@@ -1,0 +1,390 @@
+# HTML Structure Rules
+# Content creators: use these rules in your workshop/practical markdown
+# via validate: "rule_name"
+#
+# Structured Syntax:
+#   template: tag
+#   element: <tag_name>       # required
+#   closing: yes/no           # optional - require closing tag
+#   attribute: <attr_name>    # optional - check attribute exists
+#   value: <attr_value>       # optional - check attribute value
+#
+#   template: wrapper
+#   wrapper: <parent_tag>     # required
+#   wrapped: <child_tag>      # required
+#   frequency: <number>       # optional - how many times
+#
+#   template: contains
+#   value: <string>           # required
+#
+#   template: css_property
+#   property: <prop_name>     # required
+#   value: <prop_value>       # required
+
+# ============================================================
+# Basic Tag Rules
+# ============================================================
+
+check_doctype:
+  template: contains
+  value: "<!DOCTYPE"
+  hint: "Add <!DOCTYPE html> at the top of your document"
+
+check_html_tag:
+  template: tag
+  element: html
+  closing: yes
+  hint: "Add <html> and </html> tags to your document"
+
+check_head_tag:
+  template: tag
+  element: head
+  closing: yes
+  hint: "Add <head> and </head> tags"
+
+check_body_tag:
+  template: tag
+  element: body
+  closing: yes
+  hint: "Add <body> and </body> tags"
+
+check_title_tag:
+  template: tag
+  element: title
+  closing: yes
+  hint: "Add <title> inside <head>"
+
+check_h1_tag:
+  template: tag
+  element: h1
+  closing: yes
+  hint: "Add an <h1> heading element"
+
+check_p_tag:
+  template: tag
+  element: p
+  closing: yes
+  hint: "Add a <p> paragraph element"
+
+check_div_tag:
+  template: tag
+  element: div
+  closing: yes
+  hint: "Add a <div> element"
+
+check_a_tag:
+  template: tag
+  element: a
+  closing: yes
+  hint: "Add an <a> link element"
+
+check_img_tag:
+  template: tag
+  element: img
+  closing: no
+  hint: "Add an <img> element"
+
+check_ul_tag:
+  template: tag
+  element: ul
+  closing: yes
+  hint: "Add a <ul> unordered list"
+
+check_li_tag:
+  template: tag
+  element: li
+  closing: yes
+  hint: "Add <li> list items"
+
+check_nav_tag:
+  template: tag
+  element: nav
+  closing: yes
+  hint: "Add a <nav> navigation element"
+
+check_header_tag:
+  template: tag
+  element: header
+  closing: yes
+  hint: "Add a <header> element"
+
+check_footer_tag:
+  template: tag
+  element: footer
+  closing: yes
+  hint: "Add a <footer> element"
+
+check_section_tag:
+  template: tag
+  element: section
+  closing: yes
+  hint: "Add a <section> element"
+
+check_meta_tag:
+  template: tag
+  element: meta
+  closing: no
+  hint: "Add a <meta> tag"
+
+check_link_tag:
+  template: tag
+  element: link
+  closing: no
+  hint: "Add a <link> tag"
+
+check_script_tag:
+  template: tag
+  element: script
+  closing: yes
+  hint: "Add a <script> tag"
+
+check_style_tag:
+  template: tag
+  element: style
+  closing: yes
+  hint: "Add a <style> tag"
+
+# ============================================================
+# Tag + Attribute Rules
+# ============================================================
+
+check_a_has_href:
+  template: tag
+  element: a
+  closing: yes
+  attribute: href
+  hint: "Add href attribute to your <a> tag"
+
+check_a_href_value:
+  template: tag
+  element: a
+  closing: yes
+  attribute: href
+  value: "google.com"
+  hint: "Set href to google.com"
+
+check_a_target_blank:
+  template: tag
+  element: a
+  closing: yes
+  attribute: target
+  value: "_blank"
+  hint: 'Add target="_blank" to open link in new tab'
+
+check_img_has_src:
+  template: tag
+  element: img
+  closing: no
+  attribute: src
+  hint: "Add src attribute to your <img> tag"
+
+check_img_has_alt:
+  template: tag
+  element: img
+  closing: no
+  attribute: alt
+  hint: "Add alt attribute to your <img> tag"
+
+check_meta_charset:
+  template: tag
+  element: meta
+  closing: no
+  attribute: charset
+  hint: "Add charset attribute to <meta> tag"
+
+check_meta_viewport:
+  template: tag
+  element: meta
+  closing: no
+  attribute: name
+  value: "viewport"
+  hint: "Add viewport meta tag"
+
+check_link_css:
+  template: tag
+  element: link
+  closing: no
+  attribute: rel
+  value: "stylesheet"
+  hint: "Add stylesheet link"
+
+check_script_src:
+  template: tag
+  element: script
+  closing: yes
+  attribute: src
+  hint: "Add src attribute to <script> tag"
+
+# ============================================================
+# Wrapper Rules
+# ============================================================
+
+check_head_in_html:
+  template: wrapper
+  wrapper: html
+  wrapped: head
+  hint: "Add <head> inside <html>"
+
+check_body_in_html:
+  template: wrapper
+  wrapper: html
+  wrapped: body
+  hint: "Add <body> inside <html>"
+
+check_title_in_head:
+  template: wrapper
+  wrapper: head
+  wrapped: title
+  hint: "Add <title> inside <head>"
+
+check_h1_in_body:
+  template: wrapper
+  wrapper: body
+  wrapped: h1
+  hint: "Add <h1> inside <body>"
+
+check_p_in_body:
+  template: wrapper
+  wrapper: body
+  wrapped: p
+  hint: "Add <p> inside <body>"
+
+check_div_in_body:
+  template: wrapper
+  wrapper: body
+  wrapped: div
+  hint: "Add <div> inside <body>"
+
+check_li_in_ul:
+  template: wrapper
+  wrapper: ul
+  wrapped: li
+  hint: "Add <li> inside <ul>"
+
+check_a_in_body:
+  template: wrapper
+  wrapper: body
+  wrapped: a
+  hint: "Add <a> inside <body>"
+
+check_img_in_body:
+  template: wrapper
+  wrapper: body
+  wrapped: img
+  hint: "Add <img> inside <body>"
+
+check_nav_in_body:
+  template: wrapper
+  wrapper: body
+  wrapped: nav
+  hint: "Add <nav> inside <body>"
+
+check_header_in_body:
+  template: wrapper
+  wrapper: body
+  wrapped: header
+  hint: "Add <header> inside <body>"
+
+check_footer_in_body:
+  template: wrapper
+  wrapper: body
+  wrapped: footer
+  hint: "Add <footer> inside <body>"
+
+check_section_in_body:
+  template: wrapper
+  wrapper: body
+  wrapped: section
+  hint: "Add <section> inside <body>"
+
+check_3_divs_in_body:
+  template: wrapper
+  wrapper: body
+  wrapped: div
+  frequency: 3
+  hint: "Add 3 <div> elements inside <body>"
+
+check_2_li_in_ul:
+  template: wrapper
+  wrapper: ul
+  wrapped: li
+  frequency: 2
+  hint: "Add 2 <li> items inside <ul>"
+
+# ============================================================
+# Legacy Rules (backward compat)
+# ============================================================
+
+check_head_nested:
+  template: wrapper
+  wrapper: html
+  wrapped: head
+  hint: "Move <head> inside the <html> element"
+
+check_body_nested:
+  template: wrapper
+  wrapper: html
+  wrapped: body
+  hint: "Move <body> inside the <html> element"
+
+check_head_closing:
+  template: tag
+  element: head
+  closing: yes
+  hint: "Add closing </head> tag"
+
+check_body_closing:
+  template: tag
+  element: body
+  closing: yes
+  hint: "Add closing </body> tag"
+
+check_html_closing:
+  template: tag
+  element: html
+  closing: yes
+  hint: "Add closing </html> tag"
+
+check_title_nested:
+  template: wrapper
+  wrapper: head
+  wrapped: title
+  hint: "Move <title> inside <head>"
+
+check_title_has_text:
+  template: tag_has_text
+  tag: title
+  hint: "Add text content inside <title> tags"
+
+check_h1_nested_body:
+  template: wrapper
+  wrapper: body
+  wrapped: h1
+  hint: "Move <h1> inside <body>"
+
+check_h1_has_text:
+  template: tag_has_text
+  tag: h1
+  hint: "Add text content inside <h1> tags"
+
+check_p_has_text:
+  template: tag_has_text
+  tag: p
+  hint: "Add text content inside <p> tags"
+
+check_main_id:
+  template: tag_has_id
+  id_name: main
+  hint: 'Add an element with id="main"'
+
+check_li_nested_ul:
+  template: wrapper
+  wrapper: ul
+  wrapped: li
+  hint: "Put <li> items inside <ul>"
+
+check_div_has_class:
+  template: tag_has_class
+  tag: div
+  class_name: container
+  hint: 'Add class="container" to a <div>'

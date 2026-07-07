@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block title %}User Management{% endblock %}
+{% block content %}
+<div class="flex gap-6">
+    {% with active_page='users' %}{% include "components/_admin_sidebar.html" %}{% endwith %}
+    <div class="flex-1 min-w-0">
+        <div class="mb-6">
+            <h1 class="text-2xl font-extrabold tracking-tight">User Management</h1>
+            <p class="text-sm mt-0.5" style="color: var(--text-muted);">Manage users, bans, and permissions</p>
+        </div>
+        <div class="card overflow-hidden">
+            <table class="w-full">
+                <thead>
+                    <tr style="background: var(--bg);">
+                        <th class="text-left px-4 py-3 text-xs font-semibold uppercase tracking-wider" style="color: var(--text-muted);">ID</th>
+                        <th class="text-left px-4 py-3 text-xs font-semibold uppercase tracking-wider" style="color: var(--text-muted);">Username</th>
+                        <th class="text-left px-4 py-3 text-xs font-semibold uppercase tracking-wider" style="color: var(--text-muted);">Email</th>
+                        <th class="text-left px-4 py-3 text-xs font-semibold uppercase tracking-wider" style="color: var(--text-muted);">Role</th>
+                        <th class="text-left px-4 py-3 text-xs font-semibold uppercase tracking-wider" style="color: var(--text-muted);">Status</th>
+                        <th class="text-left px-4 py-3 text-xs font-semibold uppercase tracking-wider" style="color: var(--text-muted);">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="users-tbody">
+                    {% for u in users %}
+                    <tr style="border-top: 1px solid var(--border);" data-id="{{ u.id }}">
+                        <td class="px-4 py-3 text-sm">{{ u.id }}</td>
+                        <td class="px-4 py-3 text-sm font-medium">{{ u.username }}</td>
+                        <td class="px-4 py-3 text-sm" style="color: var(--text-muted);">{{ u.email }}</td>
+                        <td class="px-4 py-3 text-sm"><span class="px-2 py-0.5 rounded text-xs font-medium" style="background: var(--border);">{{ 'Admin' if u.role == 'instructor' else u.role|title }}</span></td>
+                        <td class="px-4 py-3 text-sm status-cell">{% if u.is_banned %}<span class="font-medium px-2 py-0.5 rounded" style="background: rgba(0,20,73,0.1); color: var(--c2);">Banned</span>{% else %}<span class="font-medium px-2 py-0.5 rounded" style="background: rgba(0,91,197,0.1); color: var(--c3);">Active</span>{% endif %}</td>
+                        <td class="px-4 py-3 text-sm flex gap-1.5">
+                            <button onclick="banUser({{ u.id }}, this)" class="px-2.5 py-1 rounded text-xs font-medium" style="background: rgba(0,20,73,0.1); color: var(--c2);">Ban</button>
+                            <button onclick="unbanUser({{ u.id }}, this)" class="btn-secondary text-xs px-2.5 py-1">Unban</button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+cache.set('users', Array.from(document.querySelectorAll('#users-tbody tr')).map(tr => ({
+    id: tr.dataset.id,
+    status: tr.querySelector('.status-cell').textContent.trim()
+})));
+async function banUser(id, btn) {
+    const duration = prompt('Ban duration (number) or leave empty for permanent:');
+    const unit = prompt('Unit: days, weeks, months, years (default: days):') || 'days';
+    const reason = prompt('Reason (optional):') || '';
+    const res = await fetch('/admin/api/users/' + id + '/ban', {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({duration: duration || null, unit, reason}),
+    });
+    if (!res.ok) { toast('Failed to ban', true); return; }
+    toast('User banned');
+    const tr = btn.closest('tr');
+    tr.querySelector('.status-cell').innerHTML = '<span class="font-medium px-2 py-0.5 rounded" style="background:rgba(0,20,73,0.1);color:var(--c2);">Banned</span>';
+}
+async function unbanUser(id, btn) {
+    const res = await fetch('/admin/api/users/' + id + '/unban', {method:'POST'});
+    if (!res.ok) { toast('Failed to unban', true); return; }
+    toast('User unbanned');
+    const tr = btn.closest('tr');
+    tr.querySelector('.status-cell').innerHTML = '<span class="font-medium px-2 py-0.5 rounded" style="background:rgba(0,91,197,0.1);color:var(--c3);">Active</span>';
+}
+</script>
+{% endblock %}

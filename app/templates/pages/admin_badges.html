@@ -1,0 +1,238 @@
+{% extends "base.html" %}
+{% block title %}Badges{% endblock %}
+{% block content %}
+<div class="flex gap-6">
+    {% with active_page='badges' %}{% include "components/_admin_sidebar.html" %}{% endwith %}
+    <div class="flex-1 min-w-0">
+<div class="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+    <div>
+        <h1 class="text-2xl font-extrabold tracking-tight">Badge System</h1>
+        <p class="text-sm mt-0.5" style="color: var(--text-muted);">Create and manage achievement badges</p>
+    </div>
+    <button onclick="showCreateForm()" class="btn-primary">New Badge</button>
+</div>
+
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <div class="lg:col-span-2">
+        <div class="card p-5">
+            <h3 class="font-bold mb-4">Badges</h3>
+            <div class="space-y-2" id="badge-list">
+                {% for b in badges %}
+                <div class="p-3.5 rounded-lg flex items-center justify-between" style="border: 1px solid var(--border);" data-id="{{ b.id }}">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-lg flex items-center justify-center" style="background: rgba(0,180,252,0.1);">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--primary-mid)" stroke-width="2"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>
+                        </div>
+                        <div>
+                            <div class="font-semibold">{{ b.name }}</div>
+                            <div class="text-xs" style="color: var(--text-muted);">{{ b.badge_type | replace('_', ' ') | title }} &mdash; <span class="status-text" style="color: {{ 'var(--primary-mid)' if b.enabled else 'var(--text-muted)' }};">{{ 'Enabled' if b.enabled else 'Disabled' }}</span></div>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-1.5">
+                        <button onclick="toggleBadge({{ b.id }}, this)" class="btn-secondary text-xs px-2.5 py-1">{{ 'Disable' if b.enabled else 'Enable' }}</button>
+                        <button onclick="editBadge({{ b.id }})" class="btn-secondary text-xs px-2.5 py-1">Edit</button>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div class="card p-5">
+            <h3 class="font-bold mb-4">Award Badge</h3>
+            <form id="award-badge-form" class="space-y-3" onsubmit="awardBadge(event)">
+                <div>
+                    <label class="label">User ID</label>
+                    <input name="user_id" type="number" required class="input-field">
+                </div>
+                <div>
+                    <label class="label">Badge ID</label>
+                    <input name="badge_id" type="number" required class="input-field">
+                </div>
+                <button type="submit" class="btn-primary w-full" style="background: var(--accent);">Award</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="badge-modal" class="fixed inset-0 z-50 hidden" style="background: rgba(0,20,73,0.5);">
+    <div class="flex items-center justify-center min-h-screen p-4">
+        <div class="rounded-xl w-full max-w-lg p-6 card">
+            <h3 id="modal-title" class="text-xl font-bold mb-5 tracking-tight">Create Badge</h3>
+            <form id="badge-form" class="space-y-3" onsubmit="saveBadge(event)">
+                <input type="hidden" name="id" id="badge-id">
+                <div>
+                    <label class="label">Name</label>
+                    <input name="name" id="badge-name" required class="input-field">
+                </div>
+                <div>
+                    <label class="label">Description</label>
+                    <textarea name="description" id="badge-desc" rows="2" class="input-field"></textarea>
+                </div>
+                <div>
+                    <label class="label">Icon</label>
+                    <select name="icon" id="badge-icon" class="input-field">
+                        <option value="award">Award</option>
+                        <option value="medal">Medal</option>
+                        <option value="star">Star</option>
+                        <option value="zap">Zap</option>
+                        <option value="flame">Flame</option>
+                        <option value="target">Target</option>
+                        <option value="trophy">Trophy</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="label">Badge Type</label>
+                    <select name="badge_type" id="badge-type" onchange="updateBadgeConfig()" class="input-field">
+                        <option value="streak">Streak (date-based)</option>
+                        <option value="course_completion">Course Completion</option>
+                        <option value="combo">Combo (courses + deadline)</option>
+                        <option value="certificate">Certificate</option>
+                        <option value="events">Events</option>
+                    </select>
+                </div>
+                <div id="badge-config-fields">
+                    <label class="label">Configuration</label>
+                    <div id="config-editor" class="text-sm p-3.5 rounded-lg" style="background: var(--bg); border: 1px solid var(--border);"></div>
+                </div>
+                <div class="flex justify-end gap-2 pt-2">
+                    <button type="button" onclick="closeModal()" class="btn-secondary">Cancel</button>
+                    <button type="submit" class="btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+let badgeData = {};
+
+(async function() {
+    const res = await fetch('/admin/api/badges');
+    if (res.ok) cache.set('badges', await res.json());
+})();
+
+function showCreateForm() {
+    document.getElementById('modal-title').textContent = 'Create Badge';
+    document.getElementById('badge-id').value = '';
+    document.getElementById('badge-name').value = '';
+    document.getElementById('badge-desc').value = '';
+    document.getElementById('badge-icon').value = 'award';
+    document.getElementById('badge-type').value = 'streak';
+    badgeData = {};
+    updateBadgeConfig();
+    document.getElementById('badge-modal').classList.remove('hidden');
+}
+
+function closeModal() {
+    document.getElementById('badge-modal').classList.add('hidden');
+}
+
+function updateBadgeConfig() {
+    const type = document.getElementById('badge-type').value;
+    const editor = document.getElementById('config-editor');
+    let html = '';
+    if (type === 'streak') {
+        html = `<div class="mb-2"><label class="text-xs font-medium">Min Streak Days</label><input type="number" id="cfg-min-streak" value="${badgeData.min_streak || 3}" min="1" class="input-field mt-1"></div>`;
+    } else if (type === 'course_completion') {
+        html = `<div class="mb-2"><label class="text-xs font-medium">Course IDs (comma-separated)</label><input type="text" id="cfg-course-ids" value="${(badgeData.course_ids || []).join(',')}" placeholder="os-basics,html-workshop" class="input-field mt-1"></div>`;
+    } else if (type === 'combo') {
+        html = `<div class="mb-2"><label class="text-xs font-medium">Course IDs (comma-separated)</label><input type="text" id="cfg-course-ids" value="${(badgeData.course_ids || []).join(',')}" placeholder="os-basics,html-workshop" class="input-field mt-1"></div>
+            <div class="mb-2"><label class="text-xs font-medium">Deadline (YYYY-MM-DD, optional)</label><input type="date" id="cfg-deadline" value="${badgeData.deadline || ''}" class="input-field mt-1"></div>`;
+    } else if (type === 'certificate') {
+        html = `<div class="mb-2"><label class="text-xs font-medium">Certificate Category IDs (comma-separated)</label><input type="text" id="cfg-cert-ids" value="${(badgeData.certificate_ids || []).join(',')}" placeholder="foundation-introduction" class="input-field mt-1"></div>`;
+    } else if (type === 'events') {
+        html = `<div class="mb-2"><label class="text-xs font-medium">Event Type</label>
+            <select id="cfg-event-type" class="input-field mt-1">
+                <option value="first_certificate" ${badgeData.event_type === 'first_certificate' ? 'selected' : ''}>First Certificate</option>
+                <option value="first_completion" ${badgeData.event_type === 'first_completion' ? 'selected' : ''}>First Completion</option>
+                <option value="ten_completions" ${badgeData.event_type === 'ten_completions' ? 'selected' : ''}>10 Completions</option>
+                <option value="all_courses" ${badgeData.event_type === 'all_courses' ? 'selected' : ''}>All Courses</option>
+            </select></div>`;
+    }
+    editor.innerHTML = html;
+}
+
+function getConfig() {
+    const type = document.getElementById('badge-type').value;
+    const cfg = {};
+    if (type === 'streak') { cfg.min_streak = parseInt(document.getElementById('cfg-min-streak')?.value || 3); }
+    else if (type === 'course_completion') { cfg.course_ids = (document.getElementById('cfg-course-ids')?.value || '').split(',').map(s => s.trim()).filter(Boolean); }
+    else if (type === 'combo') { cfg.course_ids = (document.getElementById('cfg-course-ids')?.value || '').split(',').map(s => s.trim()).filter(Boolean); cfg.deadline = document.getElementById('cfg-deadline')?.value || ''; }
+    else if (type === 'certificate') { cfg.certificate_ids = (document.getElementById('cfg-cert-ids')?.value || '').split(',').map(s => s.trim()).filter(Boolean); }
+    else if (type === 'events') { cfg.event_type = document.getElementById('cfg-event-type')?.value || 'first_certificate'; }
+    return cfg;
+}
+
+async function saveBadge(e) {
+    e.preventDefault();
+    const id = document.getElementById('badge-id').value;
+    const data = {
+        name: document.getElementById('badge-name').value,
+        description: document.getElementById('badge-desc').value,
+        icon: document.getElementById('badge-icon').value,
+        badge_type: document.getElementById('badge-type').value,
+        config: getConfig(),
+    };
+    const url = id ? '/admin/api/badges/' + id : '/admin/api/badges';
+    const method = id ? 'PUT' : 'POST';
+    const res = await fetch(url, { method, headers: {'Content-Type': 'application/json'}, body: JSON.stringify(data) });
+    if (!res.ok) { toast('Failed to save', true); return; }
+    toast(id ? 'Badge updated' : 'Badge created');
+    closeModal();
+    const saved = await res.json();
+    const list = document.getElementById('badge-list');
+    if (id) {
+        const el = list.querySelector(`[data-id="${id}"]`);
+        if (el) el.querySelector('.font-semibold').textContent = data.name;
+    } else {
+        list.insertAdjacentHTML('afterbegin', `<div class="p-3.5 rounded-lg flex items-center justify-between" style="border:1px solid var(--border);" data-id="${saved.id}">
+            <div class="flex items-center gap-3"><div class="w-10 h-10 rounded-lg flex items-center justify-center" style="background:rgba(0,180,252,0.1);"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--primary-mid)" stroke-width="2"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg></div>
+            <div><div class="font-semibold">${data.name}</div><div class="text-xs" style="color:var(--text-muted);">${data.badge_type.replace(/_/g,' ').replace(/\b\w/g,c=>c.toUpperCase())} &mdash; <span class="status-text" style="color:var(--primary-mid);">Enabled</span></div></div></div>
+            <div class="flex items-center gap-1.5"><button onclick="toggleBadge(${saved.id},this)" class="btn-secondary text-xs px-2.5 py-1">Disable</button><button onclick="editBadge(${saved.id})" class="btn-secondary text-xs px-2.5 py-1">Edit</button></div></div>`);
+    }
+}
+
+async function toggleBadge(id, btn) {
+    await fetch('/admin/api/badges/' + id + '/toggle', {method: 'POST'});
+    toast('Toggled');
+    const el = btn.closest('[data-id]');
+    const statusText = el.querySelector('.status-text');
+    const isEnabled = statusText.textContent === 'Enabled';
+    statusText.textContent = isEnabled ? 'Disabled' : 'Enabled';
+    statusText.style.color = isEnabled ? 'var(--text-muted)' : 'var(--primary-mid)';
+    btn.textContent = isEnabled ? 'Enable' : 'Disable';
+}
+
+async function editBadge(id) {
+    const res = await fetch('/admin/api/badges');
+    const badges = await res.json();
+    const b = badges.find(x => x.id === id);
+    if (!b) return;
+    document.getElementById('modal-title').textContent = 'Edit Badge';
+    document.getElementById('badge-id').value = b.id;
+    document.getElementById('badge-name').value = b.name || '';
+    document.getElementById('badge-desc').value = b.description || '';
+    document.getElementById('badge-icon').value = b.icon || 'award';
+    document.getElementById('badge-type').value = b.badge_type || 'streak';
+    badgeData = b.config || {};
+    updateBadgeConfig();
+    document.getElementById('badge-modal').classList.remove('hidden');
+}
+
+async function awardBadge(e) {
+    e.preventDefault();
+    const fd = new FormData(e.target);
+    const data = Object.fromEntries(fd.entries());
+    const res = await fetch('/admin/api/badges/award', {
+        method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(data),
+    });
+    if (res.ok) { toast('Badge awarded!'); e.target.reset(); }
+    else { const err = await res.json(); toast(err.error || 'Failed to award', true); }
+}
+</script>
+{% endblock %}

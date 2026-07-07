@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Page Not Found{% endblock %}
+{% block content %}
+<div class="min-h-[60vh] flex items-center justify-center">
+    <div class="text-center">
+        <div class="w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6" style="background: rgba(4,109,139,0.1);">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--primary-dark)" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M16 16s-1.5-2-4-2-4 2-4 2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+        </div>
+        <h1 class="text-6xl font-extrabold tracking-tight mb-2" style="color: var(--primary-dark);">404</h1>
+        <p class="text-lg mb-2" style="color: var(--text-muted);">This page doesn't exist</p>
+        <p class="text-sm mb-8" style="color: var(--text-muted);">The content you're looking for might have been moved or removed.</p>
+        <a href="{{ url_for('main.index') }}" class="btn-primary inline-flex items-center gap-2">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            Go Home
+        </a>
+    </div>
+</div>
+{% endblock %}

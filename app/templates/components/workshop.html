@@ -1,0 +1,14 @@
+<div id="{{ container_id }}" class="workshop-container card p-6 mt-6" style="border-width: 2px;">
+    <div class="workshop-step mb-4"></div>
+    <div id="{{ container_id }}-editor" style="height: 300px; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-bottom: 12px;"></div>
+    <div class="flex gap-2 mb-3">
+        <button class="workshop-submit btn-primary">Check Step</button>
+    </div>
+    <div class="workshop-feedback mb-3 text-sm font-medium"></div>
+    <div class="flex items-center gap-3">
+        <div class="flex-1 rounded-full h-2" style="background: var(--border);">
+            <div class="workshop-progress h-full rounded-full transition-all duration-500" style="background: var(--accent); width: 0%;"></div>
+        </div>
+        <span class="workshop-progress-text text-xs font-medium" style="color: var(--text-muted);">0%</span>
+    </div>
+</div>

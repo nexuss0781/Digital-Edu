@@ -1,0 +1,160 @@
+{% extends "base.html" %}
+{% block title %}Certificates{% endblock %}
+{% block content %}
+<div class="flex gap-6">
+    {% with active_page='certificates' %}{% include "components/_admin_sidebar.html" %}{% endwith %}
+    <div class="flex-1 min-w-0">
+        <div class="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+                <h1 class="text-2xl font-extrabold tracking-tight">Certificate System</h1>
+                <p class="text-sm mt-0.5" style="color: var(--text-muted);">Design templates and award certificates</p>
+            </div>
+            <button onclick="createTemplate()" class="btn-primary">New Template</button>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div class="space-y-6">
+                <div class="card p-5">
+                    <h3 class="font-bold mb-3">Templates</h3>
+                    {% if templates %}
+                    <div class="space-y-2">
+                        {% for t in templates %}
+                        <div class="p-3.5 rounded-lg cursor-pointer transition-shadow hover:shadow-sm" style="border: 1px solid var(--border);" onclick="loadTemplate({{ t.id }})">
+                            <div class="font-medium">{{ t.name }}</div>
+                            <div class="text-xs mt-0.5" style="color: var(--text-muted);">{{ t.header }} &mdash; {{ t.issuer }}</div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <p class="text-sm" style="color: var(--text-muted);">No templates yet. Create one to get started.</p>
+                    {% endif %}
+                </div>
+                <div class="card p-5">
+                    <h3 class="font-bold mb-4">Template Designer</h3>
+                    <form id="template-form" class="space-y-3" onsubmit="saveTemplate(event)">
+                        <input type="hidden" name="id" id="tpl-id">
+                        <div><label class="label">Name</label><input name="name" id="tpl-name" class="input-field"></div>
+                        <div><label class="label">Header</label><input name="header" id="tpl-header" class="input-field" placeholder="Certificate of Completion"></div>
+                        <div><label class="label">Subtitle</label><input name="subtitle" id="tpl-subtitle" class="input-field" placeholder="D"></div>
+                        <div><label class="label">Description</label><textarea name="description" id="tpl-description" rows="3" class="input-field"></textarea></div>
+                        <div><label class="label">Issuer</label><input name="issuer" id="tpl-issuer" class="input-field" placeholder="Digital-Edu"></div>
+                        <div><label class="label">Footer</label><input name="footer" id="tpl-footer" class="input-field"></div>
+                        <button type="submit" class="btn-primary flex items-center gap-2">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+                            Save Template
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <div class="space-y-6">
+                <div class="card p-5">
+                    <h3 class="font-bold mb-4">Award Certificate</h3>
+                    <form id="award-form" class="space-y-3" onsubmit="awardCertificate(event)">
+                        <div><label class="label">User ID</label><input name="user_id" type="number" required class="input-field"></div>
+                        <div><label class="label">Category ID</label><input name="category_id" required class="input-field" placeholder="foundation-introduction"></div>
+                        <div><label class="label">Category Title</label><input name="category_title" required class="input-field" placeholder="Foundation Introduction"></div>
+                        <div><label class="label">Subcategory IDs (comma-separated)</label><input name="subcategory_ids" class="input-field" placeholder="operating-system-basics,html-basics-workshop"></div>
+                        <div><label class="label">Template ID (optional)</label><input name="template_id" type="number" class="input-field"></div>
+                        <button type="submit" class="btn-primary flex items-center gap-2" style="background: var(--accent);">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>
+                            Award Certificate
+                        </button>
+                    </form>
+                </div>
+                <div class="card p-5">
+                    <h3 class="font-bold mb-4">Certificate Preview</h3>
+                    <div id="cert-preview" class="p-6 md:p-8 rounded-xl text-center" style="border: 2px solid var(--border); background: var(--bg-card); color: var(--text);">
+                        <h1 id="cert-header" style="font-size: 26px; font-weight: 700; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 2px;">Certificate of Completion</h1>
+                        <div id="cert-subtitle" style="font-size: 64px; font-weight: 800; margin-bottom: 8px; color: var(--c3); line-height: 1;">D</div>
+                        <p id="cert-description" style="margin-bottom: 16px; font-size: 13px; line-height: 1.6; max-width: 400px; margin-left: auto; margin-right: auto;">This is to certify that</p>
+                        <p id="cert-recipient" style="font-size: 20px; font-weight: 600; margin-bottom: 4px;">[Student Name]</p>
+                        <p style="margin-bottom: 4px; font-size: 12px;">has successfully completed the course</p>
+                        <p id="cert-course" style="font-size: 18px; font-weight: 600; margin-bottom: 12px; color: var(--c3);">[Course Title]</p>
+                        <div id="cert-subcategories" style="margin-bottom: 16px; font-size: 11px; color: var(--text-muted);">
+                            <p style="font-weight: 600; margin-bottom: 4px;">Sub-competencies:</p>
+                            <ul id="cert-subcat-list" style="list-style: none; padding: 0; margin: 0;">
+                                <li style="display: inline-block; margin: 2px 4px; padding: 2px 10px; border: 1px solid var(--border); border-radius: 12px;">Operating System Basics</li>
+                                <li style="display: inline-block; margin: 2px 4px; padding: 2px 10px; border: 1px solid var(--border); border-radius: 12px;">HTML Basics Workshop</li>
+                            </ul>
+                        </div>
+                        <p style="margin-bottom: 4px; font-size: 11px;">Awarded by Digital-Edu</p>
+                        <p id="cert-issuer" style="font-size: 10px; margin-bottom: 20px;">Prepared by Ethco Coders</p>
+                        <p id="cert-date" style="font-size: 11px; border-top: 1px solid var(--border); padding-top: 12px; width: 60%; margin: 0 auto;">Date: <span id="cert-date-text"></span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+document.getElementById('cert-date-text').textContent = new Date().toLocaleDateString('en-GB', {day: 'numeric', month: 'long', year: 'numeric'});
+async function createTemplate() {
+    const name = prompt('Template name:');
+    if (!name) return;
+    const res = await fetch('/admin/api/certificate-templates', {
+        method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({name}),
+    });
+    const data = await res.json();
+    if (data.id) {
+        toast('Template created');
+        const list = document.querySelector('.card.p-5 .space-y-2') || document.querySelector('.card.p-5');
+        if (list && list.tagName !== 'DIV') { return; }
+        if (list) {
+            const firstP = list.querySelector('p');
+            if (firstP && firstP.textContent.includes('No templates')) firstP.remove();
+            list.insertAdjacentHTML('afterbegin', `<div class="p-3.5 rounded-lg cursor-pointer transition-shadow hover:shadow-sm" style="border:1px solid var(--border);" onclick="loadTemplate(${data.id})"><div class="font-medium">${data.name}</div><div class="text-xs mt-0.5" style="color:var(--text-muted);"> &mdash; </div></div>`);
+        }
+        document.getElementById('tpl-id').value = data.id;
+        loadTemplate(data.id);
+    }
+}
+async function loadTemplate(id) {
+    const res = await fetch('/admin/api/certificate-templates');
+    const templates = await res.json();
+    const tpl = templates.find(t => t.id === id);
+    if (!tpl) return;
+    document.getElementById('tpl-id').value = tpl.id;
+    document.getElementById('tpl-name').value = tpl.name || '';
+    document.getElementById('tpl-header').value = tpl.header || '';
+    document.getElementById('tpl-subtitle').value = tpl.subtitle || '';
+    document.getElementById('tpl-description').value = tpl.description || '';
+    document.getElementById('tpl-issuer').value = tpl.issuer || '';
+    document.getElementById('tpl-footer').value = tpl.footer || '';
+    updatePreview(tpl);
+}
+function updatePreview(tpl) {
+    document.getElementById('cert-header').textContent = tpl.header || 'Certificate of Completion';
+    document.getElementById('cert-subtitle').textContent = tpl.subtitle || 'D';
+    document.getElementById('cert-description').textContent = tpl.description || 'This is to certify that';
+    document.getElementById('cert-issuer').textContent = (tpl.issuer ? 'Prepared by ' + tpl.issuer : 'Prepared by Ethco Coders');
+}
+async function saveTemplate(e) {
+    e.preventDefault();
+    const fd = new FormData(e.target);
+    const data = Object.fromEntries(fd.entries());
+    const id = data.id;
+    delete data.id;
+    if (id) {
+        await fetch('/admin/api/certificate-templates/' + id, {
+            method:'PUT', headers:{'Content-Type':'application/json'}, body: JSON.stringify(data),
+        });
+    } else {
+        await fetch('/admin/api/certificate-templates', {
+            method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(data),
+        });
+    }
+    toast('Saved!');
+}
+async function awardCertificate(e) {
+    e.preventDefault();
+    const fd = new FormData(e.target);
+    const data = Object.fromEntries(fd.entries());
+    await fetch('/admin/api/award-certificate', {
+        method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(data),
+    });
+    toast('Certificate awarded!');
+    e.target.reset();
+}
+</script>
+{% endblock %}

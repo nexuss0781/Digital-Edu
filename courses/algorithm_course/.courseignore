@@ -1,0 +1,23 @@
+# Non-learning artifacts
+.gitignore
+LICENSE
+README.md
+Curriculum.md
+GLOSSARY.md
+
+# Reference sections (kept as companion content, not part of course tree)
+system_design/
+languages/
+examples/
+assets/
+
+# Practice bank (referenced from module practice files, not traversed directly)
+practice/
+practice/**/*
+
+# Assessments (separate module)
+assessments/
+assessments/**/*
+
+# Track info
+tracks/

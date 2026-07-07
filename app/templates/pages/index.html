@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Home — Digital Education{% endblock %}
+{% block content %}
+<div class="text-center py-16">
+    <h1 class="text-4xl font-bold mb-4" style="color: var(--primary-dark);">Digital Education Platform</h1>
+    <p class="text-lg mb-8" style="color: var(--text-muted);">Competency-based learning with interactive notes, quizzes, workshops, and projects.</p>
+    <a href="{{ url_for('courses.tree') }}" class="inline-block px-8 py-3 rounded text-lg font-semibold" style="background: var(--c3); color: #E8F0FE;">
+        Browse Courses
+    </a>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+    <div class="p-6 rounded-lg" style="background: var(--bg-card); border: 1px solid var(--border);">
+        <i class="lucide lucide-book-open text-3xl mb-3" style="color: var(--primary-mid);"></i>
+        <h3 class="text-lg font-semibold mb-2">Modular Notes</h3>
+        <p class="text-sm" style="color: var(--text-muted);">Markdown-based notes with competency mapping and embedded quizzes.</p>
+    </div>
+    <div class="p-6 rounded-lg" style="background: var(--bg-card); border: 1px solid var(--border);">
+        <i class="lucide lucide-terminal text-3xl mb-3" style="color: var(--primary-mid);"></i>
+        <h3 class="text-lg font-semibold mb-2">Hands-on Workshops</h3>
+        <p class="text-sm" style="color: var(--text-muted);">Interactive command-based learning with step validation.</p>
+    </div>
+    <div class="p-6 rounded-lg" style="background: var(--bg-card); border: 1px solid var(--border);">
+        <i class="lucide lucide-code-2 text-3xl mb-3" style="color: var(--primary-mid);"></i>
+        <h3 class="text-lg font-semibold mb-2">Practical Projects</h3>
+        <p class="text-sm" style="color: var(--text-muted);">Code in the browser with live preview and instructor review.</p>
+    </div>
+</div>
+{% endblock %}

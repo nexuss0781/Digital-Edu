@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Login{% endblock %}
+{% block content %}
+<div class="min-h-[70vh] flex items-center justify-center">
+    <div class="w-full max-w-sm">
+        <div class="text-center mb-8">
+            <div class="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-4" style="background: var(--primary-dark);">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#E8F0FE" stroke-width="2"><path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4M10 17l5-5-5-5M13 12H3"/></svg>
+            </div>
+            <h1 class="text-2xl font-extrabold tracking-tight" style="color: var(--text);">Welcome back</h1>
+            <p class="text-sm mt-1.5" style="color: var(--text-muted);">Sign in to continue your learning journey</p>
+        </div>
+        <div class="card p-6">
+            <form method="POST" class="space-y-4">
+                <div>
+                    <label class="label">Email</label>
+                    <input type="email" name="email" required placeholder="you@example.com" class="input-field">
+                </div>
+                <div>
+                    <label class="label">Password</label>
+                    <input type="password" name="password" required placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;" class="input-field">
+                </div>
+                <button type="submit" class="btn-primary w-full flex items-center justify-center gap-2">
+                    Sign in
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </button>
+            </form>
+        </div>
+        <p class="mt-5 text-center text-sm" style="color: var(--text-muted);">
+            Don't have an account?
+            <a href="{{ url_for('auth.register') }}" style="color: var(--primary-dark); font-weight: 600;">Create one</a>
+        </p>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Digital Education{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lucide-static@latest/font/lucide.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}?v=1">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --c1: #001449;
+            --c2: #012677;
+            --c3: #005BC5;
+            --c4: #00B4FC;
+            --c5: #17F9FF;
+            --primary-dark: var(--c3);
+            --primary-mid: var(--c4);
+            --primary-light: var(--c5);
+            --accent: var(--c2);
+            --highlight: var(--c3);
+            --bg: #D4E4F5;
+            --bg-card: #B5C5DB;
+            --text: #001449;
+            --text-muted: #012677;
+            --border: #9EB3CB;
+            --error: var(--c2);
+            --success: var(--c4);
+            --shadow-sm: 0 1px 3px rgba(0,20,73,0.08);
+            --shadow-md: 0 4px 12px rgba(0,20,73,0.12);
+            --radius: 12px;
+        }
+        .dark {
+            --bg: #001449;
+            --bg-card: #001449;
+            --text: #E8F0FE;
+            --text-muted: #00B4FC;
+            --border: #003088;
+            --primary-dark: #00B4FC;
+            --primary-mid: #17F9FF;
+            --primary-light: #005BC5;
+            --accent: #00B4FC;
+            --highlight: #17F9FF;
+            --error: #17F9FF;
+            --success: #00B4FC;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.3);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.4);
+        }
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            transition: background 0.25s ease, color 0.25s ease;
+            min-height: 100vh;
+        }
+        a { transition: opacity 0.15s ease; }
+        a:hover { opacity: 0.8; }
+        input, select, textarea, button { transition: border-color 0.2s ease, box-shadow 0.2s ease; }
+        @keyframes slide-up { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .animate-slide-up { animation: slide-up 0.3s ease; }
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary-mid) !important;
+            box-shadow: 0 0 0 3px rgba(48, 146, 146, 0.15);
+        }
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-sm);
+        }
+        .btn-primary {
+            background: var(--primary-dark);
+            color: #E8F0FE;
+            border-radius: 8px;
+            font-weight: 600;
+            padding: 0.625rem 1.25rem;
+            font-size: 0.875rem;
+            transition: all 0.15s ease;
+        }
+        .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,91,197,0.3); }
+        .dark .btn-primary:hover { box-shadow: 0 4px 12px rgba(0,180,252,0.25); }
+        .btn-secondary {
+            background: var(--bg-card);
+            color: var(--text);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-weight: 500;
+            padding: 0.625rem 1.25rem;
+            font-size: 0.875rem;
+            transition: all 0.15s ease;
+        }
+        .btn-secondary:hover { background: var(--border); }
+        .btn-secondary:hover { border-color: var(--text-muted); background: var(--bg); }
+        .input-field {
+            width: 100%;
+            padding: 0.625rem 0.875rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--bg);
+            color: var(--text);
+            font-size: 0.9rem;
+        }
+        .label { display: block; font-size: 0.8rem; font-weight: 600; margin-bottom: 0.375rem; color: var(--text); }
+        nav, footer { background: #001449 !important; }
+        nav { border-bottom: 1px solid #012677 !important; }
+        footer { border-top: 1px solid #012677 !important; }
+        .dark nav, .dark footer { background: #012677 !important; }
+        .dark nav { border-bottom: 1px solid #003088 !important; }
+        .dark footer { border-top: 1px solid #003088 !important; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+    <style>
+        @keyframes pulse-text {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+        .loader-text { animation: pulse-text 1.2s ease-in-out infinite; }
+    </style>
+    <div id="app-loader" style="position:fixed;inset:0;z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#001449;">
+        <div style="position:relative;display:flex;flex-direction:column;align-items:center;gap:20px;">
+            <div id="loader-logo" style="position:relative;overflow:hidden;border-radius:8px;width:80px;height:80px;flex-shrink:0;background:#17F9FF;">
+                <div id="tri-wrap" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:4px;">
+                    <div id="tri1" style="width:0;height:0;border-style:solid;border-width:13px 0 13px 22px;border-color:transparent transparent transparent #001449;"></div>
+                    <div id="tri2" style="width:0;height:0;border-style:solid;border-width:13px 0 13px 22px;border-color:transparent transparent transparent #001449;opacity:0.5;"></div>
+                </div>
+            </div>
+            <span class="loader-text" style="color:#17F9FF;font-size:1.5rem;font-weight:800;letter-spacing:-0.02em;font-family:'Inter',sans-serif;">DigitalEdu</span>
+        </div>
+    </div>
+    <script>
+    (function(){
+        var t1 = document.getElementById('tri1');
+        var t2 = document.getElementById('tri2');
+        var pos = -60;
+        var running = true;
+        function step(){
+            if(!running) return;
+            pos += 6;
+            if(pos > 100) pos = -60;
+            if(t1) t1.style.transform = 'translateX(' + pos + 'px)';
+            if(t2){
+                var p2 = pos + 20;
+                if(p2 > 100) p2 = -60 + (p2 - 100);
+                t2.style.transform = 'translateX(' + p2 + 'px)';
+            }
+            requestAnimationFrame(step);
+        }
+        step();
+        function hideLoader(){
+            running = false;
+            if(t1) { t1.style.transform = 'translateX(0)'; t1.style.transition = 'transform 0.15s ease'; }
+            if(t2) { t2.style.transform = 'translateX(0)'; t2.style.transition = 'transform 0.15s ease'; }
+            setTimeout(function(){
+                var el = document.getElementById('app-loader');
+                if(!el) return;
+                el.style.transition = 'opacity 0.4s ease';
+                el.style.opacity = '0';
+                setTimeout(function(){ if(el.parentNode) el.style.display = 'none'; }, 400);
+            }, 1000);
+        }
+        if(document.readyState === 'complete') setTimeout(hideLoader, 800);
+        else window.addEventListener('load', function(){ setTimeout(hideLoader, 800); });
+    })();
+    </script>
+    <nav>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
+            <a href="{{ url_for('main.index') }}" class="flex items-center gap-2.5 text-xl font-extrabold tracking-tight" style="color: var(--c5);">
+                <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+                    <rect width="32" height="32" rx="8" fill="var(--c5)"/>
+                    <path d="M8 22V10l8 6-8 6z" fill="var(--c1)"/>
+                    <path d="M16 22V10l8 6-8 6z" fill="var(--c1)" opacity="0.6"/>
+                </svg>
+                DigitalEdu
+            </a>
+            <div class="flex items-center gap-2">
+                <button id="dark-toggle" class="flex items-center justify-center w-9 h-9 rounded-lg" style="border:1px solid rgba(232,240,254,0.2); background: rgba(232,240,254,0.08); color: #E8F0FE;" title="Toggle theme">
+                    <svg class="sun-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+                    <svg class="moon-icon hidden" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+                </button>
+                {% if current_user.is_authenticated %}
+                    {% if current_user.role in ('admin', 'instructor') %}
+                        <a href="{{ url_for('admin.dashboard') }}" class="hidden sm:inline-flex text-sm font-medium px-2.5 py-1.5 rounded-lg" style="color: rgba(232,240,254,0.75);">Admin</a>
+                    {% endif %}
+                    {% if current_user.role == 'instructor' %}
+                        <span style="display:none;">instructor-merged-to-admin</span>
+                    {% endif %}
+                    <a href="{{ url_for('main.dashboard') }}" class="hidden sm:inline-flex text-sm font-medium px-2.5 py-1.5 rounded-lg" style="color: rgba(232,240,254,0.75);">Dashboard</a>
+                    <a href="{{ url_for('courses.tree') }}" class="hidden sm:inline-flex text-sm font-medium px-2.5 py-1.5 rounded-lg" style="color: rgba(232,240,254,0.75);">Courses</a>
+                    <a href="{{ url_for('main.settings') }}" class="hidden sm:inline-flex text-sm font-medium px-2.5 py-1.5 rounded-lg" style="color: rgba(232,240,254,0.75);">Settings</a>
+                    <a href="{{ url_for('main.profile') }}" class="hidden sm:inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium" style="background: rgba(232,240,254,0.1); color: #E8F0FE;">
+                        <span class="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold" style="background: var(--c4); color: var(--c1);">{{ current_user.username[0]|upper }}</span>
+                        <span>{{ current_user.username }}</span>
+                    </a>
+                    <div class="relative sm:hidden">
+                        <button id="profile-dropdown-btn" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium" style="background: rgba(232,240,254,0.1); color: #E8F0FE;">
+                            <span class="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold" style="background: var(--c4); color: var(--c1);">{{ current_user.username[0]|upper }}</span>
+                            <svg class="chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                        </button>
+                        <div id="profile-dropdown" class="absolute right-0 top-full mt-1 z-50 hidden min-w-[180px] rounded-lg card p-1.5 shadow-md" style="background: var(--bg-card); border: 1px solid var(--border);">
+                            {% if current_user.role in ('admin', 'instructor') %}
+                            <a href="{{ url_for('admin.dashboard') }}" class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm" style="color: var(--text);" onmouseover="this.style.background='var(--bg)'" onmouseout="this.style.background='transparent'">Admin</a>
+                            {% endif %}
+                            <a href="{{ url_for('main.dashboard') }}" class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm" style="color: var(--text);" onmouseover="this.style.background='var(--bg)'" onmouseout="this.style.background='transparent'">Dashboard</a>
+                            <a href="{{ url_for('courses.tree') }}" class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm" style="color: var(--text);" onmouseover="this.style.background='var(--bg)'" onmouseout="this.style.background='transparent'">Courses</a>
+                            <a href="{{ url_for('main.settings') }}" class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm" style="color: var(--text);" onmouseover="this.style.background='var(--bg)'" onmouseout="this.style.background='transparent'">Settings</a>
+                            <hr style="border:none;border-top:1px solid var(--border);margin:4px 0;">
+                            <a href="{{ url_for('main.profile') }}" class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-semibold" style="color: var(--text);" onmouseover="this.style.background='var(--bg)'" onmouseout="this.style.background='transparent'">Profile</a>
+                        </div>
+                    </div>
+                    <a href="{{ url_for('auth.logout') }}" class="text-sm font-semibold px-4 py-1.5 rounded-lg" style="background: rgba(232,240,254,0.12); color: #E8F0FE;">Logout</a>
+                {% else %}
+                    <a href="{{ url_for('auth.login') }}" class="text-sm font-semibold px-4 py-1.5 rounded-lg" style="background: var(--c4); color: var(--c1);">Login</a>
+                    <a href="{{ url_for('auth.register') }}" class="text-sm font-semibold px-4 py-1.5 rounded-lg" style="border: 1px solid rgba(232,240,254,0.3); color: #E8F0FE;">Register</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">
+                {% for category, message in messages %}
+                    <div class="flex items-center gap-2.5 px-4 py-3 rounded-lg mb-2 text-sm font-medium {% if category == 'error' %}" style="background: rgba(0,20,73,0.08); color: var(--error); border: 1px solid rgba(0,20,73,0.2);{% else %}" style="background: rgba(0,180,252,0.1); color: var(--success); border: 1px solid rgba(0,180,252,0.2);{% endif %}">
+                        {% if category == 'error' %}
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M15 9l-6 6M9 9l6 6"/></svg>
+                        {% else %}
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>
+                        {% endif %}
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="py-6 text-center text-xs" style="color:rgba(232,240,254,0.6);">
+        DigitalEdu &mdash; Competency-Based Learning Platform &mdash; Prepared by Ethco Coders
+    </footer>
+
+    <div id="toast-container" class="fixed bottom-6 right-6 z-[100] flex flex-col gap-2"></div>
+
+    <script>
+        const cache = { get(k) { try { const r=localStorage.getItem('de_'+k); if(!r) return null; return JSON.parse(r).d; } catch{ return null } }, set(k,d) { try { localStorage.setItem('de_'+k, JSON.stringify({d,ts:Date.now()})) } catch{} }, clear(k) { if(k) localStorage.removeItem('de_'+k); else Object.keys(localStorage).filter(x=>x.startsWith('de_')).forEach(x=>localStorage.removeItem(x)) } };
+        function toast(msg, isError) {
+            const container = document.getElementById('toast-container');
+            const el = document.createElement('div');
+            el.className = 'px-4 py-2.5 rounded-lg text-sm font-medium shadow-lg animate-slide-up';
+            el.style.cssText = 'background: ' + (isError ? 'var(--c2)' : 'var(--c3)') + '; color: #E8F0FE; min-width: 220px; cursor: pointer; border: 1px solid rgba(232,240,254,0.15);';
+            el.textContent = msg;
+            el.onclick = () => el.remove();
+            container.appendChild(el);
+            setTimeout(() => { if (el.parentNode) el.remove(); }, 3500);
+        }
+        var loader = document.getElementById('app-loader');
+        function showLoader(){ if(loader) { loader.style.display='flex'; loader.style.opacity='1'; } }
+        function hideLoader(){ if(loader) { loader.style.transition='opacity 0.3s ease'; loader.style.opacity='0'; setTimeout(function(){ if(loader.parentNode) loader.style.display='none'; }, 300); } }
+        function navigate(url){
+            showLoader();
+            fetch(url).then(function(r){ return r.text(); }).then(function(html){
+                var tmp = document.createElement('div'); tmp.innerHTML = html;
+                var newMain = tmp.querySelector('main');
+                var newTitle = tmp.querySelector('title');
+                var oldMain = document.querySelector('main');
+                if(newMain && oldMain) { oldMain.innerHTML = newMain.innerHTML; }
+                if(newTitle) { document.title = newTitle.textContent; }
+                var scripts = oldMain ? oldMain.querySelectorAll('script') : [];
+                for(var i=0;i<scripts.length;i++){
+                    var s = document.createElement('script');
+                    if(scripts[i].src){ s.src = scripts[i].src; }
+                    else { s.textContent = scripts[i].textContent; }
+                    scripts[i].parentNode.replaceChild(s, scripts[i]);
+                }
+                window.scrollTo(0,0);
+                setTimeout(hideLoader, 200);
+            })['catch'](function(){ window.location.href = url; });
+        }
+        document.addEventListener('click', function(e) {
+            var link = e.target.closest('a[href]');
+            if (link && link.href && !link.href.startsWith('javascript:') && !link.href.startsWith('#') && !link.getAttribute('target') && !link.hasAttribute('download')) {
+                try {
+                    var url = new URL(link.href);
+                    if (url.origin === location.origin && !url.pathname.startsWith('/api/') && url.pathname !== window.location.pathname) {
+                        e.preventDefault();
+                        history.pushState({url: url.href}, '', url.href);
+                        navigate(url.href);
+                        return;
+                    }
+                } catch(_){}
+            }
+            var btn = document.getElementById('profile-dropdown-btn');
+            var dd = document.getElementById('profile-dropdown');
+            if (btn && dd) {
+                if (e.target.closest('#profile-dropdown-btn')) {
+                    dd.classList.toggle('hidden');
+                } else if (!e.target.closest('#profile-dropdown')) {
+                    dd.classList.add('hidden');
+                }
+            }
+        });
+        window.addEventListener('popstate', function(e){
+            if(e.state && e.state.url){ navigate(e.state.url); }
+        });
+    </script>
+    <script>
+        (function() {
+            const stored = localStorage.getItem('dark-mode');
+            const html = document.documentElement;
+            const sun = document.querySelector('.sun-icon');
+            const moon = document.querySelector('.moon-icon');
+            function apply(isDark) {
+                html.classList.toggle('dark', isDark);
+                if (sun && moon) {
+                    sun.classList.toggle('hidden', isDark);
+                    moon.classList.toggle('hidden', !isDark);
+                }
+            }
+            apply(stored === 'true');
+            document.getElementById('dark-toggle')?.addEventListener('click', function() {
+                const isDark = !html.classList.contains('dark');
+                apply(isDark);
+                localStorage.setItem('dark-mode', isDark);
+            });
+        })();
+    </script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

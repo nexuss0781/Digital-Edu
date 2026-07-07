@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Register{% endblock %}
+{% block content %}
+<div class="min-h-[70vh] flex items-center justify-center">
+    <div class="w-full max-w-sm">
+        <div class="text-center mb-8">
+            <div class="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-4" style="background: var(--accent);">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#E8F0FE" stroke-width="2"><path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="8.5" cy="7" r="4"/><path d="M20 8v6M23 11h-6"/></svg>
+            </div>
+            <h1 class="text-2xl font-extrabold tracking-tight" style="color: var(--text);">Create account</h1>
+            <p class="text-sm mt-1.5" style="color: var(--text-muted);">Start your competency-based learning path</p>
+        </div>
+        <div class="card p-6">
+            <form method="POST" class="space-y-4">
+                <div>
+                    <label class="label">Email</label>
+                    <input type="email" name="email" required placeholder="you@example.com" class="input-field">
+                </div>
+                <div>
+                    <label class="label">Username</label>
+                    <input type="text" name="username" required placeholder="yourname" class="input-field">
+                </div>
+                <div>
+                    <label class="label">Password</label>
+                    <input type="password" name="password" required placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;" minlength="6" class="input-field">
+                </div>
+                <div>
+                    <label class="label">Role</label>
+                    <select name="role" class="input-field">
+                        <option value="student">Student</option>
+                        <option value="instructor">Instructor</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-primary w-full flex items-center justify-center gap-2">
+                    Create account
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </button>
+            </form>
+        </div>
+        <p class="mt-5 text-center text-sm" style="color: var(--text-muted);">
+            Already have an account?
+            <a href="{{ url_for('auth.login') }}" style="color: var(--primary-dark); font-weight: 600;">Sign in</a>
+        </p>
+    </div>
+</div>
+{% endblock %}

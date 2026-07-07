@@ -1,0 +1,115 @@
+# CSS Validation Rules
+
+check_bg_color:
+  template: css_property
+  property: background-color
+  value: "#e0f7fa"
+  hint: "Set background-color: #e0f7fa in your CSS"
+
+check_bg_blue:
+  template: css_property
+  property: background-color
+  value: blue
+  hint: "Set background-color: blue in your CSS"
+
+check_bg_lightblue:
+  template: css_property
+  property: background
+  value: lightblue
+  hint: "Set background: lightblue in your CSS"
+
+check_font_size:
+  template: css_property
+  property: font-size
+  value: "16px"
+  hint: "Set font-size: 16px in your CSS"
+
+check_font_size_20:
+  template: css_property
+  property: font-size
+  value: "20px"
+  hint: "Set font-size: 20px in your CSS"
+
+check_color_red:
+  template: css_property
+  property: color
+  value: red
+  hint: "Set color: red in your CSS"
+
+check_color_darkblue:
+  template: css_property
+  property: color
+  value: "#046D8B"
+  hint: "Set color: #046D8B in your CSS"
+
+check_text_align_center:
+  template: css_property
+  property: text-align
+  value: center
+  hint: "Set text-align: center in your CSS"
+
+check_text_align_left:
+  template: css_property
+  property: text-align
+  value: left
+  hint: "Set text-align: left in your CSS"
+
+check_margin_auto:
+  template: css_property
+  property: margin
+  value: auto
+  hint: "Set margin: auto in your CSS"
+
+check_padding:
+  template: css_property
+  property: padding
+  value: "20px"
+  hint: "Set padding: 20px in your CSS"
+
+check_border:
+  template: css_property
+  property: border
+  value: "1px solid"
+  hint: "Set border: 1px solid in your CSS"
+
+check_border_radius:
+  template: css_property
+  property: border-radius
+  value: "8px"
+  hint: "Set border-radius: 8px in your CSS"
+
+check_width:
+  template: css_property
+  property: width
+  value: "100%"
+  hint: "Set width: 100% in your CSS"
+
+check_max_width:
+  template: css_property
+  property: max-width
+  value: "800px"
+  hint: "Set max-width: 800px in your CSS"
+
+check_display_flex:
+  template: css_property
+  property: display
+  value: flex
+  hint: "Set display: flex in your CSS"
+
+check_flex_direction:
+  template: css_property
+  property: flex-direction
+  value: column
+  hint: "Set flex-direction: column in your CSS"
+
+check_position_relative:
+  template: css_property
+  property: position
+  value: relative
+  hint: "Set position: relative in your CSS"
+
+check_position_absolute:
+  template: css_property
+  property: position
+  value: absolute
+  hint: "Set position: absolute in your CSS"

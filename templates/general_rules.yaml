@@ -1,0 +1,106 @@
+# General Validation Rules
+
+check_contains_link:
+  template: contains
+  value: "<link"
+  hint: "Add a <link> element (for external resources)"
+
+check_contains_meta:
+  template: contains
+  value: "<meta"
+  hint: "Add a <meta> element (for metadata)"
+
+check_contains_meta_charset:
+  template: contains
+  value: 'charset="UTF-8"'
+  hint: "Add <meta charset=\"UTF-8\"> in <head>"
+
+check_contains_meta_viewport:
+  template: contains
+  value: "viewport"
+  hint: "Add <meta name=\"viewport\"> for responsive design"
+
+check_contains_script:
+  template: contains
+  value: "<script"
+  hint: "Add a <script> element"
+
+check_contains_style:
+  template: contains
+  value: "<style"
+  hint: "Add a <style> element"
+
+check_contains_html5:
+  template: regex
+  pattern: "<!DOCTYPE\\s+html>"
+  hint: "Use HTML5 doctype: <!DOCTYPE html>"
+
+check_min_5_lines:
+  template: line_count_min
+  count: "5"
+  hint: "Write at least 5 lines of code"
+
+check_min_10_lines:
+  template: line_count_min
+  count: "10"
+  hint: "Write at least 10 lines of code"
+
+check_has_comment:
+  template: contains
+  value: "<!--"
+  hint: "Add an HTML comment"
+
+check_self_closing_br:
+  template: regex
+  pattern: "<br\\s*/?>"
+  hint: "Use <br> or <br/> for line break"
+
+check_self_closing_hr:
+  template: regex
+  pattern: "<hr\\s*/?>"
+  hint: "Use <hr> or <hr/> for horizontal rule"
+
+check_table_exists:
+  template: tag_exists
+  tag: table
+  hint: "Add a <table> element"
+
+check_tr_exists:
+  template: tag_exists
+  tag: tr
+  hint: "Add <tr> table rows"
+
+check_td_exists:
+  template: tag_exists
+  tag: td
+  hint: "Add <td> table data cells"
+
+check_form_exists:
+  template: tag_exists
+  tag: form
+  hint: "Add a <form> element"
+
+check_input_exists:
+  template: tag_exists
+  tag: input
+  hint: "Add an <input> element"
+
+check_button_exists:
+  template: tag_exists
+  tag: button
+  hint: "Add a <button> element"
+
+check_label_exists:
+  template: tag_exists
+  tag: label
+  hint: "Add a <label> element"
+
+check_textarea_exists:
+  template: tag_exists
+  tag: textarea
+  hint: "Add a <textarea> element"
+
+check_select_exists:
+  template: tag_exists
+  tag: select
+  hint: "Add a <select> element"

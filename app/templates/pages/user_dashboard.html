@@ -1,0 +1,192 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<div class="mb-8">
+    <h1 class="text-2xl md:text-3xl font-extrabold tracking-tight">Welcome back, {{ current_user.username }}</h1>
+    <p class="mt-1" style="color: var(--text-muted);">Continue your learning journey</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+    <div class="card p-6 flex items-center gap-4">
+        <div class="w-12 h-12 rounded-xl flex items-center justify-center" style="background: rgba(0,91,197,0.1); color: var(--primary-dark);">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        </div>
+        <div>
+            <div class="text-2xl font-extrabold" style="color: var(--primary-dark);">{{ completed|length }}</div>
+            <div class="text-xs" style="color: var(--text-muted);">items completed</div>
+        </div>
+    </div>
+    <a href="{{ url_for('courses.tree') }}" class="card p-6 flex items-center gap-4 hover:shadow-md transition-shadow">
+        <div class="w-12 h-12 rounded-xl flex items-center justify-center" style="background: rgba(0,180,252,0.1); color: var(--primary-mid);">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
+        </div>
+        <div>
+            <div class="font-bold">Browse Courses</div>
+            <div class="text-xs" style="color: var(--text-muted);">Explore all available content</div>
+        </div>
+    </a>
+    <a href="{{ url_for('main.profile') }}" class="card p-6 flex items-center gap-4 hover:shadow-md transition-shadow">
+        <div class="w-12 h-12 rounded-xl flex items-center justify-center" style="background: rgba(0,91,197,0.12); color: var(--highlight);">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </div>
+        <div>
+            <div class="font-bold">View Profile</div>
+            <div class="text-xs" style="color: var(--text-muted);">Badges, activity & achievements</div>
+        </div>
+    </a>
+</div>
+
+<div class="mt-8 card p-5">
+    <h3 class="font-bold mb-4 flex items-center gap-2">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+        Learning Activities
+    </h3>
+    <div id="dashboard-activity"></div>
+</div>
+{% endblock %}
+{% block scripts %}
+<style>
+@keyframes pulse-load {
+    0%, 100% { opacity: 0.15; transform: scale(0.85); }
+    50% { opacity: 0.8; transform: scale(1); }
+}
+.load-cell {
+    width: 10px; height: 10px; border-radius: 2px;
+    background: #E8F0FE; margin: 1px;
+    animation: pulse-load 1.2s ease-in-out infinite;
+}
+</style>
+<script>
+(function() {
+    const container = document.getElementById('dashboard-activity');
+    if (!container) return;
+    let lhtml = '<div style="padding:12px 16px;display:flex;flex-direction:column;background:#001449;border-radius:8px;">';
+    lhtml += '<div style="display:flex;margin-left:40px;margin-bottom:4px;gap:4px;">';
+    for (let m = 0; m < 11; m++) lhtml += '<span style="width:40px;height:8px;border-radius:2px;background:rgba(232,240,254,0.1);animation:pulse-load 1.5s ease-in-out infinite;animation-delay:' + (m*0.1) + 's;"></span>';
+    lhtml += '</div>';
+    for (let row = 0; row < 7; row++) {
+        lhtml += '<div style="display:flex;align-items:center;height:14px;">';
+        lhtml += '<span style="width:36px;height:8px;margin-right:4px;border-radius:2px;background:rgba(232,240,254,0.06);animation:pulse-load 1.5s ease-in-out infinite;animation-delay:' + (row*0.08) + 's;"></span>';
+        for (let c = 0; c < 52; c++) {
+            const delay = ((row * 52 + c) % 30) * 0.04;
+            lhtml += '<div class="load-cell" style="animation-delay:' + delay + 's;"></div>';
+        }
+        lhtml += '</div>';
+    }
+    lhtml += '</div>';
+    container.innerHTML = lhtml;
+
+    (async function() {
+        const [streakRes, activityRes] = await Promise.all([
+            fetch('/api/progress/streak'),
+            fetch('/api/progress/activity')
+        ]);
+        if (activityRes.ok) {
+            const activity = await activityRes.json();
+            let streakData = null;
+            if (streakRes.ok) streakData = await streakRes.json();
+            renderContributionGraph(container, activity, streakData);
+        }
+    })();
+})();
+function renderContributionGraph(container, activity, streakData) {
+    if (!container) return;
+    const today = new Date();
+    const start = new Date(today); start.setDate(start.getDate() - 364);
+    start.setDate(start.getDate() - start.getDay());
+    const weeks = [];
+    let cur = new Date(start);
+    let totalCount = 0, daysActive = 0, bestDay = { date: '', count: 0 };
+    while (cur <= today) {
+        const w = [];
+        for (let i = 0; i < 7; i++) {
+            const s = cur.toISOString().split('T')[0];
+            const e = activity[s];
+            const c = e ? (e.count || e) : 0;
+            w.push({ date: s, count: c });
+            totalCount += c;
+            if (c > 0) daysActive++;
+            if (c > bestDay.count) bestDay = { date: s, count: c };
+            cur.setDate(cur.getDate() + 1);
+        }
+        weeks.push(w);
+    }
+    const monthBounds = [];
+    {
+        let prev = -1;
+        for (let c = 0; c < weeks.length; c++) {
+            const m = new Date(weeks[c][0].date).getMonth();
+            if (m !== prev) { monthBounds.push(c); prev = m; }
+        }
+    }
+    const maxC = Math.max(1, ...weeks.flat().map(d => d.count));
+    function col(c) {
+        if (c === 0) return '#E8F0FE';
+        const i = Math.min(c / maxC, 1);
+        if (i < 0.2) return '#17F9FF';
+        if (i < 0.4) return '#00B4FC';
+        if (i < 0.6) return '#005BC5';
+        if (i < 0.8) return '#012677';
+        return '#001449';
+    }
+    const ml = [];
+    let lm = -999;
+    for (let w = 0; w < weeks.length; w++) {
+        const d = new Date(weeks[w][0].date);
+        const ym = d.getFullYear() * 12 + d.getMonth();
+        if (ym !== lm) { ml.push({ w, l: d.toLocaleDateString('en',{month:'short'}) }); lm = ym; }
+    }
+    if (ml.length > 12) ml.shift();
+    const streak = streakData ? streakData.streak : '--';
+    const bestDate = bestDay.count > 0 ? new Date(bestDay.date + 'T00:00:00').toLocaleDateString('en', { month: 'short', day: 'numeric' }) : '—';
+
+    let html = '<div style="display:flex;align-items:flex-start;flex-wrap:wrap;gap:16px;">';
+    html += '<div style="flex-shrink:0;max-width:100%;">';
+    html += '<div class="flex items-center justify-between mb-3"><span class="text-sm font-medium" style="color:var(--accent);">Current streak: ' + streak + ' days</span></div>';
+    html += '<div class="graph-scroll" style="overflow-x:auto;max-width:100%;">';
+    html += '<div style="display:flex;gap:2px;flex-direction:column;">';
+    html += '<div style="display:flex;margin-left:40px;margin-bottom:2px;font-size:10px;color:var(--text-muted);">';
+    {
+        for (let w = 0; w < weeks.length;) {
+            const mName = new Date(weeks[w][0].date).toLocaleDateString('en',{month:'short'});
+            let cnt = 0;
+            while (w + cnt < weeks.length && new Date(weeks[w+cnt][0].date).getMonth() === new Date(weeks[w][0].date).getMonth()) cnt++;
+            html += '<span style="width:' + (cnt * 14) + 'px;flex-shrink:0;text-align:center;">' + mName + '</span>';
+            w += cnt;
+        }
+    }
+    html += '</div>';
+    for (let row = 0; row < 7; row++) {
+        const dl = ['','Mon','','Wed','','Fri',''];
+        html += '<div style="display:flex;align-items:center;">';
+        html += '<span style="width:36px;flex-shrink:0;font-size:10px;color:var(--text-muted);text-align:right;padding-right:4px;">' + dl[row] + '</span>';
+        for (let c = 0; c < weeks.length; c++) {
+            const d = weeks[c][row];
+            const isMonthStart = monthBounds.indexOf(c) > 0;
+            if (d) {
+                html += '<div style="width:12px;height:12px;border-radius:2px;background:' + col(d.count) + ';margin:1px;border:1px solid var(--border);border-left:' + (isMonthStart ? '2px solid var(--text-muted)' : '1px solid var(--border)') + ';flex-shrink:0;" title="' + d.date + ': ' + d.count + ' activities"></div>';
+            } else {
+                html += '<div style="width:14px;height:14px;margin:1px;flex-shrink:0;"></div>';
+            }
+        }
+        html += '</div>';
+    }
+    html += '</div>';
+    html += '<div style="display:flex;align-items:center;gap:4px;margin-top:4px;font-size:10px;color:var(--text-muted);margin-left:40px;">';
+    html += '<span>Less</span>';
+    for (const c of ['#E8F0FE','#17F9FF','#00B4FC','#005BC5','#012677']) {
+        html += '<div style="width:12px;height:12px;border-radius:2px;background:' + c + ';border:1px solid var(--border);flex-shrink:0;"></div>';
+    }
+    html += '<span>More</span></div></div></div>';
+
+    html += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;flex:1;min-width:200px;">';
+    html += '<div class="card" style="padding:16px;text-align:center;"><div class="text-xl font-extrabold" style="color:var(--c3);">' + totalCount + '</div><div class="text-xs" style="color:var(--text-muted);">completions</div></div>';
+    html += '<div class="card" style="padding:16px;text-align:center;"><div class="text-xl font-extrabold" style="color:var(--c4);">' + daysActive + '</div><div class="text-xs" style="color:var(--text-muted);">active days</div></div>';
+    html += '<div class="card" style="padding:16px;text-align:center;"><div class="text-xl font-extrabold" style="color:var(--c5);">' + streak + '</div><div class="text-xs" style="color:var(--text-muted);">streak</div></div>';
+    html += '<div class="card" style="padding:16px;text-align:center;"><div class="text-xl font-extrabold" style="color:var(--c3);">' + (bestDay.count > 0 ? bestDay.count : '—') + '</div><div class="text-xs" style="color:var(--text-muted);">' + (bestDay.count > 0 ? 'best: ' + bestDate : 'no activity') + '</div></div>';
+    html += '</div></div>';
+    container.innerHTML = html;
+    const scroller = container.querySelector('.graph-scroll');
+    if (scroller) scroller.scrollLeft = scroller.scrollWidth - scroller.clientWidth;
+}
+</script>
+{% endblock %}
