@@ -116,6 +116,7 @@ def load_structure():
 
 def save_structure(data):
     courses_dir = current_app.config['COURSES_DIR']
+    os.makedirs(courses_dir, exist_ok=True)
     struct_path = os.path.join(courses_dir, STRUCTURE_FILE)
     with open(struct_path, 'w') as f:
         yaml.dump(data, f, default_flow_style=False)
