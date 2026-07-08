@@ -1,29 +1,493 @@
 {% extends "base.html" %}
-{% block title %}Home — Digital Education{% endblock %}
+{% block title %}Welcome — Digital Education Platform{% endblock %}
 {% block content %}
-<div class="text-center py-16">
-    <h1 class="text-4xl font-bold mb-4" style="color: var(--primary-dark);">Digital Education Platform</h1>
-    <p class="text-lg mb-8" style="color: var(--text-muted);">Competency-based learning with interactive notes, quizzes, workshops, and projects.</p>
-    <a href="{{ url_for('courses.tree') }}" class="inline-block px-8 py-3 rounded text-lg font-semibold" style="background: var(--c3); color: #E8F0FE;">
-        Browse Courses
-    </a>
-</div>
+<style>
+    /* Luxurious animations and transitions */
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
 
-<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
-    <div class="p-6 rounded-lg" style="background: var(--bg-card); border: 1px solid var(--border);">
-        <i class="lucide lucide-book-open text-3xl mb-3" style="color: var(--primary-mid);"></i>
-        <h3 class="text-lg font-semibold mb-2">Modular Notes</h3>
-        <p class="text-sm" style="color: var(--text-muted);">Markdown-based notes with competency mapping and embedded quizzes.</p>
+    @keyframes fadeInDown {
+        from {
+            opacity: 0;
+            transform: translateY(-30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes slideInLeft {
+        from {
+            opacity: 0;
+            transform: translateX(-40px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    @keyframes slideInRight {
+        from {
+            opacity: 0;
+            transform: translateX(40px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    @keyframes glow {
+        0%, 100% {
+            box-shadow: 0 0 20px rgba(0, 180, 252, 0.3), 0 0 40px rgba(0, 180, 252, 0.15);
+        }
+        50% {
+            box-shadow: 0 0 30px rgba(0, 180, 252, 0.5), 0 0 60px rgba(0, 180, 252, 0.25);
+        }
+    }
+
+    @keyframes shimmer {
+        0% {
+            background-position: -1000px 0;
+        }
+        100% {
+            background-position: 1000px 0;
+        }
+    }
+
+    @keyframes float {
+        0%, 100% {
+            transform: translateY(0px);
+        }
+        50% {
+            transform: translateY(-20px);
+        }
+    }
+
+    @keyframes pulse-soft {
+        0%, 100% {
+            opacity: 1;
+        }
+        50% {
+            opacity: 0.7;
+        }
+    }
+
+    /* Hero section with background image */
+    .hero-section {
+        position: relative;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        background: linear-gradient(135deg, #001449 0%, #012677 50%, #001449 100%);
+        background-size: 400% 400%;
+        animation: gradientShift 15s ease infinite;
+    }
+
+    @keyframes gradientShift {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+
+    .hero-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: url('{{ url_for("static", filename="img/hero-bg.jpg") }}');
+        background-size: cover;
+        background-position: center;
+        opacity: 0.4;
+        z-index: 1;
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 2;
+        text-align: center;
+        max-w-4xl;
+        animation: fadeInUp 1s ease 0.2s both;
+    }
+
+    .hero-title {
+        font-size: 4.5rem;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        background: linear-gradient(135deg, #00B4FC 0%, #17F9FF 50%, #00B4FC 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 1.5rem;
+        animation: fadeInDown 1s ease 0.3s both;
+    }
+
+    .hero-subtitle {
+        font-size: 1.5rem;
+        color: rgba(232, 240, 254, 0.85);
+        margin-bottom: 2.5rem;
+        font-weight: 300;
+        letter-spacing: 0.5px;
+        animation: fadeInUp 1s ease 0.4s both;
+    }
+
+    .cta-button {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 1rem 2.5rem;
+        background: linear-gradient(135deg, #00B4FC 0%, #005BC5 100%);
+        color: #001449;
+        font-weight: 700;
+        font-size: 1.1rem;
+        border-radius: 12px;
+        text-decoration: none;
+        transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        box-shadow: 0 10px 40px rgba(0, 180, 252, 0.3);
+        animation: fadeInUp 1s ease 0.5s both;
+        border: 2px solid transparent;
+    }
+
+    .cta-button:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 20px 60px rgba(0, 180, 252, 0.5);
+        background: linear-gradient(135deg, #17F9FF 0%, #00B4FC 100%);
+    }
+
+    .cta-button:active {
+        transform: translateY(-2px);
+    }
+
+    /* Features section */
+    .features-section {
+        padding: 6rem 2rem;
+        background: linear-gradient(180deg, #001449 0%, #012677 100%);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .features-section::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        right: -10%;
+        width: 500px;
+        height: 500px;
+        background: radial-gradient(circle, rgba(0, 180, 252, 0.1) 0%, transparent 70%);
+        border-radius: 50%;
+        animation: float 6s ease-in-out infinite;
+    }
+
+    .features-section::after {
+        content: '';
+        position: absolute;
+        bottom: -50%;
+        left: -10%;
+        width: 500px;
+        height: 500px;
+        background: radial-gradient(circle, rgba(23, 249, 255, 0.08) 0%, transparent 70%);
+        border-radius: 50%;
+        animation: float 8s ease-in-out infinite reverse;
+    }
+
+    .section-title {
+        text-align: center;
+        margin-bottom: 4rem;
+        animation: fadeInUp 1s ease both;
+    }
+
+    .section-title h2 {
+        font-size: 3rem;
+        font-weight: 800;
+        color: #E8F0FE;
+        margin-bottom: 1rem;
+        letter-spacing: -0.02em;
+    }
+
+    .section-title p {
+        font-size: 1.2rem;
+        color: rgba(232, 240, 254, 0.7);
+        max-width: 600px;
+        margin: 0 auto;
+        font-weight: 300;
+    }
+
+    .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+        position: relative;
+        z-index: 2;
+    }
+
+    .feature-card {
+        background: linear-gradient(135deg, rgba(0, 91, 197, 0.15) 0%, rgba(0, 180, 252, 0.08) 100%);
+        border: 1px solid rgba(0, 180, 252, 0.3);
+        border-radius: 16px;
+        padding: 2.5rem;
+        transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        backdrop-filter: blur(10px);
+        animation: fadeInUp 1s ease both;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .feature-card:nth-child(1) {
+        animation-delay: 0.1s;
+    }
+
+    .feature-card:nth-child(2) {
+        animation-delay: 0.2s;
+    }
+
+    .feature-card:nth-child(3) {
+        animation-delay: 0.3s;
+    }
+
+    .feature-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(23, 249, 255, 0.2), transparent);
+        transition: left 0.5s ease;
+    }
+
+    .feature-card:hover::before {
+        left: 100%;
+    }
+
+    .feature-card:hover {
+        transform: translateY(-12px);
+        border-color: rgba(0, 180, 252, 0.6);
+        background: linear-gradient(135deg, rgba(0, 91, 197, 0.25) 0%, rgba(0, 180, 252, 0.15) 100%);
+        box-shadow: 0 20px 60px rgba(0, 180, 252, 0.2);
+    }
+
+    .feature-image {
+        width: 100%;
+        height: 200px;
+        border-radius: 12px;
+        margin-bottom: 1.5rem;
+        object-fit: cover;
+        transition: transform 0.4s ease;
+    }
+
+    .feature-card:hover .feature-image {
+        transform: scale(1.05);
+    }
+
+    .feature-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #E8F0FE;
+        margin-bottom: 0.75rem;
+        letter-spacing: -0.01em;
+    }
+
+    .feature-description {
+        font-size: 0.95rem;
+        color: rgba(232, 240, 254, 0.75);
+        line-height: 1.6;
+        font-weight: 300;
+    }
+
+    /* CTA section */
+    .cta-section {
+        padding: 6rem 2rem;
+        text-align: center;
+        background: linear-gradient(135deg, #012677 0%, #001449 100%);
+        position: relative;
+        overflow: hidden;
+        animation: fadeInUp 1s ease both;
+    }
+
+    .cta-section::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 600px;
+        height: 600px;
+        background: radial-gradient(circle, rgba(0, 180, 252, 0.15) 0%, transparent 70%);
+        border-radius: 50%;
+        animation: pulse-soft 4s ease-in-out infinite;
+    }
+
+    .cta-content {
+        position: relative;
+        z-index: 2;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .cta-title {
+        font-size: 2.5rem;
+        font-weight: 800;
+        color: #E8F0FE;
+        margin-bottom: 1rem;
+        letter-spacing: -0.02em;
+    }
+
+    .cta-description {
+        font-size: 1.1rem;
+        color: rgba(232, 240, 254, 0.75);
+        margin-bottom: 2rem;
+        font-weight: 300;
+    }
+
+    .button-group {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+        animation: fadeInUp 1s ease 0.2s both;
+    }
+
+    .secondary-button {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.875rem 2rem;
+        background: transparent;
+        color: #00B4FC;
+        font-weight: 600;
+        font-size: 1rem;
+        border-radius: 12px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        border: 2px solid rgba(0, 180, 252, 0.5);
+    }
+
+    .secondary-button:hover {
+        background: rgba(0, 180, 252, 0.1);
+        border-color: rgba(0, 180, 252, 0.8);
+        transform: translateY(-2px);
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+        .hero-title {
+            font-size: 2.5rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1.1rem;
+        }
+
+        .section-title h2 {
+            font-size: 2rem;
+        }
+
+        .cta-title {
+            font-size: 1.8rem;
+        }
+
+        .button-group {
+            flex-direction: column;
+        }
+
+        .cta-button, .secondary-button {
+            width: 100%;
+            justify-content: center;
+        }
+    }
+
+    /* Smooth scroll behavior */
+    html {
+        scroll-behavior: smooth;
+    }
+
+    /* Text selection styling */
+    ::selection {
+        background: rgba(0, 180, 252, 0.3);
+        color: #E8F0FE;
+    }
+</style>
+
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="hero-content">
+        <h1 class="hero-title">Welcome to Digital Education</h1>
+        <p class="hero-subtitle">Transform your learning journey with cutting-edge interactive education</p>
+        <a href="{{ url_for('courses.tree') }}" class="cta-button">
+            Explore Now
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+        </a>
     </div>
-    <div class="p-6 rounded-lg" style="background: var(--bg-card); border: 1px solid var(--border);">
-        <i class="lucide lucide-terminal text-3xl mb-3" style="color: var(--primary-mid);"></i>
-        <h3 class="text-lg font-semibold mb-2">Hands-on Workshops</h3>
-        <p class="text-sm" style="color: var(--text-muted);">Interactive command-based learning with step validation.</p>
+</section>
+
+<!-- Features Section -->
+<section class="features-section">
+    <div class="section-title">
+        <h2>Exceptional Learning Experience</h2>
+        <p>Discover a platform designed for modern education with premium features</p>
     </div>
-    <div class="p-6 rounded-lg" style="background: var(--bg-card); border: 1px solid var(--border);">
-        <i class="lucide lucide-code-2 text-3xl mb-3" style="color: var(--primary-mid);"></i>
-        <h3 class="text-lg font-semibold mb-2">Practical Projects</h3>
-        <p class="text-sm" style="color: var(--text-muted);">Code in the browser with live preview and instructor review.</p>
+
+    <div class="features-grid">
+        <!-- Feature 1: Modular Notes -->
+        <div class="feature-card">
+            <img src="{{ url_for('static', filename='img/feature-1.jpg') }}" alt="Modular Notes" class="feature-image">
+            <h3 class="feature-title">Comprehensive Learning Materials</h3>
+            <p class="feature-description">Access expertly curated educational content with integrated assessments and competency tracking for personalized learning paths.</p>
+        </div>
+
+        <!-- Feature 2: Hands-on Workshops -->
+        <div class="feature-card">
+            <img src="{{ url_for('static', filename='img/feature-2.jpg') }}" alt="Hands-on Workshops" class="feature-image">
+            <h3 class="feature-title">Interactive Workshops</h3>
+            <p class="feature-description">Engage with practical, hands-on learning experiences that validate your progress and build real-world skills.</p>
+        </div>
+
+        <!-- Feature 3: Practical Projects -->
+        <div class="feature-card">
+            <img src="{{ url_for('static', filename='img/feature-3.jpg') }}" alt="Practical Projects" class="feature-image">
+            <h3 class="feature-title">Real-World Projects</h3>
+            <p class="feature-description">Apply your knowledge through practical projects with live feedback and professional review from industry experts.</p>
+        </div>
     </div>
-</div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+    <div class="cta-content">
+        <h2 class="cta-title">Ready to Begin Your Journey?</h2>
+        <p class="cta-description">Join thousands of learners advancing their careers through premium digital education</p>
+        <div class="button-group">
+            <a href="{{ url_for('courses.tree') }}" class="cta-button">
+                Start Learning
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+            </a>
+            {% if not current_user.is_authenticated %}
+            <a href="{{ url_for('auth.register') }}" class="secondary-button">
+                Create Account
+            </a>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
 {% endblock %}
