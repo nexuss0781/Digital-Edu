@@ -1,3 +1,4 @@
+import markdown
 from flask import Blueprint, render_template, jsonify, flash, redirect, url_for
 from flask_login import current_user
 from ..services.course_parser import (
@@ -6,6 +7,30 @@ from ..services.course_parser import (
 )
 from ..services.assessment_parser import parse_content, get_assessment_mode
 from ..models.progress import Progress
+
+MD_EXTENSIONS = [
+    'tables',
+    'fenced_code',
+    'codehilite',
+    'toc',
+    'attr_list',
+    'md_in_html',
+    'sane_lists',
+    'smarty',
+]
+
+
+def _render_markdown(text):
+    if not text:
+        return ''
+    return markdown.markdown(
+        text,
+        extensions=MD_EXTENSIONS,
+        extension_configs={
+            'codehilite': {'css_class': 'highlight', 'linenums': False},
+            'toc': {'permalink': False},
+        },
+    )
 
 courses_bp = Blueprint('courses', __name__, url_prefix='/courses')
 
@@ -36,7 +61,7 @@ def tree():
             user_id=current_user.id, completed=True
         ).all()
         completed_ids = [p.content_id for p in completed]
-    locked_ids = _compute_locked(course_tree, completed_ids)
+    locked_ids = list(_compute_locked(course_tree, completed_ids))
     return render_template('pages/courses.html', tree=course_tree, completed_ids=completed_ids, locked_ids=locked_ids)
 
 
@@ -63,6 +88,7 @@ def view(content_id):
 
     assessments = parse_content(content.get('type', 'note'), content.get('body', ''))
     breadcrumb = get_breadcrumb(content_id)
+    content['rendered_body'] = _render_markdown(content.get('body', ''))
     return render_template('pages/content_viewer.html', content=content, assessments=assessments, breadcrumb=breadcrumb)
 
 

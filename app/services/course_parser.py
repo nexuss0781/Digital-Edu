@@ -1,6 +1,6 @@
 import os
 import re
-import fnmatch
+import time
 from datetime import datetime, timedelta
 import yaml
 from flask import current_app
@@ -9,73 +9,27 @@ from .assessment_parser import normalize_type
 FRONT_MATTER_RE = re.compile(r'^---\s*\n(.*?)\n---\s*\n(.*)', re.DOTALL)
 
 STRUCTURE_FILE = 'course_structure.yaml'
-COURSEIGNORE_FILE = '.courseignore'
+METADATA_FILE = 'course_metadata.yaml'
+SIGNAL_FILE = '.structure_updated'
 
+_cache = {'tree': None, 'yaml_mtime': 0.0}
 
-# ---------- .courseignore support ----------
-
-def load_courseignore(base_path):
-    path = os.path.join(base_path, COURSEIGNORE_FILE)
-    if not os.path.exists(path):
-        return []
-    patterns = []
-    with open(path, 'r') as f:
-        for line in f:
-            line = line.strip()
-            if not line or line.startswith('#'):
-                continue
-            patterns.append(line)
-    return patterns
-
-
-def is_ignored(rel_path, base_path, ignore_patterns):
-    if not ignore_patterns:
-        return False
-
-    norm = rel_path.replace('\\', '/')
-
-    for pattern in ignore_patterns:
-        norm_pattern = pattern.rstrip('/')
-
-        # Exact match (file or dir)
-        if fnmatch.fnmatch(norm, norm_pattern):
-            return True
-
-        # Pattern is a directory (ends with / originally)
-        if pattern.endswith('/'):
-            # Check if path starts with this directory
-            if norm == norm_pattern or norm.startswith(norm_pattern + '/'):
-                return True
-            # Check if any component matches
-            parts = norm.split('/')
-            for part in parts:
-                if fnmatch.fnmatch(part, norm_pattern):
-                    return True
-
-        # Pattern is a glob — match against each component
-        parts = norm.split('/')
-        for part in parts:
-            if fnmatch.fnmatch(part, pattern):
-                return True
-
-    return False
 
 def parse_front_matter(filepath):
-    with open(filepath, 'r', encoding='utf-8') as f:
-        content = f.read()
-
+    try:
+        with open(filepath, 'r', encoding='utf-8') as f:
+            content = f.read()
+    except (UnicodeDecodeError, OSError):
+        return {}, ''
     match = FRONT_MATTER_RE.match(content)
     if not match:
         return {'type': 'note'}, content
-
     try:
         meta = yaml.safe_load(match.group(1))
     except yaml.YAMLError:
         meta = {}
-
     if meta is None:
         meta = {}
-
     return meta, match.group(2)
 
 
@@ -105,99 +59,144 @@ def name_to_title(name):
     return name
 
 
-def load_structure():
-    courses_dir = current_app.config['COURSES_DIR']
-    struct_path = os.path.join(courses_dir, STRUCTURE_FILE)
-    if os.path.exists(struct_path):
-        with open(struct_path, 'r') as f:
+# ---------- YAML tree cache (written by monitor_structure.py) ----------
+
+def _tree_path():
+    return os.path.join(current_app.config['COURSES_DIR'], STRUCTURE_FILE)
+
+
+def _signal_path():
+    return os.path.join(current_app.config['COURSES_DIR'], SIGNAL_FILE)
+
+
+def _metadata_path():
+    return os.path.join(current_app.config['COURSES_DIR'], METADATA_FILE)
+
+
+def _read_yaml(path):
+    if not os.path.exists(path):
+        return {}
+    try:
+        with open(path, 'r') as f:
             return yaml.safe_load(f) or {}
-    return {}
+    except (yaml.YAMLError, OSError):
+        return {}
+
+
+def _write_yaml(path, data):
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, 'w') as f:
+        yaml.dump(data, f, default_flow_style=False, allow_unicode=True)
+
+
+def _signal_mtime():
+    sp = _signal_path()
+    if os.path.exists(sp):
+        try:
+            return os.path.getmtime(sp)
+        except OSError:
+            return 0.0
+    return 0.0
+
+
+# ---------- metadata overlay (admin-managed locks, prerequisites, etc.) ----------
+
+def load_structure():
+    return _read_yaml(_metadata_path())
 
 
 def save_structure(data):
-    courses_dir = current_app.config['COURSES_DIR']
-    os.makedirs(courses_dir, exist_ok=True)
-    struct_path = os.path.join(courses_dir, STRUCTURE_FILE)
-    with open(struct_path, 'w') as f:
-        yaml.dump(data, f, default_flow_style=False)
+    _write_yaml(_metadata_path(), data)
 
 
-def scan_directory(base_path, rel_path='', depth=0):
-    entries = []
-    full_path = os.path.join(base_path, rel_path)
+# ---------- tree cache ----------
 
-    if not os.path.exists(full_path):
+def load_tree_cache():
+    global _cache
+    tree = _read_yaml(_tree_path())
+    if isinstance(tree, list):
+        _cache['tree'] = tree
+    else:
+        _cache['tree'] = []
+    _cache['yaml_mtime'] = _signal_mtime()
+    return _cache['tree']
+
+
+def invalidate_cache():
+    global _cache
+    _cache = {'tree': None, 'yaml_mtime': 0.0}
+
+
+def _ensure_cache():
+    global _cache
+    sig_mtime = _signal_mtime()
+    if _cache['tree'] is None or sig_mtime != _cache['yaml_mtime']:
+        load_tree_cache()
+    return _cache['tree']
+
+
+def _merge_metadata(entries, metadata):
+    if not metadata:
         return entries
-
-    ignore_patterns = load_courseignore(base_path)
-    names = sorted(os.listdir(full_path), key=get_sort_key)
-    structure = load_structure()
-
-    for name in names:
-        entry_path = os.path.join(rel_path, name)
-        full_entry_path = os.path.join(base_path, entry_path)
-
-        # Skip entries matching .courseignore patterns
-        rel_for_ignore = name if depth == 0 else entry_path.replace('\\', '/')
-        if is_ignored(rel_for_ignore, base_path, ignore_patterns):
-            continue
-
-        content_id = path_to_id(entry_path)
-        title = name_to_title(name)
-        config = structure.get(content_id, {})
-
-        if os.path.isdir(full_entry_path):
-            children = scan_directory(base_path, entry_path, depth + 1)
-            hidden = config.get('hidden', False)
-            if hidden and not children:
-                continue
-            entries.append({
-                'name': name,
-                'path': entry_path,
-                'type': 'category',
-                'id': content_id,
-                'title': config.get('title', title),
-                'sort_key': get_sort_key(name),
-                'children': children,
-                'config': config,
-                'depth': depth,
-                'hidden': hidden,
-            })
-        elif name.endswith('.md'):
-            meta, body = parse_front_matter(full_entry_path)
-            ctype = normalize_type(meta.get('type', 'note'))
-            hidden = config.get('hidden', False)
-            if hidden:
-                continue
-            entries.append({
-                'name': name,
-                'path': entry_path,
-                'type': ctype,
-                'id': config.get('id', meta.get('id', content_id)),
-                'title': config.get('title', meta.get('title', title)),
-                'sort_key': get_sort_key(name),
-                'body': body,
-                'meta': meta,
-                'config': config,
-                'prerequisites': config.get('prerequisites', []),
-                'min_errors': meta.get('min_errors'),
-                'lock_type': config.get('lock_type'),
-                'lock_value': config.get('lock_value'),
-                'hidden': hidden,
-                'depth': depth,
-            })
-
-    entries.sort(key=lambda e: e['sort_key'])
-    return entries
+    for entry in entries:
+        cid = entry.get('id', '')
+        config = metadata.get(cid, {})
+        if config:
+            if 'title' in config:
+                entry['title'] = config['title']
+            if 'hidden' in config:
+                entry['hidden'] = config['hidden']
+            if 'image' in config:
+                entry['image'] = config['image']
+            if 'description' in config:
+                entry['description'] = config['description']
+            if 'prerequisites' in config:
+                entry['prerequisites'] = config['prerequisites']
+            if 'lock_type' in config:
+                entry['lock_type'] = config['lock_type']
+            if 'lock_value' in config:
+                entry['lock_value'] = config['lock_value']
+            entry['config'] = config
+        else:
+            entry['config'] = config
+        if 'children' in entry:
+            _merge_metadata(entry['children'], metadata)
+            if entry.get('hidden'):
+                entry['children'] = [c for c in entry['children'] if not c.get('hidden')]
 
 
 def get_course_tree():
-    courses_dir = current_app.config['COURSES_DIR']
-    return scan_directory(courses_dir)
+    tree = _ensure_cache()
+    if not tree:
+        return []
+    import copy
+    merged = copy.deepcopy(tree)
+    metadata = load_structure()
+    _merge_metadata(merged, metadata)
+    merged = [e for e in merged if not e.get('hidden')]
+    _mark_category_types(merged)
+    return merged
+
+
+def _mark_category_types(entries, depth=0):
+    for entry in entries:
+        if entry.get('type') != 'category':
+            continue
+        children = entry.get('children', [])
+        subcats = [c for c in children if c.get('type') == 'category']
+        if depth == 0:
+            entry['category_type'] = 'parent'
+        elif subcats:
+            entry['category_type'] = 'category'
+        else:
+            entry['category_type'] = 'subcategory'
+        if children:
+            _mark_category_types(children, depth + 1)
 
 
 def get_breadcrumb(content_id):
-    tree = get_course_tree()
+    tree = _ensure_cache()
+
     def walk(entries, path):
         for e in entries:
             current_path = path + [{'id': e.get('id'), 'name': e.get('name'), 'title': e.get('title') or e.get('name')}]
@@ -208,11 +207,28 @@ def get_breadcrumb(content_id):
                 if result:
                     return result
         return None
+
     result = walk(tree, [])
     return result[:-1] if result else []
 
 
+def _load_body_for_entry(entry):
+    if entry.get('type') == 'category' or not entry.get('path', '').endswith('.md'):
+        return entry
+    courses_dir = current_app.config['COURSES_DIR']
+    filepath = os.path.join(courses_dir, entry['path'])
+    if os.path.exists(filepath):
+        meta, body = parse_front_matter(filepath)
+        entry['body'] = body
+        entry['meta'] = meta
+        if 'min_errors' in meta:
+            entry['min_errors'] = meta['min_errors']
+    return entry
+
+
 def get_content_by_id(content_id):
+    tree = _ensure_cache()
+
     def search(entries):
         for entry in entries:
             if entry.get('id') == content_id:
@@ -223,8 +239,18 @@ def get_content_by_id(content_id):
                     return result
         return None
 
-    tree = get_course_tree()
-    return search(tree)
+    result = search(tree)
+    if result:
+        result = dict(result)
+        _load_body_for_entry(result)
+        metadata = load_structure()
+        cid = result.get('id', '')
+        config = metadata.get(cid, {})
+        result['config'] = config
+        result.setdefault('prerequisites', config.get('prerequisites', []))
+        result.setdefault('lock_type', config.get('lock_type'))
+        result.setdefault('lock_value', config.get('lock_value'))
+    return result
 
 
 def check_prerequisites(content_id, completed_ids):
@@ -285,7 +311,7 @@ def check_item_locked(config):
 
 
 def build_structure_index():
-    tree = get_course_tree()
+    tree = _ensure_cache()
     index = {}
 
     def walk(entries, parent_id=''):
@@ -306,18 +332,24 @@ def build_structure_index():
 
 
 def capture_structure():
-    index = build_structure_index()
-    structure = {}
-    for cid, info in index.items():
-        structure[cid] = {
-            'title': info['title'],
-            'type': info['type'],
-            'path': info['path'],
-            'parent_id': info['parent_id'],
-            'prerequisites': [],
-            'hidden': False,
-            'lock_type': None,
-            'lock_value': None,
-        }
-    save_structure(structure)
-    return structure
+    from monitor_structure import scan_courses, save_tree as _save_tree
+    courses_dir = current_app.config['COURSES_DIR']
+    tree = scan_courses(courses_dir)
+    _save_tree(tree, courses_dir)
+    invalidate_cache()
+    return build_structure_index()
+
+
+def get_all_content_ids():
+    tree = _ensure_cache()
+    ids = set()
+
+    def walk(entries):
+        for e in entries:
+            if e.get('type') not in ('category',):
+                ids.add(e['id'])
+            if 'children' in e:
+                walk(e['children'])
+
+    walk(tree)
+    return ids

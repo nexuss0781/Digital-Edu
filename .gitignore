@@ -19,3 +19,11 @@ instance/
 # OS
 .DS_Store
 Thumbs.db
+
+# Course content & vendor assets
+courses/
+static/vendor/
+
+# IDE / misc
+.obsidian/
+output.txt

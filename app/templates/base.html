@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Digital Education{% endblock %}</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lucide-static@latest/font/lucide.css">
+    <script src="{{ url_for('static', filename='vendor/tailwindcss/tailwind.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='vendor/lucide/lucide.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}?v=1">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="{{ url_for('static', filename='vendor/fonts/fonts.css') }}" rel="stylesheet">
     <style>
         :root {
             --c1: #001449;
@@ -113,6 +113,7 @@
         .dark nav { border-bottom: 1px solid #003088 !important; }
         .dark footer { border-top: 1px solid #003088 !important; }
     </style>
+    {% block styles %}{% endblock %}
 </head>
 <body class="min-h-screen flex flex-col">
     <style>
@@ -265,6 +266,10 @@
         function showLoader(){ if(loader) { loader.style.display='flex'; loader.style.opacity='1'; } }
         function hideLoader(){ if(loader) { loader.style.transition='opacity 0.3s ease'; loader.style.opacity='0'; setTimeout(function(){ if(loader.parentNode) loader.style.display='none'; }, 300); } }
         function navigate(url){
+            if (url.indexOf('/courses/') !== -1 && url.indexOf('/api/') === -1) {
+                window.location.href = url;
+                return;
+            }
             showLoader();
             fetch(url).then(function(r){ return r.text(); }).then(function(html){
                 var tmp = document.createElement('div'); tmp.innerHTML = html;

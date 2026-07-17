@@ -1,4 +1,5 @@
 import os
+import atexit
 from flask import Flask, flash, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, current_user
@@ -10,6 +11,22 @@ db = SQLAlchemy()
 login_manager = LoginManager()
 sess = Session()
 migrate = Migrate()
+
+_observer = None
+
+
+def _start_course_watcher(courses_dir):
+    global _observer
+    try:
+        import sys
+        sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+        from monitor_structure import scan_courses, start_watching
+        scan_courses(courses_dir)
+        _observer = start_watching(courses_dir)
+        atexit.register(lambda: _observer.stop() if _observer else None)
+        print(f'[course-watcher] Watching {courses_dir}')
+    except Exception as e:
+        print(f'[course-watcher] Failed to start: {e}')
 
 
 def create_app(config_class=Config):
@@ -46,7 +63,7 @@ def create_app(config_class=Config):
         from . import models
         db.create_all()
         from .services import course_parser
-        if course_parser.load_structure() == {}:
-            course_parser.capture_structure()
+        course_parser.load_tree_cache()
+        _start_course_watcher(application.config['COURSES_DIR'])
 
     return application
