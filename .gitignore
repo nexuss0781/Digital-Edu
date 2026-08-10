@@ -19,10 +19,13 @@ instance/
 # OS
 .DS_Store
 Thumbs.db
+*.swp
 
-# Course content & vendor assets
-courses/
+# Vendor assets
 static/vendor/
+
+# Course runtime artifacts
+courses/.structure_updated
 
 # IDE / misc
 .obsidian/

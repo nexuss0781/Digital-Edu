@@ -1,0 +1,730 @@
+responsive-web-design:
+  image: /static/images/course-responsive-design.jpg
+  lock_type: null
+responsive-web-design/-computers:
+  hidden: true
+  lock_type: null
+responsive-web-design/-computers/-computer-basics:
+  hidden: true
+  lock_type: null
+responsive-web-design/-css:
+  lock_type: null
+responsive-web-design/-css/-absolute-and-relative-units:
+  lock_type: null
+responsive-web-design/-css/-attribute-selectors:
+  lock_type: null
+responsive-web-design/-css/-basic-css:
+  lock_type: null
+responsive-web-design/-css/-css-and-accessibility:
+  lock_type: null
+responsive-web-design/-css/-css-animations:
+  lock_type: null
+responsive-web-design/-css/-css-box-model:
+  lock_type: null
+responsive-web-design/-css/-css-colors:
+  lock_type: null
+responsive-web-design/-css/-css-flexbox:
+  lock_type: null
+responsive-web-design/-css/-css-grid:
+  lock_type: null
+responsive-web-design/-css/-css-positioning:
+  lock_type: null
+responsive-web-design/-css/-css-typography:
+  lock_type: null
+responsive-web-design/-css/-css-variables:
+  lock_type: null
+responsive-web-design/-css/-design-for-developers:
+  lock_type: null
+responsive-web-design/-css/-lab-book-inventory-app:
+  lock_type: null
+responsive-web-design/-css/-lab-page-of-playing-cards:
+  lock_type: null
+responsive-web-design/-css/-lab-product-landing-page:
+  lock_type: null
+responsive-web-design/-css/-lab-technical-documentation-page:
+  lock_type: null
+responsive-web-design/-css/-pseudo-classes-and-elements:
+  lock_type: null
+responsive-web-design/-css/-responsive-design:
+  lock_type: null
+responsive-web-design/-css/-review-css:
+  lock_type: null
+responsive-web-design/-css/-styling-forms:
+  lock_type: null
+responsive-web-design/-css/-styling-forms/-lecture-best-practices-for-styling-forms:
+  lock_type: null
+responsive-web-design/-html:
+  lock_type: null
+responsive-web-design/-html/-basic-html:
+  lock_type: null
+responsive-web-design/-html/-html-and-accessibility:
+  lock_type: null
+responsive-web-design/-html/-html-forms-and-tables:
+  lock_type: null
+responsive-web-design/-html/-lab-survey-form:
+  lock_type: null
+responsive-web-design/-html/-review-html:
+  lock_type: null
+responsive-web-design/-html/-semantic-html:
+  lock_type: null
+responsive-web-design/-responsive-web-design-certification-exam:
+  lock_type: null
+responsive-web-design/-responsive-web-design-certification-exam/-responsive-web-design-certification-exam:
+  lock_type: null
+responsive-web-design/assets:
+  hidden: true
+responsive-web-design/assets/pending:
+  hidden: true
+rwd/1.1.23-quiz-basic-html-part1/17914183436900480868:
+  lock_type: null
+rwd/1.1.23-quiz-basic-html-part2/18341265757591262785:
+  lock_type: null
+rwd/1.1.23-quiz-basic-html-part3/771311656290252072:
+  lock_type: null
+rwd/1.1.23-quiz-basic-html-part4/7464254252533403920:
+  lock_type: null
+rwd/1.2.10-quiz-semantic-html-part1/15380476807249688328:
+  lock_type: null
+rwd/1.2.10-quiz-semantic-html-part2/8314713310292647033:
+  lock_type: null
+rwd/1.2.10-quiz-semantic-html-part3/16991194239718938756:
+  lock_type: null
+rwd/1.3.8-quiz-html-tables-and-forms-part1/5664059432126925702:
+  lock_type: null
+rwd/1.3.8-quiz-html-tables-and-forms-part2/2728089386834185285:
+  lock_type: null
+rwd/2.1.5-quiz-computer-basics-part1/18263263436787423635:
+  hidden: true
+  lock_type: null
+rwd/2.1.5-quiz-computer-basics-part2/9453557888857200480:
+  hidden: true
+  lock_type: null
+rwd/3.1.12-quiz-css-backgrounds-and-borders-part1/14979283305599658518:
+  lock_type: null
+rwd/3.1.12-quiz-css-backgrounds-and-borders-part2/16077037630246759306:
+  lock_type: null
+rwd/3.1.6-quiz-basic-css-part1/5356649682451769025:
+  lock_type: null
+rwd/3.1.6-quiz-basic-css-part2/10192917562294893070:
+  lock_type: null
+rwd/3.10.5-quiz-css-typography-part1/13476445078532898022:
+  lock_type: null
+rwd/3.10.5-quiz-css-typography-part2/2391900021757737027:
+  lock_type: null
+rwd/3.12.5-quiz-css-positioning-part1/12727530354435780205:
+  lock_type: null
+rwd/3.12.5-quiz-css-positioning-part2/8167284403742693331:
+  lock_type: null
+rwd/3.15.4-quiz-responsive-web-design-part1/4633991826734574179:
+  lock_type: null
+rwd/3.15.4-quiz-responsive-web-design-part2/12793113336716044909:
+  lock_type: null
+rwd/3.17.5-quiz-css-variables-part1/14772046938799719075:
+  lock_type: null
+rwd/3.17.5-quiz-css-variables-part2/2828472924562209364:
+  lock_type: null
+rwd/3.18.6-quiz-css-grid-part1/15891480122756923557:
+  lock_type: null
+rwd/3.18.6-quiz-css-grid-part2/8841789187398907609:
+  lock_type: null
+rwd/3.2.5-quiz-design-fundamentals-part1/4584166021624724416:
+  lock_type: null
+rwd/3.2.5-quiz-design-fundamentals-part2/10267063120856001733:
+  lock_type: null
+rwd/3.20.7-quiz-css-animations-part1/4266460324313936995:
+  lock_type: null
+rwd/3.20.7-quiz-css-animations-part2/3003831261140842970:
+  lock_type: null
+rwd/3.4.6-quiz-css-pseudo-classes-part1/11349397324242679341:
+  lock_type: null
+rwd/3.4.6-quiz-css-pseudo-classes-part2/14080741654269039640:
+  lock_type: null
+rwd/3.5.5-quiz-css-colors-part1/8689126517815074876:
+  lock_type: null
+rwd/3.5.5-quiz-css-colors-part2/11488658237202597062:
+  lock_type: null
+rwd/3.7.5-quiz-css-layout-and-effects-part1/5987451950266807292:
+  lock_type: null
+rwd/3.7.5-quiz-css-layout-and-effects-part2/3531071708589206862:
+  lock_type: null
+rwd/3.8.6-quiz-css-flexbox-part1/7119511128518103669:
+  lock_type: null
+rwd/3.8.6-quiz-css-flexbox-part2/6584260485397138277:
+  lock_type: null
+rwd/exam-responsive-web-design-certification/68db37350b398ecddd1f5dac:
+  lock_type: null
+rwd/lab-availability-table/66b36358ed4f261d64840c24:
+  lock_type: null
+rwd/lab-blog-post-card/66eaddd04a9e533fba689001:
+  lock_type: null
+rwd/lab-book-catalog-table/66ec4c8e9878d8441956516f:
+  lock_type: null
+rwd/lab-book-inventory-app/66a207974c806a19d6607073:
+  lock_type: null
+rwd/lab-business-card/6690e10ebe2181212abc9652:
+  lock_type: null
+rwd/lab-checkout-page/66da326c02141df538f29ba5:
+  lock_type: null
+rwd/lab-colored-boxes/66f3f6eb66ea9dc41cdc30df:
+  lock_type: null
+rwd/lab-confidential-email-page/66bba6fff611169359d9d36a:
+  lock_type: null
+rwd/lab-contact-form/66f26c32ec6f90df01a44f60:
+  lock_type: null
+rwd/lab-debug-camperbots-profile-page/6823f9df49cc206af5471a30:
+  lock_type: null
+rwd/lab-debug-donation-form/690ddb5e6ee94eb73ed172b0:
+  lock_type: null
+rwd/lab-debug-pet-adoption-page/685239f0cad43c7a909cbd98:
+  lock_type: null
+rwd/lab-event-flyer-page/66e45c8140f9fda5c105ae26:
+  lock_type: null
+rwd/lab-event-hub/66ebd4ae2812430bb883c787:
+  lock_type: null
+rwd/lab-feature-selection/68ce56d54d3cad1149a1c4cf:
+  lock_type: null
+rwd/lab-house-painting/66d6a7a3e1aa411e94bf2346:
+  lock_type: null
+rwd/lab-html-audio-and-video-player/68de40f53fcaf106f51cc20f:
+  lock_type: null
+rwd/lab-job-application-form/66faac4139dbbd5dd632c860:
+  lock_type: null
+rwd/lab-moon-orbit/66a37f37ef5823a313de8c26:
+  lock_type: null
+rwd/lab-movie-review-page/67ef8f695db52583424bd118:
+  lock_type: null
+rwd/lab-multimedia-player/67fccc2463253b213a000142:
+  lock_type: null
+rwd/lab-newspaper-article/66ba762af611169359d9d369:
+  lock_type: null
+rwd/lab-newspaper-layout/6735a7370e0ae93a4577c689:
+  lock_type: null
+rwd/lab-page-of-playing-cards/66be24cb4144f955b6bcc550:
+  lock_type: null
+rwd/lab-personal-portfolio/bd7158d8c242eddfaeb5bd13:
+  lock_type: null
+rwd/lab-pricing-plans-layout/68e45a2b4ab9b2f48b1cc6df:
+  lock_type: null
+rwd/lab-product-landing-page/587d78af367417b2b2512b04:
+  lock_type: null
+rwd/lab-recipe-page/668f08ea07b99b1f4a91acab:
+  lock_type: null
+rwd/lab-stylized-to-do-list/66c051d13a6a20255a963695:
+  lock_type: null
+rwd/lab-survey-form/587d78af367417b2b2512b03:
+  lock_type: null
+rwd/lab-technical-documentation-page/587d78b0367417b2b2512b05:
+  lock_type: null
+rwd/lab-travel-agency-page/669e2f60e83c011754f711f9:
+  lock_type: null
+rwd/lab-tribute-page/bd7158d8c442eddfaeb5bd18:
+  lock_type: null
+rwd/lab-video-compilation-page/669e81368e52b3a5c35a2dc5:
+  lock_type: null
+rwd/lecture-accessible-media-elements/672a55b5c0c14493328fe36e:
+  lock_type: null
+rwd/lecture-accessible-media-elements/672a55dd1d86bc939606e204:
+  lock_type: null
+rwd/lecture-accessible-media-elements/672a55eb7791559421ff0cd3:
+  lock_type: null
+rwd/lecture-accessible-media-elements/672a55fbc2d95a9453151caf:
+  lock_type: null
+rwd/lecture-accessible-tables-forms/672a539b887ec68c593cdc4b:
+  lock_type: null
+rwd/lecture-accessible-tables-forms/672a53ae8f1ad28c8a1ed0f0:
+  lock_type: null
+rwd/lecture-animations-and-accessibility/672aa8d65995be62ef1c7515:
+  lock_type: null
+rwd/lecture-animations-and-accessibility/672cf764cf55a70433590def:
+  lock_type: null
+rwd/lecture-best-practices-for-accessibility-and-css/672aa82768e00d600305afc0:
+  lock_type: null
+rwd/lecture-best-practices-for-accessibility-and-css/672c35a79fa53e00de9f2a49:
+  lock_type: null
+rwd/lecture-best-practices-for-responsive-web-design/672aa8873d4e25618870764f:
+  lock_type: null
+rwd/lecture-best-practices-for-responsive-web-design/672cf05c3ad533eabe1e8197:
+  lock_type: null
+rwd/lecture-best-practices-for-responsive-web-design/672cf06c8f46f9eb04db9832:
+  lock_type: null
+rwd/lecture-best-practices-for-responsive-web-design/672cf07a2b9796eb49719e03:
+  lock_type: null
+rwd/lecture-best-practices-for-styling-forms/672aa791227e755da64cf240:
+  lock_type: null
+rwd/lecture-best-practices-for-styling-forms/672bca660aa9f9ce9b2b2787:
+  lock_type: null
+rwd/lecture-browsing-the-web-effectively/672aa5bd69657d56ab49ec8a:
+  hidden: true
+  lock_type: null
+rwd/lecture-browsing-the-web-effectively/672ac96491845f43ea9a26d7:
+  hidden: true
+  lock_type: null
+rwd/lecture-browsing-the-web-effectively/672ac9705b07a64439b73b59:
+  hidden: true
+  lock_type: null
+rwd/lecture-common-design-tools/672aa7005c24e45bbd53b20d:
+  lock_type: null
+rwd/lecture-common-design-tools/672bb619f0d4538d0528760d:
+  lock_type: null
+rwd/lecture-css-specificity-the-cascade-algorithm-and-inheritance/672aa62178d5ff57fe4f98e0:
+  lock_type: null
+rwd/lecture-css-specificity-the-cascade-algorithm-and-inheritance/672b8e7eca8a4322306d15f8:
+  lock_type: null
+rwd/lecture-css-specificity-the-cascade-algorithm-and-inheritance/672b8e8adcc27e235a154231:
+  lock_type: null
+rwd/lecture-css-specificity-the-cascade-algorithm-and-inheritance/672b8e9892eafe238d6513a5:
+  lock_type: null
+rwd/lecture-css-specificity-the-cascade-algorithm-and-inheritance/672b8ea434ceac23cc90f337:
+  lock_type: null
+rwd/lecture-css-specificity-the-cascade-algorithm-and-inheritance/672b8f1399cabc2406c3227f:
+  lock_type: null
+rwd/lecture-css-specificity-the-cascade-algorithm-and-inheritance/672b8f23511adf25646b4236:
+  lock_type: null
+rwd/lecture-css-specificity-the-cascade-algorithm-and-inheritance/672b8f382370e025aadd3f4e:
+  lock_type: null
+rwd/lecture-debugging-css/672aa8c1ad423562a38b484d:
+  lock_type: null
+rwd/lecture-html-fundamentals/670803abcb3e980233da4768:
+  lock_type: null
+rwd/lecture-html-fundamentals/6708382cf088b216580a9ff1:
+  lock_type: null
+rwd/lecture-html-fundamentals/67083868d5fdcb17bf8c14bd:
+  lock_type: null
+rwd/lecture-html-fundamentals/670838b10ee87a18e5faff62:
+  lock_type: null
+rwd/lecture-importance-of-accessibility-and-good-html-structure/672a51e9e4fd8b8552eeb758:
+  lock_type: null
+rwd/lecture-importance-of-accessibility-and-good-html-structure/672a5310d7e46b8a34d48dfd:
+  lock_type: null
+rwd/lecture-importance-of-accessibility-and-good-html-structure/672a5326a7606a8a766cbedb:
+  lock_type: null
+rwd/lecture-importance-of-accessibility-and-good-html-structure/672a533e6041c28ad680eb8f:
+  lock_type: null
+rwd/lecture-importance-of-accessibility-and-good-html-structure/672a5361ef88158b25fbfba7:
+  lock_type: null
+rwd/lecture-importance-of-accessibility-and-good-html-structure/672a536f8386288b9ed0a154:
+  lock_type: null
+rwd/lecture-importance-of-accessibility-and-good-html-structure/672a537f05f3798bd4f57d2d:
+  lock_type: null
+rwd/lecture-importance-of-accessibility-and-good-html-structure/672a538c029f9e8c1687460e:
+  lock_type: null
+rwd/lecture-importance-of-semantic-html/67298243760ae980de5266db:
+  lock_type: null
+rwd/lecture-importance-of-semantic-html/672985445d7da807c6b4f406:
+  lock_type: null
+rwd/lecture-importance-of-semantic-html/672990ecf71a852804ababe7:
+  lock_type: null
+rwd/lecture-introduction-to-aria/672a53cf67140d8cd85d4b0f:
+  lock_type: null
+rwd/lecture-introduction-to-aria/672a549231b8728f7171ed9d:
+  lock_type: null
+rwd/lecture-introduction-to-aria/672a54a6675c168faa84252d:
+  lock_type: null
+rwd/lecture-introduction-to-aria/672a54bc58319c8fe6f78ad4:
+  lock_type: null
+rwd/lecture-introduction-to-aria/672a551975938a916c74802c:
+  lock_type: null
+rwd/lecture-styling-lists-and-links/672aa6441bcd3758e9f52ae0:
+  lock_type: null
+rwd/lecture-styling-lists-and-links/672b951b1bf78038b1a2a0e7:
+  lock_type: null
+rwd/lecture-styling-lists-and-links/672b952d3a5c603908841971:
+  lock_type: null
+rwd/lecture-styling-lists-and-links/672b9538c25634394ceb7b8f:
+  lock_type: null
+rwd/lecture-understanding-computer-internet-and-tooling-basics/672aa578a2129554d4675049:
+  hidden: true
+  lock_type: null
+rwd/lecture-understanding-computer-internet-and-tooling-basics/672ab82c1a9bbd0e3aabc39d:
+  hidden: true
+  lock_type: null
+rwd/lecture-understanding-computer-internet-and-tooling-basics/672ab83c4297910eade53c2e:
+  hidden: true
+  lock_type: null
+rwd/lecture-understanding-computer-internet-and-tooling-basics/672ab849aa1ef70eefd29364:
+  hidden: true
+  lock_type: null
+rwd/lecture-understanding-computer-internet-and-tooling-basics/672ab8573f32480f192aaae1:
+  hidden: true
+  lock_type: null
+rwd/lecture-understanding-how-html-affects-seo/67083952f800051a8a21fcfd:
+  lock_type: null
+rwd/lecture-understanding-how-html-affects-seo/6708396caa00e11b597b3365:
+  lock_type: null
+rwd/lecture-understanding-how-to-work-with-floats-and-positioning-in-css/672aa86da9937560d3dfe3d6:
+  lock_type: null
+rwd/lecture-understanding-how-to-work-with-floats-and-positioning-in-css/672c3a84fb8d4613776cc99e:
+  lock_type: null
+rwd/lecture-understanding-how-to-work-with-floats-and-positioning-in-css/672c3a8fac7c5613b4bb75de:
+  lock_type: null
+rwd/lecture-understanding-how-to-work-with-floats-and-positioning-in-css/672c3a9d32c56113fcaedf24:
+  lock_type: null
+rwd/lecture-understanding-how-to-work-with-floats-and-positioning-in-css/672c3aa9bc3a481425cb52b3:
+  lock_type: null
+rwd/lecture-understanding-html-attributes/66f6db08d55022680a3cfbc9:
+  lock_type: null
+rwd/lecture-understanding-html-attributes/6708143cab2b583ecd3324f5:
+  lock_type: null
+rwd/lecture-understanding-nuanced-semantic-elements/6729959bf9c8e835f46b3f78:
+  lock_type: null
+rwd/lecture-understanding-nuanced-semantic-elements/672995ac85fd943657c2ede5:
+  lock_type: null
+rwd/lecture-understanding-nuanced-semantic-elements/672995bda6c67e369aaf8588:
+  lock_type: null
+rwd/lecture-understanding-the-html-boilerplate/670838977810401844af6fe0:
+  lock_type: null
+rwd/lecture-understanding-the-html-boilerplate/670838e914096b194b0c51aa:
+  lock_type: null
+rwd/lecture-understanding-the-html-boilerplate/670839051794aa19fcef6dc8:
+  lock_type: null
+rwd/lecture-user-centered-design/672aa6ee9011775b27e23399:
+  lock_type: null
+rwd/lecture-user-centered-design/672bafd715f6ba77d57f3ec0:
+  lock_type: null
+rwd/lecture-user-centered-design/672bafe4ef812b78696b0e27:
+  lock_type: null
+rwd/lecture-user-centered-design/672baff13bc5b3789691c75c:
+  lock_type: null
+rwd/lecture-user-centered-design/672baffc684be178dd02fa06:
+  lock_type: null
+rwd/lecture-user-centered-design/672bb009952c7a7904a750cb:
+  lock_type: null
+rwd/lecture-user-centered-design/672bb015cfc889794359c4e0:
+  lock_type: null
+rwd/lecture-user-centered-design/672bb02009ffc0797ca567ab:
+  lock_type: null
+rwd/lecture-user-centered-design/672bb02ecb230779bbbaccd9:
+  lock_type: null
+rwd/lecture-user-centered-design/672bb03999f39379f67d8972:
+  lock_type: null
+rwd/lecture-user-centered-design/672bb04476b1997a1da8b79b:
+  lock_type: null
+rwd/lecture-user-interface-design-fundamentals/672aa6c9e379285acca5a2aa:
+  lock_type: null
+rwd/lecture-user-interface-design-fundamentals/672baa97f2990e6631d522e7:
+  lock_type: null
+rwd/lecture-user-interface-design-fundamentals/672baaa62d4b46667a8ac869:
+  lock_type: null
+rwd/lecture-user-interface-design-fundamentals/672baab2a0c3df66ad987b94:
+  lock_type: null
+rwd/lecture-user-interface-design-fundamentals/672baabf16290b66e6b79a39:
+  lock_type: null
+rwd/lecture-user-interface-design-fundamentals/672baacb7f2f446728e77efe:
+  lock_type: null
+rwd/lecture-user-interface-design-fundamentals/672baad7bbc4f86762ca173e:
+  lock_type: null
+rwd/lecture-user-interface-design-fundamentals/672baae11d06c867a16f64e1:
+  lock_type: null
+rwd/lecture-what-is-css/672aa5e1f8b935577acfb2b9:
+  lock_type: null
+rwd/lecture-what-is-css/672acbbe2891564c4e316164:
+  lock_type: null
+rwd/lecture-what-is-css/672acbce8163374c903253c9:
+  lock_type: null
+rwd/lecture-what-is-css/672acbdd06b44c4cd3bf8713:
+  lock_type: null
+rwd/lecture-what-is-css/672acbf7490c054d213a8c1f:
+  lock_type: null
+rwd/lecture-what-is-css/672acc03c257524d6a5151e8:
+  lock_type: null
+rwd/lecture-what-is-css/672acc100d59d24da7b4e09c:
+  lock_type: null
+rwd/lecture-what-is-css/672acc1e24c1e54df5ad89bd:
+  lock_type: null
+rwd/lecture-what-is-css/672acc3f6f3e3c4e31ec3e12:
+  lock_type: null
+rwd/lecture-what-is-css/672acc538e6ef24e9dd3c94f:
+  lock_type: null
+rwd/lecture-working-with-attribute-selectors/672aa840de72b3607bba4bed:
+  lock_type: null
+rwd/lecture-working-with-attribute-selectors/672c37498952920879c43de9:
+  lock_type: null
+rwd/lecture-working-with-attribute-selectors/672c375857128708d04d0e22:
+  lock_type: null
+rwd/lecture-working-with-audio-and-video-elements/67168278ac6df6a799555db5:
+  lock_type: null
+rwd/lecture-working-with-backgrounds-and-borders/672aa669960f6a596081fcad:
+  lock_type: null
+rwd/lecture-working-with-backgrounds-and-borders/672b98be592cfb451f651451:
+  lock_type: null
+rwd/lecture-working-with-backgrounds-and-borders/672b98cd77b6b7456b6ef2de:
+  lock_type: null
+rwd/lecture-working-with-backgrounds-and-borders/672b98db3bcdd545ab3b3c73:
+  lock_type: null
+rwd/lecture-working-with-colors-in-css/672aa7678e05e35d42e33522:
+  lock_type: null
+rwd/lecture-working-with-colors-in-css/672bc4ff5e7a4bbdee8ba013:
+  lock_type: null
+rwd/lecture-working-with-colors-in-css/672bc51370c789be459186b4:
+  lock_type: null
+rwd/lecture-working-with-colors-in-css/672bc523324694be91d90d96:
+  lock_type: null
+rwd/lecture-working-with-colors-in-css/672bc5344330d7bee2f9c2ed:
+  lock_type: null
+rwd/lecture-working-with-colors-in-css/672bc544196a17bf28594e64:
+  lock_type: null
+rwd/lecture-working-with-css-flexbox/672aa7f7284b235f46f7d4e9:
+  lock_type: null
+rwd/lecture-working-with-css-flexbox/672bd658c0e190f674a5e057:
+  lock_type: null
+rwd/lecture-working-with-css-fonts/672aa80bc17f355fabd2e9e8:
+  lock_type: null
+rwd/lecture-working-with-css-fonts/672bd807c49548fc9be66aca:
+  lock_type: null
+rwd/lecture-working-with-css-fonts/672bd814105a0ffcf36f9233:
+  lock_type: null
+rwd/lecture-working-with-css-fonts/672bd81ee07c43fd2070f0fe:
+  lock_type: null
+rwd/lecture-working-with-css-fonts/672bd834cedccefd5939a913:
+  lock_type: null
+rwd/lecture-working-with-css-fonts/672bd8453d1371fdb1510fe5:
+  lock_type: null
+rwd/lecture-working-with-css-fonts/672bd853c985cdfdeb32f4f9:
+  lock_type: null
+rwd/lecture-working-with-css-grid/672aa8ac4631d1623ec5cd86:
+  lock_type: null
+rwd/lecture-working-with-css-grid/673226732b19aa1cacd0a75c:
+  lock_type: null
+rwd/lecture-working-with-css-grid/6732267ecab2151ced471cd4:
+  lock_type: null
+rwd/lecture-working-with-css-grid/6732268d05c3661d32a0fee8:
+  lock_type: null
+rwd/lecture-working-with-css-grid/6732269a7aa2ca1d6b6574fe:
+  lock_type: null
+rwd/lecture-working-with-css-grid/673226a62eb2121da41a3d68:
+  lock_type: null
+rwd/lecture-working-with-css-grid/673226afcd33991dd751937a:
+  lock_type: null
+rwd/lecture-working-with-css-grid/673226b97d4a731e0577ae93:
+  lock_type: null
+rwd/lecture-working-with-css-transforms-overflow-and-filters/672aa7e03c2e365e906e5733:
+  lock_type: null
+rwd/lecture-working-with-css-transforms-overflow-and-filters/672bcc8ccc976fd791610f43:
+  lock_type: null
+rwd/lecture-working-with-css-transforms-overflow-and-filters/672bcc9c4a6dd6d7dd3e6357:
+  lock_type: null
+rwd/lecture-working-with-css-transforms-overflow-and-filters/672bccae6e556cd81cef6af2:
+  lock_type: null
+rwd/lecture-working-with-css-transforms-overflow-and-filters/672bccc8ea33bad87abb3c56:
+  lock_type: null
+rwd/lecture-working-with-css-transforms-overflow-and-filters/672bccdb8f1823d8c60f914c:
+  lock_type: null
+rwd/lecture-working-with-css-transforms-overflow-and-filters/672bccebe1fc82d911c3f078:
+  lock_type: null
+rwd/lecture-working-with-css-variables/672aa8985acb7361e656f94c:
+  lock_type: null
+rwd/lecture-working-with-css-variables/672cf3ca326da9f63683e236:
+  lock_type: null
+rwd/lecture-working-with-file-systems/672aa58c389eb9565978495d:
+  hidden: true
+  lock_type: null
+rwd/lecture-working-with-file-systems/672ac37104dc2530a769e6a4:
+  hidden: true
+  lock_type: null
+rwd/lecture-working-with-file-systems/672ac39a22b0cc30eb8fd65e:
+  hidden: true
+  lock_type: null
+rwd/lecture-working-with-file-systems/672ac3c5d0e9fd31835ff772:
+  hidden: true
+  lock_type: null
+rwd/lecture-working-with-file-systems/672ac3f129efbf327742eb33:
+  hidden: true
+  lock_type: null
+rwd/lecture-working-with-file-systems/672ac403a9ba7732b31c6480:
+  hidden: true
+  lock_type: null
+rwd/lecture-working-with-forms/6729974ec29be33cb00eb54d:
+  lock_type: null
+rwd/lecture-working-with-forms/672a4cd3d59756726657efb8:
+  lock_type: null
+rwd/lecture-working-with-forms/672a4ce6dab9eb735828b48b:
+  lock_type: null
+rwd/lecture-working-with-forms/672a4cf959443073a6774908:
+  lock_type: null
+rwd/lecture-working-with-html-tools/672a4fa7d335bc7cfb63a392:
+  lock_type: null
+rwd/lecture-working-with-html-tools/672a511bb408ec81c592eb68:
+  lock_type: null
+rwd/lecture-working-with-images-and-svgs/67167835def3588873f339c6:
+  lock_type: null
+rwd/lecture-working-with-images-and-svgs/6716823876aa22a68ba3e2ec:
+  lock_type: null
+rwd/lecture-working-with-images-and-svgs/6716825aff3434a71fdc3e99:
+  lock_type: null
+rwd/lecture-working-with-links/6716744f7245947a3dd60009:
+  lock_type: null
+rwd/lecture-working-with-links/671682dd88e461a8e2620f38:
+  lock_type: null
+rwd/lecture-working-with-links/6716830dbaf95da9564f2e3b:
+  lock_type: null
+rwd/lecture-working-with-links/67168323932391a9ee0d3a9e:
+  lock_type: null
+rwd/lecture-working-with-media/6716743531fc9a797351c21e:
+  lock_type: null
+rwd/lecture-working-with-media/671682b3983489a819507553:
+  lock_type: null
+rwd/lecture-working-with-pseudo-classes-and-pseudo-elements-in-css/672aa74f761c065c9828a95e:
+  lock_type: null
+rwd/lecture-working-with-pseudo-classes-and-pseudo-elements-in-css/672bbe9171a5cca90f2edeea:
+  lock_type: null
+rwd/lecture-working-with-pseudo-classes-and-pseudo-elements-in-css/672bbe9d6ec03ea954d92ff7:
+  lock_type: null
+rwd/lecture-working-with-pseudo-classes-and-pseudo-elements-in-css/672bbeaa5afdc5a98d5ab8ff:
+  lock_type: null
+rwd/lecture-working-with-pseudo-classes-and-pseudo-elements-in-css/672bbeb6eefd7ca9c003ea00:
+  lock_type: null
+rwd/lecture-working-with-pseudo-classes-and-pseudo-elements-in-css/672bbec3b86dbdaa07a5a5be:
+  lock_type: null
+rwd/lecture-working-with-pseudo-classes-and-pseudo-elements-in-css/672bbed37c6f51aa3a15e78c:
+  lock_type: null
+rwd/lecture-working-with-relative-and-absolute-units/672aa7194614b55c16b879a1:
+  lock_type: null
+rwd/lecture-working-with-relative-and-absolute-units/672bb7d659f0089377a91eab:
+  lock_type: null
+rwd/lecture-working-with-relative-and-absolute-units/672bb7f08b58df93ed2a8768:
+  lock_type: null
+rwd/lecture-working-with-relative-and-absolute-units/672bb83c3a9906945536cff2:
+  lock_type: null
+rwd/lecture-working-with-relative-and-absolute-units/672bb851b068e3954a05b9b1:
+  lock_type: null
+rwd/lecture-working-with-specialized-semantic-elements/672995ffdfd2f337f5f215f8:
+  lock_type: null
+rwd/lecture-working-with-specialized-semantic-elements/6729960ed6e2ca3825940e97:
+  lock_type: null
+rwd/lecture-working-with-specialized-semantic-elements/6729963b1ab11638753cf082:
+  lock_type: null
+rwd/lecture-working-with-tables/672a4e04a24858778f57ebfe:
+  lock_type: null
+rwd/lecture-working-with-text-and-time-semantic-elements/672995c9e6f69436dbcccc79:
+  lock_type: null
+rwd/lecture-working-with-text-and-time-semantic-elements/672995d673bd3237200b9e7c:
+  lock_type: null
+rwd/lecture-working-with-text-and-time-semantic-elements/672995e43674fb3775b9ec5d:
+  lock_type: null
+rwd/lecture-working-with-text-and-time-semantic-elements/672995f16ed97837b365a9f6:
+  lock_type: null
+rwd/quiz-css-accessibility/66ed8fc1f45ce3ece4053ead:
+  lock_type: null
+rwd/quiz-css-attribute-selectors/66ed8fd0f45ce3ece4053eaf:
+  lock_type: null
+rwd/quiz-css-relative-and-absolute-units/66ed9009f45ce3ece4053eb7:
+  lock_type: null
+rwd/quiz-html-accessibility/66ed9026f45ce3ece4053ebb:
+  lock_type: null
+rwd/quiz-styling-forms/66ed9043f45ce3ece4053ebf:
+  lock_type: null
+rwd/review-basic-css/671a887a7e62c75e9ab1ee4a:
+  lock_type: null
+rwd/review-basic-html/67072fc183c7ca6c588feb4d:
+  lock_type: null
+rwd/review-computer-basics/671a87e6dcef5b5bd765e5ed:
+  hidden: true
+  lock_type: null
+rwd/review-css-accessibility/671a955b74ab5588735800d1:
+  lock_type: null
+rwd/review-css-animations/671a999cc77b7f9bceb4caeb:
+  lock_type: null
+rwd/review-css-attribute-selectors/671a95990b86b68961340adc:
+  lock_type: null
+rwd/review-css-backgrounds-and-borders/671a88d636cebc5fbd407b78:
+  lock_type: null
+rwd/review-css-colors/671a90c1cf517678b130419e:
+  lock_type: null
+rwd/review-css-flexbox/671a940c69cdee833d4cc312:
+  lock_type: null
+rwd/review-css-grid/671a99394bedfb9a5bc687c4:
+  lock_type: null
+rwd/review-css-layout-and-effects/671a9311a289ae7fff25d88e:
+  lock_type: null
+rwd/review-css-positioning/671a967424a00e8c6561b182:
+  lock_type: null
+rwd/review-css-pseudo-classes/671a907bad4538752765f2ff:
+  lock_type: null
+rwd/review-css-relative-and-absolute-units/671a8f8350c20a7439015c98:
+  lock_type: null
+rwd/review-css-typography/671a9528fc4f1487cf265444:
+  lock_type: null
+rwd/review-css-variables/671a98fbaabfba994e3d9a7c:
+  lock_type: null
+rwd/review-css/671a9a0a140c2b9d6a75629f:
+  lock_type: null
+rwd/review-design-fundamentals/671a892927fdba60db05edfe:
+  lock_type: null
+rwd/review-html-accessibility/671a87a39b88245a579c2271:
+  lock_type: null
+rwd/review-html-tables-and-forms/671a872c17382a582e455c4c:
+  lock_type: null
+rwd/review-html/671a883163d5ab5d47145880:
+  lock_type: null
+rwd/review-responsive-web-design/671a98927af7829722697dc2:
+  lock_type: null
+rwd/review-semantic-html/671a83934b61f64cefe87a61:
+  lock_type: null
+rwd/review-styling-forms/671a915858de057ad84c5dbd:
+  lock_type: null
+rwd/workshop-accessibility-quiz:
+  lock_type: null
+rwd/workshop-accessible-audio-controller:
+  lock_type: null
+rwd/workshop-balance-sheet:
+  lock_type: null
+rwd/workshop-blog-page:
+  lock_type: null
+rwd/workshop-bookstore-page:
+  lock_type: null
+rwd/workshop-build-a-heart-icon:
+  lock_type: null
+rwd/workshop-build-a-video-display-using-iframe:
+  lock_type: null
+rwd/workshop-cafe-menu:
+  lock_type: null
+rwd/workshop-cat-painting:
+  lock_type: null
+rwd/workshop-cat-photo-app:
+  lock_type: null
+rwd/workshop-city-skyline:
+  lock_type: null
+rwd/workshop-colored-markers:
+  lock_type: null
+rwd/workshop-colorful-boxes:
+  lock_type: null
+rwd/workshop-curriculum-outline:
+  lock_type: null
+rwd/workshop-debug-coding-journey-blog-page:
+  lock_type: null
+rwd/workshop-ferris-wheel:
+  lock_type: null
+rwd/workshop-final-exams-table:
+  lock_type: null
+rwd/workshop-flappy-penguin:
+  lock_type: null
+rwd/workshop-flexbox-photo-gallery:
+  lock_type: null
+rwd/workshop-game-settings-panel:
+  lock_type: null
+rwd/workshop-greeting-card:
+  lock_type: null
+rwd/workshop-hotel-feedback-form:
+  lock_type: null
+rwd/workshop-html-music-player:
+  lock_type: null
+rwd/workshop-html-video-player:
+  lock_type: null
+rwd/workshop-magazine:
+  lock_type: null
+rwd/workshop-major-browsers-list:
+  lock_type: null
+rwd/workshop-nutritional-label:
+  lock_type: null
+rwd/workshop-parent-teacher-conference-form:
+  lock_type: null
+rwd/workshop-piano:
+  lock_type: null
+rwd/workshop-quincys-job-tips:
+  lock_type: null
+rwd/workshop-registration-form:
+  lock_type: null
+rwd/workshop-rothko-painting:
+  lock_type: null
+rwd/workshop-tech-conference-schedule:
+  lock_type: null

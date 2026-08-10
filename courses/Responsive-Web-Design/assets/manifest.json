@@ -1,0 +1,1183 @@
+[
+  {
+    "url": "https://archive.org/download/BigBuckBunny_124/Content/big_buck_bunny_720p_surround.mp4",
+    "local": "assets/vendor/archive.org/download/BigBuckBunny_124/Content/big_buck_bunny_720p_surround.mp4",
+    "kind": "video",
+    "status": "pending",
+    "files": [
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/1-html/1.1-basic-html/1.1.12-lecture-working-with-audio-and-video-elements.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/1-html/1.1-basic-html/1.1.22-review-basic-html.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/assets/PENDING.md"
+    ]
+  },
+  {
+    "url": "https://archive.org/download/BigBuckBunny_124/Content/big_buck_bunny_720p_surround.webm",
+    "local": "assets/vendor/archive.org/download/BigBuckBunny_124/Content/big_buck_bunny_720p_surround.webm",
+    "kind": "video",
+    "status": "pending",
+    "files": [
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/1-html/1.1-basic-html/1.1.12-lecture-working-with-audio-and-video-elements.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/assets/PENDING.md"
+    ]
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/curriculum/cat-photo-app/cats.jpg",
+    "local": "assets/vendor/cdn.freecodecamp.org/curriculum/cat-photo-app/cats.jpg",
+    "kind": "image",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/curriculum/cat-photo-app/lasagna.jpg",
+    "local": "assets/vendor/cdn.freecodecamp.org/curriculum/cat-photo-app/lasagna.jpg",
+    "kind": "image",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/curriculum/cat-photo-app/relaxing-cat.jpg",
+    "local": "assets/vendor/cdn.freecodecamp.org/curriculum/cat-photo-app/relaxing-cat.jpg",
+    "kind": "image",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/curriculum/cat-photo-app/running-cats.jpg",
+    "local": "assets/vendor/cdn.freecodecamp.org/curriculum/cat-photo-app/running-cats.jpg",
+    "kind": "image",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/curriculum/css-box-model/diagram-1.png",
+    "local": "assets/vendor/cdn.freecodecamp.org/curriculum/css-box-model/diagram-1.png",
+    "kind": "image",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/curriculum/css-box-model/diagram-2.png",
+    "local": "assets/vendor/cdn.freecodecamp.org/curriculum/css-box-model/diagram-2.png",
+    "kind": "image",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/curriculum/css-box-model/diagram-3.png",
+    "local": "assets/vendor/cdn.freecodecamp.org/curriculum/css-box-model/diagram-3.png",
+    "kind": "image",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/curriculum/css-cafe/beans.jpg",
+    "local": "assets/vendor/cdn.freecodecamp.org/curriculum/css-cafe/beans.jpg",
+    "kind": "image",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/curriculum/css-cafe/coffee.jpg",
+    "local": "assets/vendor/cdn.freecodecamp.org/curriculum/css-cafe/coffee.jpg",
+    "kind": "image",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/curriculum/css-cafe/pie.jpg",
+    "local": "assets/vendor/cdn.freecodecamp.org/curriculum/css-cafe/pie.jpg",
+    "kind": "image",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/curriculum/css-photo-gallery/1.jpg",
+    "local": "assets/vendor/cdn.freecodecamp.org/curriculum/css-photo-gallery/1.jpg",
+    "kind": "image",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/curriculum/css-photo-gallery/2.jpg",
+    "local": "assets/vendor/cdn.freecodecamp.org/curriculum/css-photo-gallery/2.jpg",
+    "kind": "image",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/curriculum/css-photo-gallery/3.jpg",
+    "local": "assets/vendor/cdn.freecodecamp.org/curriculum/css-photo-gallery/3.jpg",
+    "kind": "image",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/curriculum/css-photo-gallery/4.jpg",
+    "local": "assets/vendor/cdn.freecodecamp.org/curriculum/css-photo-gallery/4.jpg",
+    "kind": "image",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/curriculum/css-photo-gallery/5.jpg",
+    "local": "assets/vendor/cdn.freecodecamp.org/curriculum/css-photo-gallery/5.jpg",
+    "kind": "image",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/curriculum/css-photo-gallery/6.jpg",
+    "local": "assets/vendor/cdn.freecodecamp.org/curriculum/css-photo-gallery/6.jpg",
+    "kind": "image",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/curriculum/css-photo-gallery/7.jpg",
+    "local": "assets/vendor/cdn.freecodecamp.org/curriculum/css-photo-gallery/7.jpg",
+    "kind": "image",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/curriculum/css-photo-gallery/8.jpg",
+    "local": "assets/vendor/cdn.freecodecamp.org/curriculum/css-photo-gallery/8.jpg",
+    "kind": "image",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/curriculum/css-photo-gallery/9.jpg",
+    "local": "assets/vendor/cdn.freecodecamp.org/curriculum/css-photo-gallery/9.jpg",
+    "kind": "image",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/curriculum/js-music-player/cruising-for-a-musing.mp3",
+    "local": "assets/vendor/cdn.freecodecamp.org/curriculum/js-music-player/cruising-for-a-musing.mp3",
+    "kind": "audio",
+    "status": "pending",
+    "files": [
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/1-html/1.1-basic-html/1.1.13.8-workshop-html-music-player.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/1-html/1.1-basic-html/1.1.12-lecture-working-with-audio-and-video-elements.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/1-html/1.1-basic-html/1.1.13.9-workshop-html-music-player.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/assets/PENDING.md"
+    ]
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/curriculum/js-music-player/never-not-favored.mp3",
+    "local": "assets/vendor/cdn.freecodecamp.org/curriculum/js-music-player/never-not-favored.mp3",
+    "kind": "audio",
+    "status": "pending",
+    "files": [
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/1-html/1.1-basic-html/1.1.12-lecture-working-with-audio-and-video-elements.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/assets/PENDING.md"
+    ]
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/curriculum/js-music-player/scratching-the-surface.mp3",
+    "local": "assets/vendor/cdn.freecodecamp.org/curriculum/js-music-player/scratching-the-surface.mp3",
+    "kind": "audio",
+    "status": "pending",
+    "files": [
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/1-html/1.1-basic-html/1.1.13.9-workshop-html-music-player.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/assets/PENDING.md"
+    ]
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/curriculum/labs/mapmethod.mov",
+    "local": "assets/vendor/cdn.freecodecamp.org/curriculum/labs/mapmethod.mov",
+    "kind": "video",
+    "status": "pending",
+    "files": [
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/1-html/1.1-basic-html/1.1.14.13-workshop-html-video-player.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/assets/PENDING.md"
+    ]
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/curriculum/labs/mapmethod.ogg",
+    "local": "assets/vendor/cdn.freecodecamp.org/curriculum/labs/mapmethod.ogg",
+    "kind": "audio",
+    "status": "pending",
+    "files": [
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/1-html/1.1-basic-html/1.1.14.12-workshop-html-video-player.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/1-html/1.1-basic-html/1.1.14.13-workshop-html-video-player.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/assets/PENDING.md"
+    ]
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/curriculum/labs/mapmethod.webm",
+    "local": "assets/vendor/cdn.freecodecamp.org/curriculum/labs/mapmethod.webm",
+    "kind": "video",
+    "status": "pending",
+    "files": [
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/1-html/1.1-basic-html/1.1.14.12-workshop-html-video-player.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/1-html/1.1-basic-html/1.1.14.11-workshop-html-video-player.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/1-html/1.1-basic-html/1.1.14.13-workshop-html-video-player.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/assets/PENDING.md"
+    ]
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/curriculum/labs/past-event2.jpg",
+    "local": "assets/vendor/cdn.freecodecamp.org/curriculum/labs/past-event2.jpg",
+    "kind": "image",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/curriculum/labs/what-is-the-map-method-and-how-does-it-work.mp4",
+    "local": "assets/vendor/cdn.freecodecamp.org/curriculum/labs/what-is-the-map-method-and-how-does-it-work.mp4",
+    "kind": "video",
+    "status": "pending",
+    "files": [
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/1-html/1.5-html-and-accessibility/1.5.8.3-lecture-accessible-media-elements.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/1-html/1.1-basic-html/1.1.14.12-workshop-html-video-player.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/1-html/1.1-basic-html/1.1.14.11-workshop-html-video-player.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/1-html/1.1-basic-html/1.1.14.13-workshop-html-video-player.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/1-html/1.1-basic-html/1.1.14.10-workshop-html-video-player.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/1-html/1.1-basic-html/1.1.14.9-workshop-html-video-player.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/assets/PENDING.md"
+    ]
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/curriculum/lecture-transcripts/how-do-you-work-with-external-fonts-like-font-squirrel-and-google-fonts-1.png",
+    "local": "assets/vendor/cdn.freecodecamp.org/curriculum/lecture-transcripts/how-do-you-work-with-external-fonts-like-font-squirrel-and-google-fonts-1.png",
+    "kind": "image",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/curriculum/lecture-transcripts/how-do-you-work-with-external-fonts-like-font-squirrel-and-google-fonts-10.png",
+    "local": "assets/vendor/cdn.freecodecamp.org/curriculum/lecture-transcripts/how-do-you-work-with-external-fonts-like-font-squirrel-and-google-fonts-10.png",
+    "kind": "image",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/curriculum/lecture-transcripts/how-do-you-work-with-external-fonts-like-font-squirrel-and-google-fonts-11.png",
+    "local": "assets/vendor/cdn.freecodecamp.org/curriculum/lecture-transcripts/how-do-you-work-with-external-fonts-like-font-squirrel-and-google-fonts-11.png",
+    "kind": "image",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/curriculum/lecture-transcripts/how-do-you-work-with-external-fonts-like-font-squirrel-and-google-fonts-12.png",
+    "local": "assets/vendor/cdn.freecodecamp.org/curriculum/lecture-transcripts/how-do-you-work-with-external-fonts-like-font-squirrel-and-google-fonts-12.png",
+    "kind": "image",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/curriculum/lecture-transcripts/how-do-you-work-with-external-fonts-like-font-squirrel-and-google-fonts-13.png",
+    "local": "assets/vendor/cdn.freecodecamp.org/curriculum/lecture-transcripts/how-do-you-work-with-external-fonts-like-font-squirrel-and-google-fonts-13.png",
+    "kind": "image",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/curriculum/lecture-transcripts/how-do-you-work-with-external-fonts-like-font-squirrel-and-google-fonts-14.png",
+    "local": "assets/vendor/cdn.freecodecamp.org/curriculum/lecture-transcripts/how-do-you-work-with-external-fonts-like-font-squirrel-and-google-fonts-14.png",
+    "kind": "image",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/curriculum/lecture-transcripts/how-do-you-work-with-external-fonts-like-font-squirrel-and-google-fonts-2.png",
+    "local": "assets/vendor/cdn.freecodecamp.org/curriculum/lecture-transcripts/how-do-you-work-with-external-fonts-like-font-squirrel-and-google-fonts-2.png",
+    "kind": "image",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/curriculum/lecture-transcripts/how-do-you-work-with-external-fonts-like-font-squirrel-and-google-fonts-3.png",
+    "local": "assets/vendor/cdn.freecodecamp.org/curriculum/lecture-transcripts/how-do-you-work-with-external-fonts-like-font-squirrel-and-google-fonts-3.png",
+    "kind": "image",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/curriculum/lecture-transcripts/how-do-you-work-with-external-fonts-like-font-squirrel-and-google-fonts-4.png",
+    "local": "assets/vendor/cdn.freecodecamp.org/curriculum/lecture-transcripts/how-do-you-work-with-external-fonts-like-font-squirrel-and-google-fonts-4.png",
+    "kind": "image",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/curriculum/lecture-transcripts/how-do-you-work-with-external-fonts-like-font-squirrel-and-google-fonts-5.png",
+    "local": "assets/vendor/cdn.freecodecamp.org/curriculum/lecture-transcripts/how-do-you-work-with-external-fonts-like-font-squirrel-and-google-fonts-5.png",
+    "kind": "image",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/curriculum/lecture-transcripts/how-do-you-work-with-external-fonts-like-font-squirrel-and-google-fonts-6.png",
+    "local": "assets/vendor/cdn.freecodecamp.org/curriculum/lecture-transcripts/how-do-you-work-with-external-fonts-like-font-squirrel-and-google-fonts-6.png",
+    "kind": "image",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/curriculum/lecture-transcripts/how-do-you-work-with-external-fonts-like-font-squirrel-and-google-fonts-7.png",
+    "local": "assets/vendor/cdn.freecodecamp.org/curriculum/lecture-transcripts/how-do-you-work-with-external-fonts-like-font-squirrel-and-google-fonts-7.png",
+    "kind": "image",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/curriculum/lecture-transcripts/how-do-you-work-with-external-fonts-like-font-squirrel-and-google-fonts-8.png",
+    "local": "assets/vendor/cdn.freecodecamp.org/curriculum/lecture-transcripts/how-do-you-work-with-external-fonts-like-font-squirrel-and-google-fonts-8.png",
+    "kind": "image",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/curriculum/lecture-transcripts/how-do-you-work-with-external-fonts-like-font-squirrel-and-google-fonts-9.png",
+    "local": "assets/vendor/cdn.freecodecamp.org/curriculum/lecture-transcripts/how-do-you-work-with-external-fonts-like-font-squirrel-and-google-fonts-9.png",
+    "kind": "image",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/curriculum/lecture-transcripts/lecture-what-is-color-theory-in-design-1.png",
+    "local": "assets/vendor/cdn.freecodecamp.org/curriculum/lecture-transcripts/lecture-what-is-color-theory-in-design-1.png",
+    "kind": "image",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/curriculum/lecture-transcripts/lecture-what-is-color-theory-in-design-10.png",
+    "local": "assets/vendor/cdn.freecodecamp.org/curriculum/lecture-transcripts/lecture-what-is-color-theory-in-design-10.png",
+    "kind": "image",
+    "status": "missing"
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/curriculum/lecture-transcripts/lecture-what-is-color-theory-in-design-11.png",
+    "local": "assets/vendor/cdn.freecodecamp.org/curriculum/lecture-transcripts/lecture-what-is-color-theory-in-design-11.png",
+    "kind": "image",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/curriculum/lecture-transcripts/lecture-what-is-color-theory-in-design-2.png",
+    "local": "assets/vendor/cdn.freecodecamp.org/curriculum/lecture-transcripts/lecture-what-is-color-theory-in-design-2.png",
+    "kind": "image",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/curriculum/lecture-transcripts/lecture-what-is-color-theory-in-design-3.png",
+    "local": "assets/vendor/cdn.freecodecamp.org/curriculum/lecture-transcripts/lecture-what-is-color-theory-in-design-3.png",
+    "kind": "image",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/curriculum/lecture-transcripts/lecture-what-is-color-theory-in-design-4.png",
+    "local": "assets/vendor/cdn.freecodecamp.org/curriculum/lecture-transcripts/lecture-what-is-color-theory-in-design-4.png",
+    "kind": "image",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/curriculum/lecture-transcripts/lecture-what-is-color-theory-in-design-5.png",
+    "local": "assets/vendor/cdn.freecodecamp.org/curriculum/lecture-transcripts/lecture-what-is-color-theory-in-design-5.png",
+    "kind": "image",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/curriculum/lecture-transcripts/lecture-what-is-color-theory-in-design-6.png",
+    "local": "assets/vendor/cdn.freecodecamp.org/curriculum/lecture-transcripts/lecture-what-is-color-theory-in-design-6.png",
+    "kind": "image",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/curriculum/lecture-transcripts/lecture-what-is-color-theory-in-design-7.png",
+    "local": "assets/vendor/cdn.freecodecamp.org/curriculum/lecture-transcripts/lecture-what-is-color-theory-in-design-7.png",
+    "kind": "image",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/curriculum/lecture-transcripts/lecture-what-is-color-theory-in-design-8.png",
+    "local": "assets/vendor/cdn.freecodecamp.org/curriculum/lecture-transcripts/lecture-what-is-color-theory-in-design-8.png",
+    "kind": "image",
+    "status": "missing"
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/curriculum/lecture-transcripts/lecture-what-is-color-theory-in-design-9.png",
+    "local": "assets/vendor/cdn.freecodecamp.org/curriculum/lecture-transcripts/lecture-what-is-color-theory-in-design-9.png",
+    "kind": "image",
+    "status": "missing"
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/curriculum/lecture-transcripts/puppy.png",
+    "local": "assets/vendor/cdn.freecodecamp.org/curriculum/lecture-transcripts/puppy.png",
+    "kind": "image",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/curriculum/lecture-transcripts/resort.jpg",
+    "local": "assets/vendor/cdn.freecodecamp.org/curriculum/lecture-transcripts/resort.jpg",
+    "kind": "image",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/curriculum/lecture-transcripts/what-are-font-families-and-how-do-they-work-1.png",
+    "local": "assets/vendor/cdn.freecodecamp.org/curriculum/lecture-transcripts/what-are-font-families-and-how-do-they-work-1.png",
+    "kind": "image",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/curriculum/lecture-transcripts/what-are-some-best-practices-for-working-with-typography-in-your-designs-1.png",
+    "local": "assets/vendor/cdn.freecodecamp.org/curriculum/lecture-transcripts/what-are-some-best-practices-for-working-with-typography-in-your-designs-1.png",
+    "kind": "image",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/curriculum/lecture-transcripts/what-are-some-best-practices-for-working-with-typography-in-your-designs-2.png",
+    "local": "assets/vendor/cdn.freecodecamp.org/curriculum/lecture-transcripts/what-are-some-best-practices-for-working-with-typography-in-your-designs-2.png",
+    "kind": "image",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/curriculum/lecture-transcripts/what-are-some-best-practices-for-working-with-typography-in-your-designs-3.png",
+    "local": "assets/vendor/cdn.freecodecamp.org/curriculum/lecture-transcripts/what-are-some-best-practices-for-working-with-typography-in-your-designs-3.png",
+    "kind": "image",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/curriculum/lecture-transcripts/what-are-some-best-practices-for-working-with-typography-in-your-designs-4.png",
+    "local": "assets/vendor/cdn.freecodecamp.org/curriculum/lecture-transcripts/what-are-some-best-practices-for-working-with-typography-in-your-designs-4.png",
+    "kind": "image",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/curriculum/lecture-transcripts/what-are-some-best-practices-for-working-with-typography-in-your-designs-5.png",
+    "local": "assets/vendor/cdn.freecodecamp.org/curriculum/lecture-transcripts/what-are-some-best-practices-for-working-with-typography-in-your-designs-5.png",
+    "kind": "image",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/curriculum/lecture-transcripts/what-are-some-best-practices-for-working-with-typography-in-your-designs-6.png",
+    "local": "assets/vendor/cdn.freecodecamp.org/curriculum/lecture-transcripts/what-are-some-best-practices-for-working-with-typography-in-your-designs-6.png",
+    "kind": "image",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/curriculum/lecture-transcripts/what-are-the-fundamentals-of-typography-1.png",
+    "local": "assets/vendor/cdn.freecodecamp.org/curriculum/lecture-transcripts/what-are-the-fundamentals-of-typography-1.png",
+    "kind": "image",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/curriculum/lecture-transcripts/what-are-the-fundamentals-of-typography-10.png",
+    "local": "assets/vendor/cdn.freecodecamp.org/curriculum/lecture-transcripts/what-are-the-fundamentals-of-typography-10.png",
+    "kind": "image",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/curriculum/lecture-transcripts/what-are-the-fundamentals-of-typography-11.png",
+    "local": "assets/vendor/cdn.freecodecamp.org/curriculum/lecture-transcripts/what-are-the-fundamentals-of-typography-11.png",
+    "kind": "image",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/curriculum/lecture-transcripts/what-are-the-fundamentals-of-typography-2.png",
+    "local": "assets/vendor/cdn.freecodecamp.org/curriculum/lecture-transcripts/what-are-the-fundamentals-of-typography-2.png",
+    "kind": "image",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/curriculum/lecture-transcripts/what-are-the-fundamentals-of-typography-3.png",
+    "local": "assets/vendor/cdn.freecodecamp.org/curriculum/lecture-transcripts/what-are-the-fundamentals-of-typography-3.png",
+    "kind": "image",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/curriculum/lecture-transcripts/what-are-the-fundamentals-of-typography-4.png",
+    "local": "assets/vendor/cdn.freecodecamp.org/curriculum/lecture-transcripts/what-are-the-fundamentals-of-typography-4.png",
+    "kind": "image",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/curriculum/lecture-transcripts/what-are-the-fundamentals-of-typography-5.png",
+    "local": "assets/vendor/cdn.freecodecamp.org/curriculum/lecture-transcripts/what-are-the-fundamentals-of-typography-5.png",
+    "kind": "image",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/curriculum/lecture-transcripts/what-are-the-fundamentals-of-typography-6.png",
+    "local": "assets/vendor/cdn.freecodecamp.org/curriculum/lecture-transcripts/what-are-the-fundamentals-of-typography-6.png",
+    "kind": "image",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/curriculum/lecture-transcripts/what-are-the-fundamentals-of-typography-7.png",
+    "local": "assets/vendor/cdn.freecodecamp.org/curriculum/lecture-transcripts/what-are-the-fundamentals-of-typography-7.png",
+    "kind": "image",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/curriculum/lecture-transcripts/what-are-the-fundamentals-of-typography-8.png",
+    "local": "assets/vendor/cdn.freecodecamp.org/curriculum/lecture-transcripts/what-are-the-fundamentals-of-typography-8.png",
+    "kind": "image",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/curriculum/lecture-transcripts/what-are-the-fundamentals-of-typography-9.png",
+    "local": "assets/vendor/cdn.freecodecamp.org/curriculum/lecture-transcripts/what-are-the-fundamentals-of-typography-9.png",
+    "kind": "image",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/curriculum/lecture-transcripts/what-are-web-safe-fonts-1.png",
+    "local": "assets/vendor/cdn.freecodecamp.org/curriculum/lecture-transcripts/what-are-web-safe-fonts-1.png",
+    "kind": "image",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/curriculum/lecture-transcripts/what-are-web-safe-fonts-2.png",
+    "local": "assets/vendor/cdn.freecodecamp.org/curriculum/lecture-transcripts/what-are-web-safe-fonts-2.png",
+    "kind": "image",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/curriculum/lecture-transcripts/what-are-web-safe-fonts-3.png",
+    "local": "assets/vendor/cdn.freecodecamp.org/curriculum/lecture-transcripts/what-are-web-safe-fonts-3.png",
+    "kind": "image",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/curriculum/lecture-transcripts/what-are-web-safe-fonts-4.png",
+    "local": "assets/vendor/cdn.freecodecamp.org/curriculum/lecture-transcripts/what-are-web-safe-fonts-4.png",
+    "kind": "image",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/curriculum/lecture-transcripts/what-are-web-safe-fonts-5.png",
+    "local": "assets/vendor/cdn.freecodecamp.org/curriculum/lecture-transcripts/what-are-web-safe-fonts-5.png",
+    "kind": "image",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/curriculum/lecture-transcripts/what-is-the-importance-of-whitespace-in-design-1.png",
+    "local": "assets/vendor/cdn.freecodecamp.org/curriculum/lecture-transcripts/what-is-the-importance-of-whitespace-in-design-1.png",
+    "kind": "image",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/curriculum/lecture-transcripts/what-is-the-importance-of-whitespace-in-design-2.png",
+    "local": "assets/vendor/cdn.freecodecamp.org/curriculum/lecture-transcripts/what-is-the-importance-of-whitespace-in-design-2.png",
+    "kind": "image",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/platform/universal/fcc_meta_1920X1080-indigo.png",
+    "local": "assets/vendor/cdn.freecodecamp.org/platform/universal/fcc_meta_1920X1080-indigo.png",
+    "kind": "image",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/platform/universal/fcc_primary.svg",
+    "local": "assets/vendor/cdn.freecodecamp.org/platform/universal/fcc_primary.svg",
+    "kind": "image",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/platform/universal/fcc_secondary.svg",
+    "local": "assets/vendor/cdn.freecodecamp.org/platform/universal/fcc_secondary.svg",
+    "kind": "image",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/platform/universal/freecodecamp-org-gravatar.jpeg",
+    "local": "assets/vendor/cdn.freecodecamp.org/platform/universal/freecodecamp-org-gravatar.jpeg",
+    "kind": "image",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/testable-projects-fcc/images/calc.png",
+    "local": "assets/vendor/cdn.freecodecamp.org/testable-projects-fcc/images/calc.png",
+    "kind": "image",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/testable-projects-fcc/images/random-quote-machine.png",
+    "local": "assets/vendor/cdn.freecodecamp.org/testable-projects-fcc/images/random-quote-machine.png",
+    "kind": "image",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://cdn.freecodecamp.org/testable-projects-fcc/images/survey-form-background.jpeg",
+    "local": "assets/vendor/cdn.freecodecamp.org/testable-projects-fcc/images/survey-form-background.jpeg",
+    "kind": "image",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://design-style-guide.freecodecamp.org/img/fcc_secondary_small.svg",
+    "local": "assets/vendor/design-style-guide.freecodecamp.org/img/fcc_secondary_small.svg",
+    "kind": "image",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://fonts.googleapis.com/css2?family=Playwrite+CU:wght@100..400&display=swap",
+    "local": "assets/vendor/fonts.googleapis.com/css~Playwrite-CU-wght-100-400-088518ec4cc8.css",
+    "kind": "font-css",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://fonts.googleapis.com/css2?family=Roboto",
+    "local": "assets/vendor/fonts.googleapis.com/css~Roboto-bec16df787dd.css",
+    "kind": "font-css",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://fonts.googleapis.com/css2?family=Roboto&display=swap",
+    "local": "assets/vendor/fonts.googleapis.com/css~Roboto-80f489ec6478.css",
+    "kind": "font-css",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap",
+    "local": "assets/vendor/fonts.googleapis.com/css~Roboto-ital-wght-0-100-0-300-0-400-0-500-0-700-0-900-1-100-1-300-1-400-1-500-1-700-1-900-95c6696b7940.css",
+    "kind": "font-css",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://fonts.googleapis.com/css?family=Anton%7CBaskervville%7CRaleway&display=swap",
+    "local": "assets/vendor/fonts.googleapis.com/css~Anton-7CBaskervville-7CRaleway-e800cc0227fb.css",
+    "kind": "font-css",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://fonts.googleapis.com/css?family=Lato:400,700",
+    "local": "assets/vendor/fonts.googleapis.com/css~Lato-400-700-1ae5408b5844.css",
+    "kind": "font-css",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://fonts.googleapis.com/css?family=Open+Sans:400,700,800",
+    "local": "assets/vendor/fonts.googleapis.com/css~Open-Sans-400-700-800-fefa68588cff.css",
+    "kind": "font-css",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://fonts.googleapis.com/css?family=Poppins:200i,300,400&display=swap",
+    "local": "assets/vendor/fonts.googleapis.com/css~Poppins-200i-300-400-0014d1fd9472.css",
+    "kind": "font-css",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://fonts.googleapis.com/css?family=Raleway:700&display=swap",
+    "local": "assets/vendor/fonts.googleapis.com/css~Raleway-700-99c77e0ad0ad.css",
+    "kind": "font-css",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://placehold.co/1200x400/png?text=Large+Banner+Image",
+    "local": "assets/vendor/placehold.co/1200x400-png.png",
+    "kind": "image",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://placehold.co/150x150",
+    "local": "assets/vendor/placehold.co/150x150.svg",
+    "kind": "image",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://placehold.co/300x200",
+    "local": "assets/vendor/placehold.co/300x200.svg",
+    "kind": "image",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://use.fontawesome.com/releases/v5.15.4/css/all.css",
+    "local": "assets/vendor/use.fontawesome.com/releases/v5.15.4/css/all.css",
+    "kind": "font-css",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://use.fontawesome.com/releases/v5.15.4/webfonts/fa-brands-400.eot",
+    "local": "assets/vendor/use.fontawesome.com/releases/v5.15.4/webfonts/fa-brands-400.eot",
+    "kind": "webfont",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://use.fontawesome.com/releases/v5.15.4/webfonts/fa-brands-400.eot?#iefix",
+    "local": "assets/vendor/use.fontawesome.com/releases/v5.15.4/webfonts/fa-brands-400.eot",
+    "kind": "webfont",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://use.fontawesome.com/releases/v5.15.4/webfonts/fa-brands-400.svg#fontawesome",
+    "local": "assets/vendor/use.fontawesome.com/releases/v5.15.4/webfonts/fa-brands-400.svg",
+    "kind": "webfont",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://use.fontawesome.com/releases/v5.15.4/webfonts/fa-brands-400.ttf",
+    "local": "assets/vendor/use.fontawesome.com/releases/v5.15.4/webfonts/fa-brands-400.ttf",
+    "kind": "webfont",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://use.fontawesome.com/releases/v5.15.4/webfonts/fa-brands-400.woff",
+    "local": "assets/vendor/use.fontawesome.com/releases/v5.15.4/webfonts/fa-brands-400.woff",
+    "kind": "webfont",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://use.fontawesome.com/releases/v5.15.4/webfonts/fa-brands-400.woff2",
+    "local": "assets/vendor/use.fontawesome.com/releases/v5.15.4/webfonts/fa-brands-400.woff2",
+    "kind": "webfont",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://use.fontawesome.com/releases/v5.15.4/webfonts/fa-regular-400.eot",
+    "local": "assets/vendor/use.fontawesome.com/releases/v5.15.4/webfonts/fa-regular-400.eot",
+    "kind": "webfont",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://use.fontawesome.com/releases/v5.15.4/webfonts/fa-regular-400.eot?#iefix",
+    "local": "assets/vendor/use.fontawesome.com/releases/v5.15.4/webfonts/fa-regular-400.eot",
+    "kind": "webfont",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://use.fontawesome.com/releases/v5.15.4/webfonts/fa-regular-400.svg#fontawesome",
+    "local": "assets/vendor/use.fontawesome.com/releases/v5.15.4/webfonts/fa-regular-400.svg",
+    "kind": "webfont",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://use.fontawesome.com/releases/v5.15.4/webfonts/fa-regular-400.ttf",
+    "local": "assets/vendor/use.fontawesome.com/releases/v5.15.4/webfonts/fa-regular-400.ttf",
+    "kind": "webfont",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://use.fontawesome.com/releases/v5.15.4/webfonts/fa-regular-400.woff",
+    "local": "assets/vendor/use.fontawesome.com/releases/v5.15.4/webfonts/fa-regular-400.woff",
+    "kind": "webfont",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://use.fontawesome.com/releases/v5.15.4/webfonts/fa-regular-400.woff2",
+    "local": "assets/vendor/use.fontawesome.com/releases/v5.15.4/webfonts/fa-regular-400.woff2",
+    "kind": "webfont",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://use.fontawesome.com/releases/v5.15.4/webfonts/fa-solid-900.eot",
+    "local": "assets/vendor/use.fontawesome.com/releases/v5.15.4/webfonts/fa-solid-900.eot",
+    "kind": "webfont",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://use.fontawesome.com/releases/v5.15.4/webfonts/fa-solid-900.eot?#iefix",
+    "local": "assets/vendor/use.fontawesome.com/releases/v5.15.4/webfonts/fa-solid-900.eot",
+    "kind": "webfont",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://use.fontawesome.com/releases/v5.15.4/webfonts/fa-solid-900.svg#fontawesome",
+    "local": "assets/vendor/use.fontawesome.com/releases/v5.15.4/webfonts/fa-solid-900.svg",
+    "kind": "webfont",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://use.fontawesome.com/releases/v5.15.4/webfonts/fa-solid-900.ttf",
+    "local": "assets/vendor/use.fontawesome.com/releases/v5.15.4/webfonts/fa-solid-900.ttf",
+    "kind": "webfont",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://use.fontawesome.com/releases/v5.15.4/webfonts/fa-solid-900.woff",
+    "local": "assets/vendor/use.fontawesome.com/releases/v5.15.4/webfonts/fa-solid-900.woff",
+    "kind": "webfont",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://use.fontawesome.com/releases/v5.15.4/webfonts/fa-solid-900.woff2",
+    "local": "assets/vendor/use.fontawesome.com/releases/v5.15.4/webfonts/fa-solid-900.woff2",
+    "kind": "webfont",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://use.fontawesome.com/releases/v5.8.1/css/all.css",
+    "local": "assets/vendor/use.fontawesome.com/releases/v5.8.1/css/all.css",
+    "kind": "font-css",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://use.fontawesome.com/releases/v5.8.1/webfonts/fa-brands-400.eot",
+    "local": "assets/vendor/use.fontawesome.com/releases/v5.8.1/webfonts/fa-brands-400.eot",
+    "kind": "webfont",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://use.fontawesome.com/releases/v5.8.1/webfonts/fa-brands-400.eot?#iefix",
+    "local": "assets/vendor/use.fontawesome.com/releases/v5.8.1/webfonts/fa-brands-400.eot",
+    "kind": "webfont",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://use.fontawesome.com/releases/v5.8.1/webfonts/fa-brands-400.svg#fontawesome",
+    "local": "assets/vendor/use.fontawesome.com/releases/v5.8.1/webfonts/fa-brands-400.svg",
+    "kind": "webfont",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://use.fontawesome.com/releases/v5.8.1/webfonts/fa-brands-400.ttf",
+    "local": "assets/vendor/use.fontawesome.com/releases/v5.8.1/webfonts/fa-brands-400.ttf",
+    "kind": "webfont",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://use.fontawesome.com/releases/v5.8.1/webfonts/fa-brands-400.woff",
+    "local": "assets/vendor/use.fontawesome.com/releases/v5.8.1/webfonts/fa-brands-400.woff",
+    "kind": "webfont",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://use.fontawesome.com/releases/v5.8.1/webfonts/fa-brands-400.woff2",
+    "local": "assets/vendor/use.fontawesome.com/releases/v5.8.1/webfonts/fa-brands-400.woff2",
+    "kind": "webfont",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://use.fontawesome.com/releases/v5.8.1/webfonts/fa-regular-400.eot",
+    "local": "assets/vendor/use.fontawesome.com/releases/v5.8.1/webfonts/fa-regular-400.eot",
+    "kind": "webfont",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://use.fontawesome.com/releases/v5.8.1/webfonts/fa-regular-400.eot?#iefix",
+    "local": "assets/vendor/use.fontawesome.com/releases/v5.8.1/webfonts/fa-regular-400.eot",
+    "kind": "webfont",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://use.fontawesome.com/releases/v5.8.1/webfonts/fa-regular-400.svg#fontawesome",
+    "local": "assets/vendor/use.fontawesome.com/releases/v5.8.1/webfonts/fa-regular-400.svg",
+    "kind": "webfont",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://use.fontawesome.com/releases/v5.8.1/webfonts/fa-regular-400.ttf",
+    "local": "assets/vendor/use.fontawesome.com/releases/v5.8.1/webfonts/fa-regular-400.ttf",
+    "kind": "webfont",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://use.fontawesome.com/releases/v5.8.1/webfonts/fa-regular-400.woff",
+    "local": "assets/vendor/use.fontawesome.com/releases/v5.8.1/webfonts/fa-regular-400.woff",
+    "kind": "webfont",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://use.fontawesome.com/releases/v5.8.1/webfonts/fa-regular-400.woff2",
+    "local": "assets/vendor/use.fontawesome.com/releases/v5.8.1/webfonts/fa-regular-400.woff2",
+    "kind": "webfont",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://use.fontawesome.com/releases/v5.8.1/webfonts/fa-solid-900.eot",
+    "local": "assets/vendor/use.fontawesome.com/releases/v5.8.1/webfonts/fa-solid-900.eot",
+    "kind": "webfont",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://use.fontawesome.com/releases/v5.8.1/webfonts/fa-solid-900.eot?#iefix",
+    "local": "assets/vendor/use.fontawesome.com/releases/v5.8.1/webfonts/fa-solid-900.eot",
+    "kind": "webfont",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://use.fontawesome.com/releases/v5.8.1/webfonts/fa-solid-900.svg#fontawesome",
+    "local": "assets/vendor/use.fontawesome.com/releases/v5.8.1/webfonts/fa-solid-900.svg",
+    "kind": "webfont",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://use.fontawesome.com/releases/v5.8.1/webfonts/fa-solid-900.ttf",
+    "local": "assets/vendor/use.fontawesome.com/releases/v5.8.1/webfonts/fa-solid-900.ttf",
+    "kind": "webfont",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://use.fontawesome.com/releases/v5.8.1/webfonts/fa-solid-900.woff",
+    "local": "assets/vendor/use.fontawesome.com/releases/v5.8.1/webfonts/fa-solid-900.woff",
+    "kind": "webfont",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://use.fontawesome.com/releases/v5.8.1/webfonts/fa-solid-900.woff2",
+    "local": "assets/vendor/use.fontawesome.com/releases/v5.8.1/webfonts/fa-solid-900.woff2",
+    "kind": "webfont",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://use.fontawesome.com/releases/v5.8.2/css/all.css",
+    "local": "assets/vendor/use.fontawesome.com/releases/v5.8.2/css/all.css",
+    "kind": "font-css",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://use.fontawesome.com/releases/v5.8.2/webfonts/fa-brands-400.eot",
+    "local": "assets/vendor/use.fontawesome.com/releases/v5.8.2/webfonts/fa-brands-400.eot",
+    "kind": "webfont",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://use.fontawesome.com/releases/v5.8.2/webfonts/fa-brands-400.eot?#iefix",
+    "local": "assets/vendor/use.fontawesome.com/releases/v5.8.2/webfonts/fa-brands-400.eot",
+    "kind": "webfont",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://use.fontawesome.com/releases/v5.8.2/webfonts/fa-brands-400.svg#fontawesome",
+    "local": "assets/vendor/use.fontawesome.com/releases/v5.8.2/webfonts/fa-brands-400.svg",
+    "kind": "webfont",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://use.fontawesome.com/releases/v5.8.2/webfonts/fa-brands-400.ttf",
+    "local": "assets/vendor/use.fontawesome.com/releases/v5.8.2/webfonts/fa-brands-400.ttf",
+    "kind": "webfont",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://use.fontawesome.com/releases/v5.8.2/webfonts/fa-brands-400.woff",
+    "local": "assets/vendor/use.fontawesome.com/releases/v5.8.2/webfonts/fa-brands-400.woff",
+    "kind": "webfont",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://use.fontawesome.com/releases/v5.8.2/webfonts/fa-brands-400.woff2",
+    "local": "assets/vendor/use.fontawesome.com/releases/v5.8.2/webfonts/fa-brands-400.woff2",
+    "kind": "webfont",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://use.fontawesome.com/releases/v5.8.2/webfonts/fa-regular-400.eot",
+    "local": "assets/vendor/use.fontawesome.com/releases/v5.8.2/webfonts/fa-regular-400.eot",
+    "kind": "webfont",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://use.fontawesome.com/releases/v5.8.2/webfonts/fa-regular-400.eot?#iefix",
+    "local": "assets/vendor/use.fontawesome.com/releases/v5.8.2/webfonts/fa-regular-400.eot",
+    "kind": "webfont",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://use.fontawesome.com/releases/v5.8.2/webfonts/fa-regular-400.svg#fontawesome",
+    "local": "assets/vendor/use.fontawesome.com/releases/v5.8.2/webfonts/fa-regular-400.svg",
+    "kind": "webfont",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://use.fontawesome.com/releases/v5.8.2/webfonts/fa-regular-400.ttf",
+    "local": "assets/vendor/use.fontawesome.com/releases/v5.8.2/webfonts/fa-regular-400.ttf",
+    "kind": "webfont",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://use.fontawesome.com/releases/v5.8.2/webfonts/fa-regular-400.woff",
+    "local": "assets/vendor/use.fontawesome.com/releases/v5.8.2/webfonts/fa-regular-400.woff",
+    "kind": "webfont",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://use.fontawesome.com/releases/v5.8.2/webfonts/fa-regular-400.woff2",
+    "local": "assets/vendor/use.fontawesome.com/releases/v5.8.2/webfonts/fa-regular-400.woff2",
+    "kind": "webfont",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://use.fontawesome.com/releases/v5.8.2/webfonts/fa-solid-900.eot",
+    "local": "assets/vendor/use.fontawesome.com/releases/v5.8.2/webfonts/fa-solid-900.eot",
+    "kind": "webfont",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://use.fontawesome.com/releases/v5.8.2/webfonts/fa-solid-900.eot?#iefix",
+    "local": "assets/vendor/use.fontawesome.com/releases/v5.8.2/webfonts/fa-solid-900.eot",
+    "kind": "webfont",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://use.fontawesome.com/releases/v5.8.2/webfonts/fa-solid-900.svg#fontawesome",
+    "local": "assets/vendor/use.fontawesome.com/releases/v5.8.2/webfonts/fa-solid-900.svg",
+    "kind": "webfont",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://use.fontawesome.com/releases/v5.8.2/webfonts/fa-solid-900.ttf",
+    "local": "assets/vendor/use.fontawesome.com/releases/v5.8.2/webfonts/fa-solid-900.ttf",
+    "kind": "webfont",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://use.fontawesome.com/releases/v5.8.2/webfonts/fa-solid-900.woff",
+    "local": "assets/vendor/use.fontawesome.com/releases/v5.8.2/webfonts/fa-solid-900.woff",
+    "kind": "webfont",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://use.fontawesome.com/releases/v5.8.2/webfonts/fa-solid-900.woff2",
+    "local": "assets/vendor/use.fontawesome.com/releases/v5.8.2/webfonts/fa-solid-900.woff2",
+    "kind": "webfont",
+    "status": "downloaded"
+  },
+  {
+    "url": "https://www.openstreetmap.org/#map=11/6.4501/3.3210",
+    "local": "assets/vendor/www.openstreetmap.org/",
+    "kind": "embed",
+    "status": "pending",
+    "files": [
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/1-html/1.1-basic-html/1.1.18.2-lecture-working-with-media.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/assets/PENDING.md"
+    ]
+  },
+  {
+    "url": "https://www.openstreetmap.org/export/embed.html?bbox=-0.004017949104309083%2C51.47612752641776%2C0.00030577182769775396%2C51.478569861898606&amp;layer=mapnik",
+    "local": "assets/vendor/www.openstreetmap.org/export/embed.html",
+    "kind": "embed",
+    "status": "pending",
+    "files": [
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/1-html/1.1-basic-html/1.1.18.1-lecture-working-with-media.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/assets/PENDING.md"
+    ]
+  },
+  {
+    "url": "https://www.openstreetmap.org/export/embed.html?bbox=3.006134033203125%2C6.150112578753815%2C3.6357879638671875%2C6.749850810550778&amp;layer=mapnik",
+    "local": "assets/vendor/www.openstreetmap.org/export/embed.html",
+    "kind": "embed",
+    "status": "pending",
+    "files": [
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/1-html/1.1-basic-html/1.1.18.2-lecture-working-with-media.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/assets/PENDING.md"
+    ]
+  },
+  {
+    "url": "https://www.youtube-nocookie.com/embed/y8Yv4pnO7qc?rel=0&amp;controls=0&amp;showinfo=0",
+    "local": "assets/vendor/www.youtube-nocookie.com/embed/y8Yv4pnO7qc",
+    "kind": "embed",
+    "status": "pending",
+    "files": [
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/3-css/3.19-lab-product-landing-page/3.19.1-lab-product-landing-page.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/assets/PENDING.md"
+    ]
+  },
+  {
+    "url": "https://www.youtube.com/embed/GDGejH3SDNQ?si=KJYLgcz4kyyroYMB",
+    "local": "assets/vendor/www.youtube.com/embed/GDGejH3SDNQ",
+    "kind": "embed",
+    "status": "pending",
+    "files": [
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/1-html/1.1-basic-html/1.1.20-lab-video-compilation-page.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/assets/PENDING.md"
+    ]
+  },
+  {
+    "url": "https://www.youtube.com/embed/I0_951_MPE0",
+    "local": "assets/vendor/www.youtube.com/embed/I0_951_MPE0",
+    "kind": "embed",
+    "status": "pending",
+    "files": [
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/1-html/1.1-basic-html/1.1.19.6-workshop-build-a-video-display-using-iframe.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/1-html/1.1-basic-html/1.1.19.5-workshop-build-a-video-display-using-iframe.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/1-html/1.1-basic-html/1.1.19.7-workshop-build-a-video-display-using-iframe.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/1-html/1.1-basic-html/1.1.19.4-workshop-build-a-video-display-using-iframe.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/1-html/1.1-basic-html/1.1.19.8-workshop-build-a-video-display-using-iframe.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/assets/PENDING.md"
+    ]
+  },
+  {
+    "url": "https://www.youtube.com/embed/OXGznpKZ_sA?si=s3KDSZvrhU_PU9XL",
+    "local": "assets/vendor/www.youtube.com/embed/OXGznpKZ_sA",
+    "kind": "embed",
+    "status": "pending",
+    "files": [
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/1-html/1.1-basic-html/1.1.20-lab-video-compilation-page.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/assets/PENDING.md"
+    ]
+  },
+  {
+    "url": "https://www.youtube.com/embed/PkZNo7MFNFg?si=-UBVIUNM3csdeiWF",
+    "local": "assets/vendor/www.youtube.com/embed/PkZNo7MFNFg",
+    "kind": "embed",
+    "status": "pending",
+    "files": [
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/1-html/1.1-basic-html/1.1.18.2-lecture-working-with-media.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/1-html/1.1-basic-html/1.1.22-review-basic-html.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/assets/PENDING.md"
+    ]
+  },
+  {
+    "url": "https://www.youtube.com/embed/jS4aFq5-91M?si=zKQhHEYwU4tnMmVm",
+    "local": "assets/vendor/www.youtube.com/embed/jS4aFq5-91M",
+    "kind": "embed",
+    "status": "pending",
+    "files": [
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/1-html/1.1-basic-html/1.1.20-lab-video-compilation-page.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/assets/PENDING.md"
+    ]
+  },
+  {
+    "url": "https://www.youtube.com/embed/u43gJJrVa1I?si=BoDW_puFsy8OEr_Z",
+    "local": "assets/vendor/www.youtube.com/embed/u43gJJrVa1I",
+    "kind": "embed",
+    "status": "pending",
+    "files": [
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/1-html/1.1-basic-html/1.1.18.1-lecture-working-with-media.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/assets/PENDING.md"
+    ]
+  },
+  {
+    "url": "https://www.youtube.com/freecodecamp",
+    "local": "assets/vendor/www.youtube.com/freecodecamp",
+    "kind": "embed",
+    "status": "pending",
+    "files": [
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/3-css/3.18-css-grid/3.18.2.21-workshop-magazine.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/3-css/3.18-css-grid/3.18.2.59-workshop-magazine.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/3-css/3.18-css-grid/3.18.2.39-workshop-magazine.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/3-css/3.18-css-grid/3.18.2.27-workshop-magazine.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/3-css/3.18-css-grid/3.18.2.12-workshop-magazine.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/3-css/3.18-css-grid/3.18.2.35-workshop-magazine.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/3-css/3.18-css-grid/3.18.2.63-workshop-magazine.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/3-css/3.18-css-grid/3.18.2.34-workshop-magazine.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/3-css/3.18-css-grid/3.18.2.49-workshop-magazine.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/3-css/3.18-css-grid/3.18.2.56-workshop-magazine.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/3-css/3.18-css-grid/3.18.2.9-workshop-magazine.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/3-css/3.18-css-grid/3.18.2.67-workshop-magazine.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/3-css/3.18-css-grid/3.18.2.62-workshop-magazine.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/3-css/3.18-css-grid/3.18.2.55-workshop-magazine.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/3-css/3.18-css-grid/3.18.2.33-workshop-magazine.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/3-css/3.18-css-grid/3.18.2.57-workshop-magazine.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/3-css/3.18-css-grid/3.18.2.76-workshop-magazine.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/3-css/3.18-css-grid/3.18.2.64-workshop-magazine.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/3-css/3.18-css-grid/3.18.2.71-workshop-magazine.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/3-css/3.18-css-grid/3.18.2.28-workshop-magazine.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/3-css/3.18-css-grid/3.18.2.25-workshop-magazine.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/3-css/3.18-css-grid/3.18.2.15-workshop-magazine.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/3-css/3.18-css-grid/3.18.2.51-workshop-magazine.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/3-css/3.18-css-grid/3.18.2.45-workshop-magazine.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/3-css/3.18-css-grid/3.18.2.50-workshop-magazine.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/3-css/3.18-css-grid/3.18.2.53-workshop-magazine.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/3-css/3.18-css-grid/3.18.2.54-workshop-magazine.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/3-css/3.18-css-grid/3.18.2.20-workshop-magazine.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/3-css/3.18-css-grid/3.18.2.72-workshop-magazine.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/3-css/3.18-css-grid/3.18.2.52-workshop-magazine.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/3-css/3.18-css-grid/3.18.2.46-workshop-magazine.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/3-css/3.18-css-grid/3.18.2.5-workshop-magazine.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/3-css/3.18-css-grid/3.18.2.7-workshop-magazine.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/3-css/3.18-css-grid/3.18.2.73-workshop-magazine.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/3-css/3.18-css-grid/3.18.2.23-workshop-magazine.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/3-css/3.18-css-grid/3.18.2.41-workshop-magazine.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/3-css/3.18-css-grid/3.18.2.44-workshop-magazine.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/3-css/3.18-css-grid/3.18.2.48-workshop-magazine.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/3-css/3.18-css-grid/3.18.2.17-workshop-magazine.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/3-css/3.18-css-grid/3.18.2.65-workshop-magazine.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/3-css/3.18-css-grid/3.18.2.70-workshop-magazine.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/3-css/3.18-css-grid/3.18.2.22-workshop-magazine.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/3-css/3.18-css-grid/3.18.2.14-workshop-magazine.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/3-css/3.18-css-grid/3.18.2.19-workshop-magazine.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/3-css/3.18-css-grid/3.18.2.43-workshop-magazine.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/3-css/3.18-css-grid/3.18.2.8-workshop-magazine.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/3-css/3.18-css-grid/3.18.2.30-workshop-magazine.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/3-css/3.18-css-grid/3.18.2.6-workshop-magazine.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/3-css/3.18-css-grid/3.18.2.40-workshop-magazine.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/3-css/3.18-css-grid/3.18.2.69-workshop-magazine.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/3-css/3.18-css-grid/3.18.2.26-workshop-magazine.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/3-css/3.18-css-grid/3.18.2.38-workshop-magazine.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/3-css/3.18-css-grid/3.18.2.60-workshop-magazine.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/3-css/3.18-css-grid/3.18.2.24-workshop-magazine.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/3-css/3.18-css-grid/3.18.2.42-workshop-magazine.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/3-css/3.18-css-grid/3.18.2.66-workshop-magazine.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/3-css/3.18-css-grid/3.18.2.10-workshop-magazine.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/3-css/3.18-css-grid/3.18.2.18-workshop-magazine.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/3-css/3.18-css-grid/3.18.2.13-workshop-magazine.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/3-css/3.18-css-grid/3.18.2.31-workshop-magazine.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/3-css/3.18-css-grid/3.18.2.36-workshop-magazine.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/3-css/3.18-css-grid/3.18.2.37-workshop-magazine.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/3-css/3.18-css-grid/3.18.2.68-workshop-magazine.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/3-css/3.18-css-grid/3.18.2.74-workshop-magazine.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/3-css/3.18-css-grid/3.18.2.11-workshop-magazine.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/3-css/3.18-css-grid/3.18.2.32-workshop-magazine.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/3-css/3.18-css-grid/3.18.2.16-workshop-magazine.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/3-css/3.18-css-grid/3.18.2.58-workshop-magazine.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/3-css/3.18-css-grid/3.18.2.47-workshop-magazine.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/3-css/3.18-css-grid/3.18.2.75-workshop-magazine.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/3-css/3.18-css-grid/3.18.2.61-workshop-magazine.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/3-css/3.18-css-grid/3.18.2.29-workshop-magazine.md",
+      "/home/nexuss0781/Desktop/Nex/Digital-edu/courses/Responsive-Web-Design/assets/PENDING.md"
+    ]
+  }
+]
