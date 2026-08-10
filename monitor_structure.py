@@ -85,10 +85,21 @@ def path_to_id(rel_path):
     return '/'.join(cleaned) if cleaned else 'root'
 
 
+_TITLE_ACRONYMS = {
+    'html', 'css', 'js', 'api', 'json', 'pdf', 'svg', 'ai', 'ui', 'ux',
+    'http', 'https', 'url', 'uri', 'dom', 'rgb', 'id', 'seo', 'sql', 'git', 'npm',
+}
+
+
 def name_to_title(name):
     name = name.replace('.md', '')
     name = re.sub(r'^[\d.\s]+', '', name).strip()
-    return name
+    name = re.sub(r'^[-_]+|[-_]+$', '', name)
+    words = [w for w in re.split(r'[-_\s]+', name) if w]
+    return ' '.join(
+        w.upper() if w.lower() in _TITLE_ACRONYMS else w.capitalize()
+        for w in words
+    )
 
 
 def parse_front_matter(filepath):
@@ -99,7 +110,7 @@ def parse_front_matter(filepath):
         return {}, ''
     match = FRONT_MATTER_RE.match(content)
     if not match:
-        return {'type': 'note'}, content
+        return {'type': 'lecture'}, content
     try:
         meta = yaml.safe_load(match.group(1))
     except yaml.YAMLError:
@@ -111,9 +122,11 @@ def parse_front_matter(filepath):
 
 def normalize_type(raw):
     if not raw:
-        return 'note'
+        return 'lecture'
     aliases = {
-        'notes': 'note', 'note': 'note',
+        'note': 'lecture', 'notes': 'lecture', 'lecture': 'lecture', 'lectures': 'lecture',
+        'review': 'review', 'reviews': 'review',
+        'pdf': 'pdf',
         'quiz': 'quiz', 'quizzes': 'quiz', 'quizs': 'quiz', 'quizes': 'quiz',
         'test': 'test', 'tests': 'test',
         'exam': 'exam', 'exams': 'exam',
@@ -165,7 +178,7 @@ def scan_directory(base_path, rel_path='', depth=0):
             })
         elif name.endswith('.md'):
             meta, _ = parse_front_matter(full_entry_path)
-            ctype = normalize_type(meta.get('type', 'note'))
+            ctype = normalize_type(meta.get('type', 'lecture'))
             entries.append({
                 'name': name,
                 'path': entry_path.replace('\\', '/'),
@@ -175,13 +188,84 @@ def scan_directory(base_path, rel_path='', depth=0):
                 'sort_key': get_sort_key(name),
                 'depth': depth,
             })
+        elif name.lower().endswith('.pdf'):
+            entries.append({
+                'name': name,
+                'path': entry_path.replace('\\', '/'),
+                'type': 'pdf',
+                'id': content_id,
+                'title': title,
+                'sort_key': get_sort_key(name),
+                'depth': depth,
+            })
 
     entries.sort(key=lambda e: e['sort_key'])
     return entries
 
 
+def _get_workshop_groups():
+    groups_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'scripts', 'workshop_groups.json')
+    if not os.path.exists(groups_path):
+        return []
+    try:
+        import json
+        with open(groups_path, 'r') as f:
+            data = json.load(f)
+        return data.get('workshop_groups', [])
+    except (json.JSONDecodeError, OSError):
+        return []
+
+
+def _remove_steps_and_insert_parents(tree, groups):
+    step_to_parent = {}
+    for g in groups:
+        for s in g['steps']:
+            step_to_parent[s['id']] = g
+
+    _step_ids_all = set(step_to_parent.keys())
+
+    def walk(entries):
+        for e in entries:
+            if e.get('type') == 'category' and 'children' in e:
+                walk(e['children'])
+
+        group_indices = {}
+        for idx, entry in enumerate(entries):
+            eid = entry.get('id')
+            if eid in _step_ids_all:
+                pid = step_to_parent[eid]['parent_id']
+                if pid not in group_indices:
+                    group_indices[pid] = []
+                group_indices[pid].append(idx)
+
+        if not group_indices:
+            return
+
+        groups_sorted = sorted(group_indices.items(), key=lambda x: x[1][0], reverse=True)
+        for pid, indices in groups_sorted:
+            g = step_to_parent[entries[indices[0]]['id']]
+            parent_entry = {
+                'name': g['title'],
+                'path': g['directory_path'],
+                'type': 'workshop',
+                'id': pid,
+                'title': g['title'],
+                'step_count': g['step_count'],
+            }
+            pos = indices[0]
+            for idx in reversed(indices):
+                del entries[idx]
+            entries.insert(pos, parent_entry)
+
+    walk(tree)
+
+
 def scan_courses(courses_dir):
-    return scan_directory(courses_dir)
+    tree = scan_directory(courses_dir)
+    groups = _get_workshop_groups()
+    if groups:
+        _remove_steps_and_insert_parents(tree, groups)
+    return tree
 
 
 def save_tree(tree, courses_dir):

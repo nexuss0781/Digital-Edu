@@ -4,8 +4,9 @@ from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
 from .. import db
 from ..models.progress import Progress
+from ..models.admin import Restriction
 from ..models.badge import Badge, UserBadge, ActivityLog
-from ..services.course_parser import get_content_by_id
+from ..services.course_parser import get_content_by_id, get_all_content_ids
 from ..services.validator import get_validator
 
 progress_api = Blueprint('progress_api', __name__, url_prefix='/api/progress')
@@ -60,6 +61,8 @@ def get_progress(content_id):
 @progress_api.route('/<content_id>/step', methods=['POST'])
 @login_required
 def save_step(content_id):
+    if Restriction.query.filter_by(user_id=current_user.id, content_id=content_id).first():
+        return jsonify({'error': 'Content is restricted for your account'}), 403
     data = request.get_json()
     step_index = data.get('step_index', 0)
     code = data.get('code', '')
@@ -88,6 +91,8 @@ def save_step(content_id):
 @progress_api.route('/<content_id>/complete', methods=['POST'])
 @login_required
 def complete_content(content_id):
+    if Restriction.query.filter_by(user_id=current_user.id, content_id=content_id).first():
+        return jsonify({'error': 'Content is restricted for your account'}), 403
     data = request.get_json() or {}
 
     p = Progress.query.filter_by(
@@ -97,7 +102,7 @@ def complete_content(content_id):
         p = Progress(
             user_id=current_user.id,
             content_id=content_id,
-            content_type=data.get('content_type', 'note'),
+            content_type=data.get('content_type', 'lecture'),
             completed=True,
             score=data.get('score'),
             passed=data.get('passed'),
@@ -128,12 +133,49 @@ def complete_content(content_id):
     # Check and award badges
     _check_badges(current_user.id)
 
+    # Pass-locked items: when current is completed, unlock the next item
+    _unlock_next_pass(content_id)
+
     return jsonify({'completed': True})
+
+
+def _unlock_next_pass(completed_id):
+    """When an item is completed, unlock the next pass-locked item."""
+    from ..services.course_parser import get_course_tree, load_structure, save_structure
+
+    tree = get_course_tree()
+    metadata = load_structure()
+
+    flat = []
+    def flatten(entries):
+        for e in entries:
+            flat.append(e)
+            if 'children' in e:
+                flatten(e['children'])
+    flatten(tree)
+
+    for i, item in enumerate(flat):
+        if item.get('id') == completed_id:
+            for j in range(i + 1, len(flat)):
+                next_item = flat[j]
+                if next_item.get('type') != 'category':
+                    cid = next_item.get('id')
+                    if cid in metadata:
+                        entry = metadata[cid]
+                        if entry.get('lock_type') == 'pass':
+                            del entry['lock_type']
+                            if 'lock_value' in entry:
+                                del entry['lock_value']
+                            save_structure(metadata)
+                    break
+            break
 
 
 @progress_api.route('/<content_id>/submit', methods=['POST'])
 @login_required
 def submit_project(content_id):
+    if Restriction.query.filter_by(user_id=current_user.id, content_id=content_id).first():
+        return jsonify({'error': 'Content is restricted for your account'}), 403
     data = request.get_json()
     code = data.get('code', '')
 
@@ -249,9 +291,7 @@ def _check_badges(user_id):
                 if completed_count >= 10:
                     earned = True
             elif event_type == 'all_courses':
-                from ..services.course_parser import load_structure
-                structure = load_structure()
-                all_ids = set(k for k, v in structure.items() if v.get('type') not in ('category', 'note'))
+                all_ids = get_all_content_ids()
                 completed_ids = set()
                 for p in Progress.query.filter_by(user_id=user_id, completed=True).all():
                     completed_ids.add(p.content_id)

@@ -1,4 +1,5 @@
 from datetime import datetime
+from sqlalchemy import UniqueConstraint
 from .. import db
 
 
@@ -42,3 +43,19 @@ class Certificate(db.Model):
 
     user = db.relationship('User', backref=db.backref('certificates_list', lazy=True))
     template = db.relationship('CertificateTemplate', backref=db.backref('certificates', lazy=True))
+
+
+class Restriction(db.Model):
+    __tablename__ = 'restrictions'
+
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    content_id = db.Column(db.String(200), nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    created_by = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+
+    __table_args__ = (
+        UniqueConstraint('user_id', 'content_id', name='uq_user_content'),
+    )
+
+    user = db.relationship('User', foreign_keys=[user_id], backref=db.backref('restrictions', lazy='dynamic'))

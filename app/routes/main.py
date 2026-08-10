@@ -12,7 +12,7 @@ main_bp = Blueprint('main', __name__)
 def index():
     if current_user.is_authenticated:
         if current_user.role in ('admin', 'instructor'):
-            return redirect(url_for('admin.dashboard'))
+            return redirect('/admin')
         return redirect(url_for('main.dashboard'))
     return render_template('pages/landing.html')
 

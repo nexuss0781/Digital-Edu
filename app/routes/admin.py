@@ -2,17 +2,17 @@ import json
 import os
 from datetime import datetime, timedelta
 import yaml
-from flask import Blueprint, render_template, redirect, url_for, flash, request, jsonify, current_app
-from flask_login import login_required, current_user
+from flask import Blueprint, request, jsonify, current_app, send_file
+from flask_login import current_user
 from .. import db
 from ..models.user import User
 from ..models.progress import Progress
-from ..models.admin import Ban, Certificate, CertificateTemplate
+from ..models.admin import Ban, Certificate, CertificateTemplate, Restriction
 from ..models.badge import Badge, UserBadge, ActivityLog
 from ..services.course_parser import (
     get_course_tree, get_content_by_id, capture_structure,
     load_structure, save_structure, build_structure_index,
-    parse_front_matter,
+    parse_front_matter, invalidate_cache,
 )
 
 admin_bp = Blueprint('admin', __name__, url_prefix='/admin')
@@ -22,38 +22,30 @@ def admin_required(f):
     from functools import wraps
     @wraps(f)
     def decorated(*args, **kwargs):
-        if not current_user.is_authenticated or current_user.role not in ('admin', 'instructor'):
-            flash('Admin access required', 'error')
-            return redirect(url_for('main.index'))
+        if not current_user.is_authenticated:
+            return jsonify({'error': 'Authentication required'}), 401
+        if current_user.role not in ('admin', 'instructor'):
+            return jsonify({'error': 'Admin access required'}), 403
         return f(*args, **kwargs)
     return decorated
 
 
-@admin_bp.route('/')
-@login_required
+@admin_bp.route('/api/dashboard')
 @admin_required
-def dashboard():
+def api_dashboard():
     total_users = User.query.count()
     total_progress = Progress.query.count()
     completed = Progress.query.filter_by(completed=True).count()
-    structure = load_structure()
-    return render_template('pages/admin_dashboard.html',
-                           total_users=total_users,
-                           total_progress=total_progress,
-                           completed=completed,
-                           content_count=len(structure))
-
-
-@admin_bp.route('/content')
-@login_required
-@admin_required
-def content_tree():
-    structure = load_structure()
-    return render_template('pages/admin_content.html', tree=get_course_tree(), structure=structure)
+    tree_index = build_structure_index()
+    return jsonify({
+        'total_users': total_users,
+        'total_progress': total_progress,
+        'completed': completed,
+        'content_count': len(tree_index),
+    })
 
 
 @admin_bp.route('/api/structure', methods=['GET', 'POST'])
-@login_required
 @admin_required
 def api_structure():
     if request.method == 'POST':
@@ -65,7 +57,6 @@ def api_structure():
 
 
 @admin_bp.route('/api/capture', methods=['POST'])
-@login_required
 @admin_required
 def api_capture():
     structure = capture_structure()
@@ -73,22 +64,20 @@ def api_capture():
 
 
 @admin_bp.route('/api/update-item', methods=['POST'])
-@login_required
 @admin_required
 def api_update_item():
     data = request.get_json()
     item_id = data.get('id')
     updates = data.get('updates', {})
     structure = load_structure()
-    if item_id in structure:
-        structure[item_id].update(updates)
-        save_structure(structure)
-        return jsonify({'ok': True})
-    return jsonify({'error': 'Not found'}), 404
+    if item_id not in structure:
+        structure[item_id] = {}
+    structure[item_id].update(updates)
+    save_structure(structure)
+    return jsonify({'ok': True})
 
 
 @admin_bp.route('/api/batch-update', methods=['POST'])
-@login_required
 @admin_required
 def api_batch_update():
     data = request.get_json()
@@ -96,41 +85,43 @@ def api_batch_update():
     updates = data.get('updates', {})
     structure = load_structure()
     for item_id in ids:
-        if item_id in structure:
-            structure[item_id].update(updates)
+        if item_id not in structure:
+            structure[item_id] = {}
+        structure[item_id].update(updates)
     save_structure(structure)
     return jsonify({'ok': True})
 
 
-@admin_bp.route('/users')
-@login_required
-@admin_required
-def user_list():
-    users = User.query.all()
-    return render_template('pages/admin_users.html', users=users)
-
-
 @admin_bp.route('/api/users')
-@login_required
 @admin_required
 def api_users():
-    users = User.query.all()
+    search = request.args.get('q', '').strip()
+    query = User.query
+    if search:
+        like = f'%{search}%'
+        query = query.filter(
+            db.or_(User.username.ilike(like), User.email.ilike(like))
+        )
+    users = query.order_by(User.id).all()
     result = []
     for u in users:
         completed = Progress.query.filter_by(user_id=u.id, completed=True).count()
+        restriction_count = db.session.query(Restriction).filter_by(user_id=u.id).count()
         result.append({
             'id': u.id,
             'email': u.email,
             'username': u.username,
             'role': u.role,
             'banned': u.is_banned,
+            'muted': u.is_muted,
             'completed': completed,
+            'restriction_count': restriction_count,
+            'date_joined': u.date_joined.isoformat() if u.date_joined else None,
         })
     return jsonify(result)
 
 
 @admin_bp.route('/api/users/<int:user_id>/ban', methods=['POST'])
-@login_required
 @admin_required
 def api_ban_user(user_id):
     data = request.get_json()
@@ -154,7 +145,6 @@ def api_ban_user(user_id):
 
 
 @admin_bp.route('/api/users/<int:user_id>/unban', methods=['POST'])
-@login_required
 @admin_required
 def api_unban_user(user_id):
     bans = Ban.query.filter_by(user_id=user_id, active=True).all()
@@ -164,18 +154,63 @@ def api_unban_user(user_id):
     return jsonify({'ok': True})
 
 
-@admin_bp.route('/submissions')
-@login_required
+@admin_bp.route('/api/users/<int:user_id>/role', methods=['POST'])
 @admin_required
-def submissions():
-    projects = Progress.query.filter_by(content_type='project').filter(
-        Progress.submission.isnot(None)
-    ).all()
-    return render_template('pages/admin_submissions.html', projects=projects)
+def api_set_role(user_id):
+    u = db.session.get(User, user_id)
+    if not u:
+        return jsonify({'error': 'User not found'}), 404
+    data = request.get_json()
+    role = data.get('role', 'student')
+    if role not in ('student', 'admin', 'instructor'):
+        return jsonify({'error': 'Invalid role'}), 400
+    if role == 'admin':
+        role = 'instructor'
+    u.role = role
+    db.session.commit()
+    return jsonify({'ok': True, 'role': u.role})
+
+
+@admin_bp.route('/api/users/<int:user_id>/mute', methods=['POST'])
+@admin_required
+def api_toggle_mute(user_id):
+    u = db.session.get(User, user_id)
+    if not u:
+        return jsonify({'error': 'User not found'}), 404
+    data = request.get_json() or {}
+    muted = data.get('muted', not u.muted)
+    u.muted = muted
+    db.session.commit()
+    return jsonify({'ok': True, 'muted': u.muted})
+
+
+@admin_bp.route('/api/users/<int:user_id>/restrictions', methods=['GET', 'POST'])
+@admin_required
+def api_restrictions(user_id):
+    u = db.session.get(User, user_id)
+    if not u:
+        return jsonify({'error': 'User not found'}), 404
+
+    if request.method == 'POST':
+        data = request.get_json() or {}
+        content_ids = data.get('content_ids', [])
+
+        old = Restriction.query.filter_by(user_id=user_id).all()
+        for r in old:
+            db.session.delete(r)
+
+        for cid in content_ids:
+            r = Restriction(user_id=user_id, content_id=cid, created_by=current_user.id)
+            db.session.add(r)
+
+        db.session.commit()
+        return jsonify({'ok': True, 'count': len(content_ids)})
+
+    restrictions = Restriction.query.filter_by(user_id=user_id).all()
+    return jsonify([{'id': r.id, 'content_id': r.content_id, 'created_at': r.created_at.isoformat() if r.created_at else None} for r in restrictions])
 
 
 @admin_bp.route('/api/submissions')
-@login_required
 @admin_required
 def api_submissions():
     projects = Progress.query.filter_by(content_type='project').filter(
@@ -197,7 +232,6 @@ def api_submissions():
 
 
 @admin_bp.route('/api/submissions/<int:progress_id>/verdict', methods=['POST'])
-@login_required
 @admin_required
 def api_submission_verdict(progress_id):
     data = request.get_json()
@@ -212,19 +246,7 @@ def api_submission_verdict(progress_id):
     return jsonify({'error': 'Not found'}), 404
 
 
-@admin_bp.route('/certificates')
-@login_required
-@admin_required
-def certificates():
-    templates = CertificateTemplate.query.all()
-    tree_index = build_structure_index()
-    return render_template('pages/admin_certificates.html',
-                           templates=templates,
-                           tree_index=tree_index)
-
-
 @admin_bp.route('/api/certificate-templates', methods=['GET', 'POST'])
-@login_required
 @admin_required
 def api_cert_templates():
     if request.method == 'POST':
@@ -254,7 +276,6 @@ def api_cert_templates():
 
 
 @admin_bp.route('/api/certificate-templates/<int:template_id>', methods=['PUT'])
-@login_required
 @admin_required
 def api_update_cert_template(template_id):
     tpl = db.session.get(CertificateTemplate, template_id)
@@ -269,7 +290,6 @@ def api_update_cert_template(template_id):
 
 
 @admin_bp.route('/api/award-certificate', methods=['POST'])
-@login_required
 @admin_required
 def api_award_certificate():
     data = request.get_json()
@@ -292,7 +312,6 @@ def api_award_certificate():
 
 
 @admin_bp.route('/api/certificates')
-@login_required
 @admin_required
 def api_certificates():
     certs = Certificate.query.all()
@@ -310,7 +329,6 @@ def api_certificates():
 
 
 @admin_bp.route('/api/content-preview/<path:content_id>')
-@login_required
 @admin_required
 def api_content_preview(content_id):
     content = get_content_by_id(content_id)
@@ -326,7 +344,6 @@ def api_content_preview(content_id):
 
 
 @admin_bp.route('/api/save-content', methods=['POST'])
-@login_required
 @admin_required
 def api_save_content():
     data = request.get_json()
@@ -347,18 +364,7 @@ def api_save_content():
     return jsonify({'ok': True})
 
 
-# ---- Badge Management ----
-
-@admin_bp.route('/badges')
-@login_required
-@admin_required
-def badge_list():
-    badges = Badge.query.all()
-    return render_template('pages/admin_badges.html', badges=badges)
-
-
 @admin_bp.route('/api/badges', methods=['GET', 'POST'])
-@login_required
 @admin_required
 def api_badges():
     if request.method == 'POST':
@@ -389,7 +395,6 @@ def api_badges():
 
 
 @admin_bp.route('/api/badges/<int:badge_id>', methods=['PUT'])
-@login_required
 @admin_required
 def api_update_badge(badge_id):
     badge = db.session.get(Badge, badge_id)
@@ -406,7 +411,6 @@ def api_update_badge(badge_id):
 
 
 @admin_bp.route('/api/badges/<int:badge_id>/toggle', methods=['POST'])
-@login_required
 @admin_required
 def api_toggle_badge(badge_id):
     badge = db.session.get(Badge, badge_id)
@@ -418,7 +422,6 @@ def api_toggle_badge(badge_id):
 
 
 @admin_bp.route('/api/badges/award', methods=['POST'])
-@login_required
 @admin_required
 def api_award_badge():
     data = request.get_json()
@@ -440,7 +443,6 @@ def api_award_badge():
 import uuid
 
 @admin_bp.route('/api/upload', methods=['POST'])
-@login_required
 @admin_required
 def upload_file():
     if 'file' not in request.files:
@@ -457,8 +459,13 @@ def upload_file():
     f.save(os.path.join(upload_dir, filename))
     return jsonify({'url': '/upload/' + filename})
 
+@admin_bp.route('/api/course-tree')
+@admin_required
+def api_course_tree():
+    return jsonify(get_course_tree(sorted=False))
+
+
 @admin_bp.route('/api/activity/<int:user_id>')
-@login_required
 @admin_required
 def api_user_activity(user_id):
     from datetime import date, timedelta
@@ -472,3 +479,17 @@ def api_user_activity(user_id):
     for log in logs:
         result[log.date.isoformat()] = log.count
     return jsonify(result)
+
+
+_SPA_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), 'static', 'spa')
+
+
+@admin_bp.route('/')
+@admin_bp.route('/<path:path>')
+def admin_spa_fallback(path=''):
+    if path.startswith('api/'):
+        return jsonify({'error': 'Not found'}), 404
+    spa_index = os.path.join(_SPA_DIR, 'index.html')
+    if os.path.isfile(spa_index):
+        return send_file(spa_index)
+    return jsonify({'error': 'Not found'}), 404

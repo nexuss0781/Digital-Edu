@@ -11,7 +11,9 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(80), unique=True, nullable=False)
     password_hash = db.Column(db.String(256), nullable=False)
     role = db.Column(db.String(20), nullable=False, default='student')
+    date_joined = db.Column(db.DateTime, default=__import__('datetime').datetime.utcnow)
     profile_visibility = db.Column(db.String(20), default='public')
+    muted = db.Column(db.Boolean, default=False)
 
     certifications = db.Column(db.Text, default='')
     achievements = db.Column(db.Text, default='')
@@ -35,12 +37,18 @@ class User(UserMixin, db.Model):
         ).first()
         return active_ban is not None
 
+    @property
+    def is_muted(self):
+        return self.muted
+
     def to_dict(self):
         return {
             'id': self.id,
             'email': self.email,
             'username': self.username,
             'role': self.role,
+            'muted': self.muted,
+            'date_joined': self.date_joined.isoformat() if self.date_joined else None,
         }
 
 

@@ -1,10 +1,12 @@
 import os
 import atexit
+import re
 from flask import Flask, flash, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, current_user
 from flask_session import Session
 from flask_migrate import Migrate
+from flask_cors import CORS
 from config import Config
 
 db = SQLAlchemy()
@@ -37,21 +39,58 @@ def create_app(config_class=Config):
     login_manager.init_app(application)
     sess.init_app(application)
     migrate.init_app(application, db)
+    CORS(
+        application,
+        origins=[
+            "http://localhost:3000",
+            "http://127.0.0.1:3000",
+            re.compile(r"^http://(localhost|127\.0\.0\.1):\d+$"),
+        ],
+        supports_credentials=True,
+    )
 
     login_manager.login_view = 'auth.login'
     login_manager.login_message_category = 'info'
+
+    @application.template_global()
+    def countAll(items):
+        if not items:
+            return 0
+        n = 0
+        for item in items:
+            if item.get('type') != 'category':
+                n += 1
+            else:
+                n += countAll(item.get('children', []))
+        return n
+
+    @application.template_global()
+    def countCompleted(items):
+        if not items:
+            return 0
+        n = 0
+        for item in items:
+            if item.get('completed') and item.get('type') != 'category':
+                n += 1
+            elif item.get('type') == 'category':
+                n += countCompleted(item.get('children', []))
+        return n
 
     from .routes.auth import auth_bp
     from .routes.main import main_bp
     from .routes.courses import courses_bp
     from .routes.progress_api import progress_api, validate_api
     from .routes.admin import admin_bp
+    from .routes.api import api_bp
+    from .routes.spa import spa_bp
     application.register_blueprint(auth_bp)
     application.register_blueprint(main_bp)
     application.register_blueprint(courses_bp)
     application.register_blueprint(progress_api)
     application.register_blueprint(validate_api)
     application.register_blueprint(admin_bp)
+    application.register_blueprint(api_bp)
+    application.register_blueprint(spa_bp)
 
     @application.before_request
     def check_banned():

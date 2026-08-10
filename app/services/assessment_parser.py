@@ -35,7 +35,8 @@ ANSWER_LINE_RE = re.compile(r'^Answer:\s*([A-Da-d])', re.MULTILINE)
 # ---------- content type normalizer ----------
 
 TYPE_ALIASES = {
-    'notes': 'note', 'note': 'note',
+    'note': 'lecture', 'notes': 'lecture', 'lecture': 'lecture', 'lectures': 'lecture',
+    'review': 'review', 'reviews': 'review',
     'quiz': 'quiz', 'quizzes': 'quiz', 'quizs': 'quiz', 'quizes': 'quiz',
     'test': 'test', 'tests': 'test',
     'exam': 'exam', 'exams': 'exam',
@@ -47,7 +48,7 @@ TYPE_ALIASES = {
 
 def normalize_type(raw):
     if not raw:
-        return 'note'
+        return 'lecture'
     key = raw.strip().lower()
     return TYPE_ALIASES.get(key, key)
 
@@ -91,19 +92,32 @@ def _parse_question_items(text):
 
 # ---------- main parser ----------
 
-VALID_TYPES = {'note', 'quiz', 'test', 'exam', 'workshop', 'practical'}
+VALID_TYPES = {'lecture', 'quiz', 'test', 'exam', 'workshop', 'practical'}
 
 
 def parse_content(content_type, body):
     ct = normalize_type(content_type)
 
-    if ct == 'note':
+    if ct == 'lecture':
+        lecture_data = _parse_fcc_lecture(body)
+        if lecture_data['questions']:
+            return [{
+                'type': 'lecture_quiz',
+                'questions': lecture_data['questions'],
+                'content_section': lecture_data['content_section'],
+                'content_type': lecture_data['content_type'],
+                'interactive_blocks': lecture_data['interactive_blocks'],
+            }]
         questions = _parse_questions(body)
         if questions:
             return [{'type': 'quiz', 'questions': questions}]
         return []
 
     if ct in ('quiz', 'test', 'exam'):
+        if ct in ('test', 'exam'):
+            fcc_questions = _parse_fcc_test_questions(body)
+            if fcc_questions:
+                return [{'type': 'quiz', 'questions': fcc_questions, 'question_count': len(fcc_questions)}]
         questions = _parse_questions(body)
         return [{'type': ct, 'questions': questions}]
 
@@ -168,6 +182,176 @@ def _parse_requirements(body):
                 item['goal'] = req_match.group(3)
             reqs.append(item)
     return reqs
+
+
+# ---------- FCC lecture parser ----------
+
+def _parse_fcc_lecture(body):
+    """Parse FCC-format lecture markdown into structured data."""
+    result = {
+        'content_section': '',
+        'content_type': 'description',
+        'interactive_blocks': [],
+        'questions': [],
+    }
+
+    if not body or not body.strip():
+        return result
+
+    questions_match = re.search(r'^# --questions--\s*$', body, re.MULTILINE)
+
+    if questions_match:
+        content_raw = body[:questions_match.start()].strip()
+        questions_raw = body[questions_match.end():].strip()
+    else:
+        content_raw = body.strip()
+        questions_raw = ''
+
+    if content_raw.startswith('# --interactive--'):
+        result['content_type'] = 'interactive'
+        content_raw = content_raw[len('# --interactive--'):].strip()
+    elif content_raw.startswith('# --description--'):
+        result['content_type'] = 'description'
+        content_raw = content_raw[len('# --description--'):].strip()
+
+    content_raw = re.sub(r'^# --assignment--\s*\n?', '', content_raw, flags=re.MULTILINE).strip()
+    content_raw = re.sub(r'^# --instructions--\s*\n?', '', content_raw, flags=re.MULTILINE).strip()
+
+    editor_pattern = re.compile(r':::interactive_editor\s*\n(.*?)\n:::', re.DOTALL)
+    blocks = []
+    for m in editor_pattern.finditer(content_raw):
+        block_content = m.group(1).strip()
+        code_pattern = re.compile(r'```(\w+)\s*\n(.*?)```', re.DOTALL)
+        for code_m in code_pattern.finditer(block_content):
+            blocks.append({
+                'lang': code_m.group(1).lower(),
+                'code': code_m.group(2).strip(),
+            })
+    result['interactive_blocks'] = blocks
+
+    cleaned = editor_pattern.sub('', content_raw).strip()
+    cleaned = re.sub(r'^:::\s*$', '', cleaned, flags=re.MULTILINE).strip()
+    result['content_section'] = cleaned
+
+    if questions_raw:
+        result['questions'] = _parse_fcc_questions(questions_raw)
+
+    return result
+
+
+def _parse_fcc_questions(text):
+    """Parse FCC question format into structured question list."""
+    questions = []
+    parts = re.split(r'^## --text--\s*$', text, flags=re.MULTILINE)
+
+    for part in parts[1:]:
+        question = _parse_single_fcc_question(part.strip())
+        if question:
+            questions.append(question)
+
+    return questions
+
+
+def _parse_single_fcc_question(text):
+    """Parse a single FCC question block."""
+    answers_split = re.split(r'^## --answers--\s*$', text, flags=re.MULTILINE)
+    if len(answers_split) < 2:
+        return None
+
+    question_text = answers_split[0].strip()
+    answers_raw = answers_split[1].strip()
+
+    video_match = re.search(r'^## --video-solution--\s*\n\s*(\d+)', answers_raw, re.MULTILINE)
+    correct_index = 0
+    if video_match:
+        correct_index = int(video_match.group(1)) - 1
+        answers_raw = answers_raw[:video_match.start()].strip()
+
+    answer_parts = re.split(r'^---\s*$', answers_raw, flags=re.MULTILINE)
+
+    options = []
+    for ans in answer_parts:
+        ans = ans.strip()
+        if not ans:
+            continue
+
+        feedback_match = re.search(r'^### --feedback--\s*\n\s*(.*?)$', ans, re.MULTILINE | re.DOTALL)
+        feedback = None
+        answer_text = ans
+        if feedback_match:
+            feedback = feedback_match.group(1).strip()
+            answer_text = ans[:feedback_match.start()].strip()
+
+        options.append({
+            'text': answer_text,
+            'feedback': feedback,
+        })
+
+    if not options:
+        return None
+
+    return {
+        'text': question_text,
+        'options': options,
+        'correct_index': min(correct_index, len(options) - 1),
+    }
+
+
+# ---------- FCC test/quiz parser ----------
+
+def _parse_fcc_test_questions(body):
+    """Parse FCC test/quiz format (# --quizzes--) into structured question list.
+
+    Format:
+      # --quizzes--
+        ## --quiz--
+          ### --question--
+            #### --text--
+            #### --distractors--  (3 options, --- separated)
+            #### --answer--
+    """
+    questions = []
+
+    quizzes_match = re.search(r'^# --quizzes--\s*$', body, re.MULTILINE)
+    if not quizzes_match:
+        return questions
+
+    quizzes_raw = body[quizzes_match.end():].strip()
+    quiz_sections = re.split(r'^## --quiz--\s*$', quizzes_raw, flags=re.MULTILINE)
+
+    for quiz_section in quiz_sections[1:]:
+        question_blocks = re.split(r'^### --question--\s*$', quiz_section, flags=re.MULTILINE)
+
+        for qblock in question_blocks[1:]:
+            qblock = qblock.strip()
+            if not qblock:
+                continue
+
+            text_m = re.search(r'^#### --text--\s*\n(.*?)(?=^#### --)', qblock, re.MULTILINE | re.DOTALL)
+            if not text_m:
+                continue
+
+            question_text = text_m.group(1).strip()
+
+            dist_m = re.search(r'^#### --distractors--\s*\n(.*?)(?=^#### --)', qblock, re.MULTILINE | re.DOTALL)
+            distractors = []
+            if dist_m:
+                parts = re.split(r'^---\s*$', dist_m.group(1).strip(), flags=re.MULTILINE)
+                distractors = [p.strip() for p in parts if p.strip()]
+
+            ans_m = re.search(r'^#### --answer--\s*\n(.*?)(?=^#### --|\Z)', qblock, re.MULTILINE | re.DOTALL)
+            correct_answer = ans_m.group(1).strip() if ans_m else ''
+
+            options = [{'text': d, 'feedback': None} for d in distractors]
+            options.append({'text': correct_answer, 'feedback': None})
+
+            questions.append({
+                'text': question_text,
+                'options': options,
+                'correct_index': len(distractors),
+            })
+
+    return questions
 
 
 # ---------- helpers ----------
