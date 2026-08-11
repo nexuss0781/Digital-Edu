@@ -1,0 +1,23 @@
+services:
+  digital-edu:
+    build: .
+    ports:
+      - "5199:5199"
+      - "5198:5198"
+    environment:
+      SECRET_KEY: ${SECRET_KEY:-dev-secret-key}
+      FLASK_PORT: "5199"
+      VITE_PORT: "5198"
+      VITE_API_PROXY: "http://127.0.0.1:5199"
+    volumes:
+      # live-edit the curriculum and keep the SQLite DB on the host
+      - ./courses:/app/courses
+      - ./instance:/app/instance
+      # HMR for the React app
+      - ./digital-edu-web/src:/app/digital-edu-web/src
+      # container-built node_modules (avoids host/container mismatch)
+      - node_modules:/app/digital-edu-web/node_modules
+    restart: unless-stopped
+
+volumes:
+  node_modules:
