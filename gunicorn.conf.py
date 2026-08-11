@@ -13,4 +13,5 @@ errorlog = os.getenv('GUNICORN_ERROR_LOG', '-')
 loglevel = os.getenv('GUNICORN_LOG_LEVEL', 'info')
 preload_app = False
 reload = os.getenv('GUNICORN_RELOAD', 'false').lower() in ('1', 'true', 'yes')
-reload_extra_files = ['app/templates/']
+if reload:
+    reload_extra_files = ['app/templates/']
