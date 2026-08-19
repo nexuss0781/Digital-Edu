@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import type React from 'react';
 import { Link } from 'react-router-dom';
 import {
-  ArrowRight, Menu, X, SquareCode, BookOpen, Hammer, ClipboardCheck,
+  ArrowRight, Download, Menu, X, SquareCode, BookOpen, Hammer, ClipboardCheck,
   Flame, Check, Award, TrendingUp, BadgeCheck, Wrench, Github, Twitter,
   Youtube,
 } from 'lucide-react';
@@ -1452,16 +1452,32 @@ function FinalCta() {
         <p className="de-anim" style={{ fontSize: 17, lineHeight: 1.7, color: INK2, margin: '18px 0 34px', animationName: 'de-fadeUp', animationDelay: '200ms' }}>
           Create your free account and write your first line of code today.
         </p>
-        <Link
-          to="/register"
-          className="de-focus de-cta"
-          style={{ display: 'inline-flex', alignItems: 'center', gap: 10, height: 52, padding: '0 34px', borderRadius: 12, fontSize: 16, fontWeight: 600, color: WHITE, textDecoration: 'none', background: BLUE, boxShadow: '0 16px 40px rgba(0,91,197,0.4)', transition: 'background .15s' }}
-          onMouseEnter={(e) => (e.currentTarget.style.background = SKY)}
-          onMouseLeave={(e) => (e.currentTarget.style.background = BLUE)}
-        >
-          Create free account
-          <ArrowRight size={17} className="de-arrow" />
-        </Link>
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
+          <Link
+            to="/register"
+            className="de-focus de-cta"
+            style={{ display: 'inline-flex', alignItems: 'center', gap: 10, height: 52, padding: '0 34px', borderRadius: 12, fontSize: 16, fontWeight: 600, color: WHITE, textDecoration: 'none', background: BLUE, boxShadow: '0 16px 40px rgba(0,91,197,0.4)', transition: 'background .15s' }}
+            onMouseEnter={(e) => (e.currentTarget.style.background = SKY)}
+            onMouseLeave={(e) => (e.currentTarget.style.background = BLUE)}
+          >
+            Create free account
+            <ArrowRight size={17} className="de-arrow" />
+          </Link>
+          <a
+            href="/downloads/DigitalEdu.exe"
+            download="DigitalEdu.exe"
+            className="de-focus"
+            style={{ display: 'inline-flex', alignItems: 'center', gap: 10, height: 52, padding: '0 26px', borderRadius: 12, fontSize: 15, fontWeight: 600, color: INK, textDecoration: 'none', background: 'rgba(23,249,255,0.10)', border: '1px solid rgba(23,249,255,0.4)', transition: 'background .15s, border-color .15s' }}
+            onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(23,249,255,0.18)'; e.currentTarget.style.borderColor = CYAN; }}
+            onMouseLeave={(e) => { e.currentTarget.style.background = 'rgba(23,249,255,0.10)'; e.currentTarget.style.borderColor = 'rgba(23,249,255,0.4)'; }}
+          >
+            <Download size={17} />
+            Download for Windows
+          </a>
+        </div>
+        <div style={{ marginTop: 14, fontFamily: FONT_MONO, fontSize: 11, color: INK3 }}>
+          Windows Professional · Offline installer · No internet required after download
+        </div>
       </div>
     </section>
   );

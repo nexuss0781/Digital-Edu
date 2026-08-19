@@ -1,25 +1,29 @@
-FROM python:3.12-slim
+# Build the React SPA during the image build so Render receives a self-contained image.
+FROM node:22-bookworm-slim AS frontend-builder
+WORKDIR /src/digital-edu-web
 
+COPY digital-edu-web/package*.json ./
+RUN npm ci
+
+COPY digital-edu-web/ ./
+RUN npm run build
+
+# Production Flask image.
+FROM python:3.12-slim
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
-    FLASK_PORT=5199 \
-    VITE_PORT=5198 \
-    VITE_API_PROXY=http://127.0.0.1:5199
+    DISABLE_COURSE_WATCHER=1 \
+    FLASK_PORT=10000
 
 WORKDIR /app
 
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends nodejs npm \
-    && rm -rf /var/lib/apt/lists/*
-
-COPY requirements.txt .
+COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY digital-edu-web/package*.json digital-edu-web/
-RUN cd digital-edu-web && npm install
+COPY . ./
+# Always use the SPA compiled in this Docker build, rather than stale generated files.
+COPY --from=frontend-builder /src/digital-edu-web/dist ./static/spa
 
-COPY . .
+EXPOSE 10000
 
-EXPOSE 5199 5198
-
-CMD ["python", "run_dev.py"]
+CMD ["sh", "-c", "exec gunicorn --bind 0.0.0.0:${PORT:-10000} --workers 1 --threads 4 --timeout 120 wsgi:app"]

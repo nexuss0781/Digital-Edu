@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: digital-edu
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DISABLE_COURSE_WATCHER
+        value: "1"

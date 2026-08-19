@@ -5,6 +5,7 @@ from paths import SPA_DIR, STATIC_DIR
 spa_bp = Blueprint('spa', __name__)
 
 _SPA_DIR = SPA_DIR
+_DOWNLOADS_DIR = os.path.join(STATIC_DIR, 'downloads')
 
 
 def serve_spa():
@@ -27,6 +28,15 @@ def spa_catch_all(path):
     if os.path.isfile(file_path):
         return send_from_directory(_SPA_DIR, path)
     return send_file(os.path.join(_SPA_DIR, 'index.html'))
+
+
+@spa_bp.route('/downloads/<path:filename>')
+def spa_download(filename):
+    """Serve public desktop installers and downloadable release files."""
+    file_path = os.path.join(_DOWNLOADS_DIR, filename)
+    if os.path.isfile(file_path):
+        return send_from_directory(_DOWNLOADS_DIR, filename, as_attachment=True)
+    abort(404)
 
 
 # Serve SPA assets at root /assets/... for admin SPA

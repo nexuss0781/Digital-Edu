@@ -1,9 +1,10 @@
 import os
-from flask import Blueprint, render_template, redirect, url_for, request, flash, send_from_directory, current_app
+from flask import Blueprint, redirect, url_for, request, flash, send_from_directory, send_file, current_app
 from flask_login import login_required, current_user
 from .. import db
 from ..models.progress import Progress
 from ..models.admin import Certificate
+from paths import SPA_DIR
 
 main_bp = Blueprint('main', __name__)
 
@@ -14,7 +15,7 @@ def index():
         if current_user.role in ('admin', 'instructor'):
             return redirect('/admin')
         return redirect(url_for('main.dashboard'))
-    return render_template('pages/landing.html')
+    return send_file(os.path.join(SPA_DIR, 'index.html'))
 
 
 @main_bp.route('/dashboard')
