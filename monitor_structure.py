@@ -18,6 +18,7 @@ import threading
 import yaml
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
+from paths import WORKSHOP_GROUPS_JSON
 
 STRUCTURE_FILE = 'course_structure.yaml'
 SIGNAL_FILE = '.structure_updated'
@@ -204,12 +205,11 @@ def scan_directory(base_path, rel_path='', depth=0):
 
 
 def _get_workshop_groups():
-    groups_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'scripts', 'workshop_groups.json')
-    if not os.path.exists(groups_path):
+    if not os.path.exists(WORKSHOP_GROUPS_JSON):
         return []
     try:
         import json
-        with open(groups_path, 'r') as f:
+        with open(WORKSHOP_GROUPS_JSON, 'r') as f:
             data = json.load(f)
         return data.get('workshop_groups', [])
     except (json.JSONDecodeError, OSError):
@@ -362,7 +362,8 @@ def main():
     if args.courses_dir:
         courses_dir = args.courses_dir
     else:
-        courses_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'courses')
+        from paths import COURSES_DIR
+        courses_dir = COURSES_DIR
 
     tree = scan_courses(courses_dir)
     path = save_tree(tree, courses_dir)

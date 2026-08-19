@@ -1,9 +1,18 @@
 import os
-from flask import Blueprint, send_from_directory, send_file, abort
+from flask import Blueprint, send_from_directory, send_file, abort, redirect, url_for
+from paths import SPA_DIR, STATIC_DIR
 
 spa_bp = Blueprint('spa', __name__)
 
-_SPA_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), 'static', 'spa')
+_SPA_DIR = SPA_DIR
+
+
+def serve_spa():
+    """Serve the built React SPA (Vite) index; fall back to /app."""
+    index = os.path.join(_SPA_DIR, 'index.html')
+    if os.path.isfile(index):
+        return send_file(index)
+    return redirect(url_for('spa.spa_index'))
 
 
 @spa_bp.route('/app/')
@@ -27,6 +36,25 @@ def spa_assets(filename):
     file_path = os.path.join(assets_dir, filename)
     if os.path.isfile(file_path):
         return send_from_directory(assets_dir, filename)
+    abort(404)
+
+
+# Serve SPA images at root /images/... (logo, noise, course placeholder)
+@spa_bp.route('/images/<path:filename>')
+def spa_images(filename):
+    images_dir = os.path.join(_SPA_DIR, 'images')
+    file_path = os.path.join(images_dir, filename)
+    if os.path.isfile(file_path):
+        return send_from_directory(images_dir, filename)
+    abort(404)
+
+
+# Default browser request for the site favicon; we only ship an SVG one.
+@spa_bp.route('/favicon.ico')
+def spa_favicon():
+    favicon = os.path.join(STATIC_DIR, 'favicon.svg')
+    if os.path.isfile(favicon):
+        return send_file(favicon, mimetype='image/svg+xml')
     abort(404)
 
 

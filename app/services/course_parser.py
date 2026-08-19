@@ -133,13 +133,12 @@ def _load_workshop_groups():
     global _WORKSHOP_GROUPS
     if _WORKSHOP_GROUPS is not None:
         return _WORKSHOP_GROUPS
-    groups_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))),
-                               'scripts', 'workshop_groups.json')
-    if not os.path.exists(groups_path):
+    from paths import WORKSHOP_GROUPS_JSON
+    if not os.path.exists(WORKSHOP_GROUPS_JSON):
         _WORKSHOP_GROUPS = []
         return _WORKSHOP_GROUPS
     try:
-        with open(groups_path, 'r') as f:
+        with open(WORKSHOP_GROUPS_JSON, 'r') as f:
             data = json.load(f)
         _WORKSHOP_GROUPS = data.get('workshop_groups', [])
     except (json.JSONDecodeError, OSError):

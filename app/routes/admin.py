@@ -4,6 +4,7 @@ from datetime import datetime, timedelta
 import yaml
 from flask import Blueprint, request, jsonify, current_app, send_file
 from flask_login import current_user
+from paths import SPA_DIR
 from .. import db
 from ..models.user import User
 from ..models.progress import Progress
@@ -481,7 +482,7 @@ def api_user_activity(user_id):
     return jsonify(result)
 
 
-_SPA_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), 'static', 'spa')
+_SPA_DIR = SPA_DIR
 
 
 @admin_bp.route('/')

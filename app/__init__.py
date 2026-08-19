@@ -8,6 +8,7 @@ from flask_session import Session
 from flask_migrate import Migrate
 from flask_cors import CORS
 from config import Config
+from paths import STATIC_DIR
 
 db = SQLAlchemy()
 login_manager = LoginManager()
@@ -32,7 +33,7 @@ def _start_course_watcher(courses_dir):
 
 
 def create_app(config_class=Config):
-    application = Flask(__name__, static_folder=os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'static'))
+    application = Flask(__name__, static_folder=STATIC_DIR)
     application.config.from_object(config_class)
 
     db.init_app(application)
@@ -103,6 +104,7 @@ def create_app(config_class=Config):
         db.create_all()
         from .services import course_parser
         course_parser.load_tree_cache()
-        _start_course_watcher(application.config['COURSES_DIR'])
+        if os.environ.get('DISABLE_COURSE_WATCHER') != '1':
+            _start_course_watcher(application.config['COURSES_DIR'])
 
     return application
