@@ -6,7 +6,8 @@ COPY digital-edu-web/package*.json ./
 RUN npm ci
 
 COPY digital-edu-web/ ./
-RUN npm run build
+# The package build script mirrors the repository layout and writes to ../static/spa.
+RUN mkdir -p /src/static && npm run build
 
 # Production Flask image.
 FROM python:3.12-slim
