@@ -1,40 +1,27 @@
 import os
-from flask import Blueprint, redirect, url_for, request, flash, send_from_directory, send_file, current_app
-from flask_login import login_required, current_user
+from flask import Blueprint, redirect, url_for, request, flash, send_from_directory, current_app
+from flask_login import login_required
 from .. import db
-from ..models.progress import Progress
-from ..models.admin import Certificate
-from paths import SPA_DIR
+from .spa import serve_spa
 
 main_bp = Blueprint('main', __name__)
 
 
 @main_bp.route('/')
 def index():
-    if current_user.is_authenticated:
-        if current_user.role in ('admin', 'instructor'):
-            return redirect('/admin')
-        return redirect(url_for('main.dashboard'))
-    return send_file(os.path.join(SPA_DIR, 'index.html'))
+    return serve_spa()
 
 
 @main_bp.route('/dashboard')
 @login_required
 def dashboard():
-    completed = Progress.query.filter_by(
-        user_id=current_user.id, completed=True
-    ).all()
-    return render_template('pages/user_dashboard.html', completed=completed)
+    return serve_spa()
 
 
 @main_bp.route('/profile')
 @login_required
 def profile():
-    certificates = Certificate.query.filter_by(user_id=current_user.id).all()
-    completed = Progress.query.filter_by(
-        user_id=current_user.id, completed=True
-    ).count()
-    return render_template('pages/profile.html', certificates=certificates, completed=completed)
+    return serve_spa()
 
 
 @main_bp.route('/upload/<path:filename>')
@@ -52,4 +39,4 @@ def settings():
         db.session.commit()
         flash('Settings updated', 'success')
         return redirect(url_for('main.settings'))
-    return render_template('pages/settings.html')
+    return serve_spa()

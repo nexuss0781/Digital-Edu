@@ -1,8 +1,9 @@
-from flask import Blueprint, render_template, redirect, url_for, flash, request
+from flask import Blueprint, redirect, url_for, flash, request
 from flask_login import login_user, logout_user, login_required, current_user
 from werkzeug.security import check_password_hash
 from .. import db
 from ..models.user import User
+from .spa import serve_spa
 
 auth_bp = Blueprint('auth', __name__, url_prefix='/auth')
 
@@ -19,11 +20,11 @@ def register():
 
         if User.query.filter_by(email=email).first():
             flash('Email already registered', 'error')
-            return render_template('pages/register.html')
+            return redirect(url_for('main.index'))
 
         if User.query.filter_by(username=username).first():
             flash('Username already taken', 'error')
-            return render_template('pages/register.html')
+            return redirect(url_for('main.index'))
 
         if role == 'admin':
             role = 'instructor'
@@ -36,7 +37,7 @@ def register():
         flash('Registration successful! Welcome to DigitalEdu.', 'success')
         return redirect(url_for('main.dashboard'))
 
-    return render_template('pages/register.html')
+    return serve_spa()
 
 
 @auth_bp.route('/login', methods=['GET', 'POST'])
@@ -56,7 +57,7 @@ def login():
 
         flash('Invalid email or password', 'error')
 
-    return render_template('pages/login.html')
+    return serve_spa()
 
 
 @auth_bp.route('/change-password', methods=['POST'])

@@ -1,5 +1,5 @@
 import os
-from flask import Blueprint, render_template, jsonify, flash, redirect, url_for, send_file, current_app
+from flask import Blueprint, jsonify, flash, redirect, url_for, send_file, current_app
 from flask_login import current_user
 from ..services.course_parser import (
     get_course_tree, get_content_by_id, check_item_locked,
@@ -8,6 +8,7 @@ from ..services.course_parser import (
 )
 from ..services.assessment_parser import parse_content, get_assessment_mode
 from ..models.progress import Progress
+from .spa import serve_spa
 
 courses_bp = Blueprint('courses', __name__, url_prefix='/courses')
 
@@ -75,14 +76,14 @@ def tree():
         ).all()
         completed_ids = [p.content_id for p in completed]
     locked_ids = list(_compute_locked(course_tree, completed_ids))
-    return render_template('pages/courses.html', tree=course_tree, completed_ids=completed_ids, locked_ids=locked_ids)
+    return serve_spa()
 
 
 @courses_bp.route('/<path:content_id>')
 def view(content_id):
     content = get_content_by_id(content_id)
     if not content:
-        return render_template('pages/404.html'), 404
+        return serve_spa(), 404
 
     config = content.get('config', {})
     if check_item_locked(config):
@@ -102,7 +103,7 @@ def view(content_id):
     assessments = parse_content(content.get('type', 'lecture'), content.get('body', ''))
     breadcrumb = get_breadcrumb(content_id)
     content['rendered_body'] = _render_markdown(content.get('body', ''))
-    return render_template('pages/content_viewer.html', content=content, assessments=assessments, breadcrumb=breadcrumb)
+    return serve_spa()
 
 
 @courses_bp.route('/api/tree')
