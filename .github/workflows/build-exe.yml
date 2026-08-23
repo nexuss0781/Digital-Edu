@@ -196,6 +196,76 @@ jobs:
           retention-days: 14
           if-no-files-found: ignore
 
+      - name: Visual check (open app in browser + screenshot)
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Continue'
+          $exePath = Join-Path $PWD 'dist\DigitalEdu.exe'
+          $shot    = Join-Path $PWD 'exe-screenshot.png'
+          $baseUrl = 'http://127.0.0.1:5199'
+
+          # Kill any browser left over from the smoke test so the capture is clean
+          Get-Process msedge, chrome -ErrorAction SilentlyContinue | Stop-Process -Force -ErrorAction SilentlyContinue
+
+          # Start the app fresh
+          $proc = Start-Process -FilePath $exePath `
+            -WorkingDirectory $PWD `
+            -PassThru -WindowStyle Hidden
+
+          # Wait for the server
+          $up = $false
+          foreach ($i in 1..60) {
+            Start-Sleep -Seconds 2
+            try {
+              $code = & curl.exe -s -o NUL -w '%{http_code}' --max-time 5 "$baseUrl/"
+              if ($code -eq '200') { $up = $true; break }
+            } catch {}
+          }
+          Write-Output "Server up: $up"
+
+          if ($up) {
+            # Open the app in Edge, maximized, no first-run dialogs
+            $edge = "$env:ProgramFiles (x86)\Microsoft\Edge\Application\msedge.exe"
+            if (-not (Test-Path $edge)) { $edge = "$env:ProgramFiles\Microsoft\Edge\Application\msedge.exe" }
+            Write-Output "Using browser: $edge"
+            Start-Process $edge -ArgumentList @(
+              '--new-window', '--start-maximized', '--no-first-run',
+              '--disable-features=msSmartScreenOverlay',
+              '--window-size=1600,900',
+              "$baseUrl/"
+            )
+
+            # Give the React SPA time to boot and fetch course data
+            Start-Sleep -Seconds 25
+          }
+
+          # Capture the full screen
+          Add-Type -AssemblyName System.Windows.Forms
+          Add-Type -AssemblyName System.Drawing
+          $vs  = [System.Windows.Forms.SystemInformation]::VirtualScreen
+          $bmp = New-Object System.Drawing.Bitmap $vs.Width, $vs.Height
+          $g   = [System.Drawing.Graphics]::FromImage($bmp)
+          $g.CopyFromScreen($vs.X, $vs.Y, 0, 0, $bmp.Size)
+          $bmp.Save($shot, [System.Drawing.Imaging.ImageFormat]::Png)
+          $g.Dispose(); $bmp.Dispose()
+
+          $kb = [math]::Round((Get-Item $shot).Length / 1KB)
+          Write-Output "Screenshot saved: exe-screenshot.png ($kb KB)"
+          if ($kb -lt 10) { Write-Output 'WARNING: screenshot suspiciously small - display may be blank' }
+
+          # Stop the app and the browser
+          if (-not $proc.HasExited) { Stop-Process -Id $proc.Id -Force -ErrorAction SilentlyContinue }
+          Get-Process msedge, chrome -ErrorAction SilentlyContinue | Stop-Process -Force -ErrorAction SilentlyContinue
+
+      - name: Upload screenshot
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: exe-screenshot
+          path: exe-screenshot.png
+          retention-days: 14
+          if-no-files-found: ignore
+
       - name: Upload to Release
         if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v2
