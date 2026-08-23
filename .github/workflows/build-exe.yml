@@ -1,7 +1,8 @@
-name: Build Windows EXE
+name: Build Windows EXE + Smoke Test
 
 on:
   push:
+    branches: [main]
     tags:
       - 'v*'
   workflow_dispatch:
@@ -12,13 +13,14 @@ permissions:
 jobs:
   build-windows-exe:
     runs-on: windows-latest
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Python 3.9
+      - name: Set up Python 3.11
         uses: actions/setup-python@v5
         with:
-          python-version: '3.9'
+          python-version: '3.11'
 
       - name: Install dependencies
         run: |
@@ -29,6 +31,171 @@ jobs:
       - name: Build EXE
         run: python -m PyInstaller digiEdu.spec --noconfirm --clean
 
+      - name: Smoke test EXE (run + probe endpoints)
+        id: smoke
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Continue'
+
+          $exePath   = Join-Path $PWD 'dist\DigitalEdu.exe'
+          $outLog    = Join-Path $PWD 'exe-stdout.log'
+          $errLog    = Join-Path $PWD 'exe-stderr.log'
+          $resultTxt = Join-Path $PWD 'smoke-test-result.txt'
+          $baseUrl   = 'http://127.0.0.1:5199'
+
+          $lines = @()
+          $lines += '====================================================='
+          $lines += ' DigitalEdu Windows EXE - Smoke Test Result'
+          $lines += (' Date       : ' + (Get-Date -Format 'yyyy-MM-dd HH:mm:ss'))
+          $lines += (' Commit     : ' + $env:GITHUB_SHA)
+          $lines += (' Runner OS  : ' + $env:RUNNER_OS)
+
+          if (-not (Test-Path $exePath)) {
+            $lines += ' EXE found  : NO - build did not produce dist\DigitalEdu.exe'
+            $lines += ' RESULT     : FAIL'
+            $lines | Set-Content $resultTxt
+            Get-Content $resultTxt
+            exit 1
+          }
+
+          $sizeMb = [math]::Round((Get-Item $exePath).Length / 1MB, 1)
+          $lines += (' EXE found  : YES (' + $sizeMb + ' MB)')
+          $lines += '-----------------------------------------------------'
+
+          # Start the exe with output captured to log files
+          $proc = Start-Process -FilePath $exePath `
+            -WorkingDirectory $PWD `
+            -PassThru -WindowStyle Hidden `
+            -RedirectStandardOutput $outLog `
+            -RedirectStandardError  $errLog
+
+          # Wait for the server to come up (first run extracts the bundle)
+          $up = $false
+          $lastCode = '000'
+          foreach ($i in 1..60) {
+            Start-Sleep -Seconds 2
+            try {
+              $code = & curl.exe -s -o NUL -w '%{http_code}' --max-time 5 "$baseUrl/"
+              $lastCode = $code
+              if ($code -eq '200') { $up = $true; break }
+              if ($proc.HasExited) { break }
+            } catch {
+              if ($proc.HasExited) { break }
+            }
+          }
+
+          $pass = $true
+
+          if ($proc.HasExited) {
+            $lines += (' Server started : NO - process exited early (code ' + $proc.ExitCode + ')')
+            $pass = $false
+          } elseif (-not $up) {
+            $lines += (" Server started : NO - no HTTP 200 on / (last status: $lastCode)")
+            $pass = $false
+          } else {
+            $lines += ' Server started : YES (HTTP 200 on /)'
+          }
+
+          # Helper: probe a URL, return "status|body"
+          function Probe($url) {
+            $bodyFile = New-TemporaryFile
+            $code = & curl.exe -s -o $bodyFile.FullName -w '%{http_code}' --max-time 15 $url
+            $body = ''
+            try { $body = Get-Content $bodyFile.FullName -Raw } catch {}
+            Remove-Item $bodyFile.FullName -Force
+            return @($code, $body)
+          }
+
+          $checks = @()
+
+          # Check 1: landing page serves the SPA, not an error page
+          $r = Probe "$baseUrl/"
+          $bad = ($r[1] -match 'TemplateNotFound') -or ($r[1] -match 'Internal Server Error')
+          $okFlag = ($r[0] -eq '200') -and (-not $bad)
+          $checks += @{ Name = 'GET / (SPA index)'; Code = $r[0]; Ok = $okFlag }
+          if (-not $okFlag) { $pass = $false }
+
+          # Check 2: hashed JS bundle referenced by index.html is reachable
+          $mainJs = $null
+          if ($r[1] -match '/assets/([^"'']+\.(?:js|css))') { $mainJs = $Matches[1] }
+          if ($mainJs) {
+            $r2 = Probe "$baseUrl/assets/$mainJs"
+            $okFlag = ($r2[0] -eq '200')
+            $checks += @{ Name = "GET /assets/$mainJs"; Code = $r2[0]; Ok = $okFlag }
+            if (-not $okFlag) { $pass = $false }
+          } else {
+            $checks += @{ Name = 'SPA bundle reference'; Code = 'n/a'; Ok = $false }
+            $pass = $false
+          }
+
+          # Check 3: courses API responds
+          $r3 = Probe "$baseUrl/courses/api/tree"
+          $okFlag = ($r3[0] -eq '200')
+          $checks += @{ Name = 'GET /courses/api/tree'; Code = $r3[0]; Ok = $okFlag }
+          if (-not $okFlag) { $pass = $false }
+
+          # Check 4: /app/ SPA route
+          $r4 = Probe "$baseUrl/app/"
+          $okFlag = ($r4[0] -eq '200')
+          $checks += @{ Name = 'GET /app/'; Code = $r4[0]; Ok = $okFlag }
+          if (-not $okFlag) { $pass = $false }
+
+          foreach ($c in $checks) {
+            $mark = if ($c.Ok) { 'PASS' } else { 'FAIL' }
+            $lines += (' [{0}] {1}  ->  HTTP {2}' -f $mark, $c.Name, $c.Code)
+          }
+
+          $lines += '-----------------------------------------------------'
+          $lines += (' RESULT     : ' + $(if ($pass) { 'PASS' } else { 'FAIL' }))
+          $lines += ''
+          $lines += '===== EXE stdout (exe-stdout.log) ====='
+          if (Test-Path $outLog) { $lines += (Get-Content $outLog | Select-Object -First 100) }
+          $lines += ''
+          $lines += '===== EXE stderr (exe-stderr.log) ====='
+          if ((Test-Path $errLog) -and (Get-Item $errLog).Length -gt 0) {
+            $lines += (Get-Content $errLog | Select-Object -First 50)
+          } else {
+            $lines += '(empty)'
+          }
+
+          # Stop the server
+          if (-not $proc.HasExited) {
+            Stop-Process -Id $proc.Id -Force -ErrorAction SilentlyContinue
+          }
+
+          $lines | Set-Content $resultTxt -Encoding UTF8
+          Get-Content $resultTxt | ForEach-Object { $_ }
+
+          # Visible summary in the GitHub Actions run page
+          $summary = @()
+          $summary += '## EXE Smoke Test Result'
+          $summary += ''
+          $summary += ('**RESULT: ' + $(if ($pass) { 'PASS ✅' } else { 'FAIL ❌' }) + '**')
+          $summary += ''
+          $summary += '| Check | Status |'
+          $summary += '|---|---|'
+          foreach ($c in $checks) {
+            $mark = if ($c.Ok) { 'PASS' } else { 'FAIL' }
+            $summary += ('| ' + $c.Name + ' | ' + $mark + ' (HTTP ' + $c.Code + ') |')
+          }
+          $summary += ''
+          $summary += 'Full log: artifact ``smoke-test-result`` (smoke-test-result.txt)'
+          $summary | Add-Content $env:GITHUB_STEP_SUMMARY
+
+          if (-not $pass) { exit 1 }
+
+      - name: Upload smoke test result
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: smoke-test-result
+          path: |
+            smoke-test-result.txt
+            exe-stdout.log
+            exe-stderr.log
+          retention-days: 14
+          if-no-files-found: ignore
+
       - name: Upload to Release
         if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v2
@@ -36,7 +203,7 @@ jobs:
           files: dist/DigitalEdu.exe
           generate_release_notes: true
 
-      - name: Upload as fallback artifact
+      - name: Upload EXE as artifact
         if: "!startsWith(github.ref, 'refs/tags/')"
         uses: actions/upload-artifact@v4
         with:
