@@ -346,3 +346,130 @@ jobs:
           name: DigitalEdu-Windows7
           path: dist/DigitalEdu-Win7.exe
           retention-days: 7
+
+  build-linux-deb:
+    name: Build Debian (.deb) for Linux
+    runs-on: ubuntu-latest
+    container:
+      image: debian:12
+    timeout-minutes: 30
+    steps:
+      - name: Install toolchain
+        run: |
+          apt-get update -qq
+          DEBIAN_FRONTEND=noninteractive apt-get install -y -qq \
+            git python3 python3-venv python3-pip curl binutils > /dev/null
+
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          python3 -m venv /tmp/venv
+          /tmp/venv/bin/pip install --upgrade pip -q
+          /tmp/venv/bin/pip install pyinstaller -q
+          /tmp/venv/bin/pip install -r requirements.txt -q
+
+      - name: Build Linux binary
+        run: /tmp/venv/bin/pyinstaller digiEdu.spec --noconfirm --clean
+
+      - name: Smoke test binary
+        run: |
+          ./dist/DigitalEdu > exe-stdout.log 2>&1 &
+          APP_PID=$!
+          up=0
+          for i in $(seq 1 60); do
+            sleep 2
+            code=$(curl -s -o page.html -w '%{http_code}' --max-time 5 http://127.0.0.1:5199/ || true)
+            if [ "$code" = "200" ]; then up=1; break; fi
+            kill -0 $APP_PID 2>/dev/null || break
+          done
+          echo "Server up: $up"
+          if [ "$up" != "1" ] || grep -qE 'TemplateNotFound|Internal Server Error' page.html; then
+            echo 'RESULT: FAIL'
+            tail -50 exe-stdout.log
+            kill $APP_PID 2>/dev/null || true
+            exit 1
+          fi
+          echo 'RESULT: PASS'
+          kill $APP_PID 2>/dev/null || true
+
+      - name: Package .deb
+        id: deb
+        run: |
+          if [ -n "${GITHUB_REF_NAME}" ] && [[ "${GITHUB_REF_NAME}" == v* ]]; then
+            VERSION="${GITHUB_REF_NAME#v}"
+          else
+            VERSION="0.0.0-${GITHUB_SHA::7}"
+          fi
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+          PKG=pkg/DEBIAN
+          mkdir -p "$PKG" pkg/opt/DigitalEdu pkg/usr/bin pkg/usr/share/applications
+
+          cp dist/DigitalEdu pkg/opt/DigitalEdu/DigitalEdu
+          chmod 755 pkg/opt/DigitalEdu/DigitalEdu
+
+          printf '%s\n' \
+            '#!/bin/sh' \
+            'exec /opt/DigitalEdu/DigitalEdu "$@"' \
+            > pkg/usr/bin/digitaledu
+          chmod 755 pkg/usr/bin/digitaledu
+
+          printf '%s\n' \
+            '[Desktop Entry]' \
+            'Type=Application' \
+            'Name=DigitalEdu' \
+            'Comment=Offline competency-based learning platform (runs on http://127.0.0.1:5199)' \
+            'Exec=/opt/DigitalEdu/DigitalEdu' \
+            'Terminal=false' \
+            'Categories=Education;' \
+            > pkg/usr/share/applications/digitaledu.desktop
+
+          { printf '%s\n' \
+              'Package: digitaledu' \
+              "Version: $VERSION" \
+              'Section: education' \
+              'Priority: optional' \
+              'Architecture: amd64' \
+              'Maintainer: Tadiyos Aschalew <nexuss0781@gmail.com>' \
+              'Description: DigitalEdu offline learning platform' \
+              ' Self-contained Flask + React learning platform served locally on port 5199.'
+          } > "$PKG/control"
+
+          dpkg-deb --build --root-owner-group pkg "digitaledu_${VERSION}_amd64.deb"
+          dpkg-deb --info "digitaledu_${VERSION}_amd64.deb"
+
+      - name: Verify .deb installs and launches
+        run: |
+          dpkg -i digitaledu_*_amd64.deb > /dev/null
+          /usr/bin/digitaledu > wrapper-stdout.log 2>&1 &
+          WRAP_PID=$!
+          up=0
+          for i in $(seq 1 60); do
+            sleep 2
+            code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 5 http://127.0.0.1:5199/ || true)
+            if [ "$code" = "200" ]; then up=1; break; fi
+            kill -0 $WRAP_PID 2>/dev/null || break
+          done
+          echo "Installed app via wrapper, server up: $up"
+          kill $WRAP_PID 2>/dev/null || true
+          if [ "$up" != "1" ]; then
+            tail -30 wrapper-stdout.log
+            exit 1
+          fi
+
+      - name: Upload to Release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: digitaledu_*_amd64.deb
+
+      - name: Upload artifacts
+        if: "!startsWith(github.ref, 'refs/tags/')"
+        uses: actions/upload-artifact@v4
+        with:
+          name: DigitalEdu-linux-deb
+          path: |
+            digitaledu_*_amd64.deb
+            dist/DigitalEdu
+          retention-days: 7

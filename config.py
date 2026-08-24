@@ -21,7 +21,11 @@ def _base_dir():
             return os.path.join(appdata, 'DigitalEdu')
     from paths import FROZEN, APP_DIR
     if FROZEN:
-        return os.path.join(os.environ.get('APPDATA', APP_DIR), 'DigitalEdu')
+        if os.name == 'nt':
+            return os.path.join(os.environ.get('APPDATA', APP_DIR), 'DigitalEdu')
+        # Frozen on Linux/macOS: keep data out of the ephemeral _MEIPASS dir
+        xdg_data = os.environ.get('XDG_DATA_HOME') or os.path.expanduser('~/.local/share')
+        return os.path.join(xdg_data, 'DigitalEdu')
     return os.path.join(APP_DIR, 'instance')
 
 
