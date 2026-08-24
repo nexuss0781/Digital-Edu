@@ -112,8 +112,17 @@ function ArticleRenderer({ markdown, rewrites }: { markdown: string; rewrites?: 
         </code>
       );
     },
+    table({ children }) {
+      // Wide tables must scroll inside the reading column instead of
+      // stretching the page on narrow windows (e.g. taskbar-on-right).
+      return (
+        <div className="prose-table-scroll">
+          <table>{children}</table>
+        </div>
+      );
+    },
     img({ src, alt }) {
-      return <img src={rewriteUrl(src || '', rewrites)} alt={alt || ''} loading="lazy" className="rounded-lg" />;
+      return <img src={rewriteUrl(src || '', rewrites)} alt={alt || ''} loading="lazy" className="max-w-full rounded-lg" style={{ height: 'auto' }} />;
     },
     a({ href, children, ...props }) {
       const external = href ? isExternalLink(href) : false;

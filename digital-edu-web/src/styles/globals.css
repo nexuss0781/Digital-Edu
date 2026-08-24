@@ -286,6 +286,15 @@ body::before {
   overflow: hidden;
   border: 1px solid var(--border);
 }
+/* Scroll container: wide tables stay inside the reading column at any width */
+.prose-table-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  max-width: 100%;
+}
+.prose-table-scroll table {
+  min-width: 480px;
+}
 .prose-custom thead {
   background: #001449;
 }

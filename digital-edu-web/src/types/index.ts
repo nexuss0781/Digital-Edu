@@ -76,6 +76,8 @@ export interface ContentDetail {
   step_count?: number;
   lab?: LabData;
   rewrites?: Rewrite[];
+  completed?: boolean;
+  locked?: boolean;
 }
 
 export interface Assessment {
