@@ -280,3 +280,69 @@ jobs:
           name: DigitalEdu-windows
           path: dist/DigitalEdu.exe
           retention-days: 7
+
+  build-windows7-exe:
+    name: Build Windows 7 EXE (legacy, Python 3.8)
+    runs-on: windows-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python 3.8 (last version supporting Windows 7)
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.8'
+
+      - name: Install dependencies (Win7 compatible pins)
+        run: |
+          python -m pip install --upgrade pip
+          pip install "pyinstaller==5.13.2"
+          pip install -r requirements-windows-py38.txt
+
+      - name: Build EXE
+        run: python -m PyInstaller digiEdu-win7.spec --noconfirm --clean
+
+      - name: Smoke test EXE
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Continue'
+          $proc = Start-Process -FilePath (Join-Path $PWD 'dist\DigitalEdu-Win7.exe') `
+            -WorkingDirectory $PWD -PassThru -WindowStyle Hidden
+
+          $up = $false
+          foreach ($i in 1..60) {
+            Start-Sleep -Seconds 2
+            try {
+              $code = & curl.exe -s -o "$env:TEMP\page.html" -w '%{http_code}' --max-time 5 'http://127.0.0.1:5199/'
+              if ($code -eq '200') { $up = $true; break }
+              if ($proc.HasExited) { break }
+            } catch {}
+          }
+
+          $body = ''
+          if (Test-Path "$env:TEMP\page.html") { $body = Get-Content "$env:TEMP\page.html" -Raw }
+          $bad = ($body -match 'TemplateNotFound') -or ($body -match 'Internal Server Error')
+
+          Write-Output "Win7 exe server up : $up"
+          Write-Output "Landing page clean : $(-not $bad)"
+          if (-not $proc.HasExited) { Stop-Process -Id $proc.Id -Force -ErrorAction SilentlyContinue }
+
+          if (-not $up -or $bad) {
+            Write-Output 'RESULT: FAIL'
+            exit 1
+          }
+          Write-Output 'RESULT: PASS'
+
+      - name: Upload to Release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/DigitalEdu-Win7.exe
+
+      - name: Upload EXE as artifact
+        if: "!startsWith(github.ref, 'refs/tags/')"
+        uses: actions/upload-artifact@v4
+        with:
+          name: DigitalEdu-Windows7
+          path: dist/DigitalEdu-Win7.exe
+          retention-days: 7
