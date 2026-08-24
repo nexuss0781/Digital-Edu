@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { BookOpen, PanelRight } from 'lucide-react';
 import { useLab } from '@/hooks/useLab';
+import { useMediaQuery } from '@/hooks/useMediaQuery';
 import { codeForTests } from '@/lib/workshopParser';
 import { buildLabSrcDoc } from '@/lib/labParser';
 import { runStepChecks } from '@/lib/workshopChecks';
@@ -18,7 +20,14 @@ interface Props {
 export default function LabWorkbench({ content, onTreeToggle, onComplete }: Props) {
   const state = useLab(content, onComplete);
   const [checking, setChecking] = useState(false);
+  const [instructionsOpen, setInstructionsOpen] = useState(false);
+  const [previewOpen, setPreviewOpen] = useState(false);
   const frameRef = useRef<HTMLIFrameElement | null>(null);
+
+  // Docked panes exist only at these breakpoints; below them the panes are
+  // reachable through the header toggle buttons (e.g. taskbar-on-right setups).
+  const hasInstructionsDocked = useMediaQuery('(min-width: 1024px)');
+  const hasPreviewDocked = useMediaQuery('(min-width: 1280px)');
   const assetBase = content.lab?.asset_base;
   const rewrites = content.lab?.rewrites;
 
@@ -115,6 +124,28 @@ export default function LabWorkbench({ content, onTreeToggle, onComplete }: Prop
             <BreadcrumbBar breadcrumbs={content.breadcrumb || []} onTreeToggle={onTreeToggle} />
           </div>
           <div className="flex shrink-0 items-center gap-2.5">
+            {!hasInstructionsDocked && (
+              <button
+                onClick={() => setInstructionsOpen(true)}
+                className="flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-medium transition-colors hover:bg-[var(--accent-glow)]"
+                style={{ color: 'var(--text-secondary)', border: '1px solid var(--border)' }}
+                title="Open instructions"
+              >
+                <BookOpen size={14} />
+                Instructions
+              </button>
+            )}
+            {!hasPreviewDocked && (
+              <button
+                onClick={() => setPreviewOpen(true)}
+                className="flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-medium transition-colors hover:bg-[var(--accent-glow)]"
+                style={{ color: 'var(--text-secondary)', border: '1px solid var(--border)' }}
+                title="Open live preview"
+              >
+                <PanelRight size={14} />
+                Preview
+              </button>
+            )}
             <span className="hidden text-sm font-bold md:block" style={{ color: 'var(--text)' }}>
               {content.title || content.name}
             </span>
@@ -147,6 +178,40 @@ export default function LabWorkbench({ content, onTreeToggle, onComplete }: Prop
           <LabRightPane workspace={state.workspace} assetBase={assetBase} rewrites={rewrites} />
         </div>
       </div>
+
+      {/* Instructions drawer (when the left pane is not docked) */}
+      {instructionsOpen && (
+        <div className="fixed inset-0 z-50">
+          <div className="absolute inset-0 bg-black/40" onClick={() => setInstructionsOpen(false)} />
+          <div
+            className="absolute bottom-0 left-0 top-0 flex w-[380px] max-w-[92vw] animate-slide-up flex-col"
+            style={{ background: 'var(--bg)', boxShadow: 'var(--shadow-lg)', borderRight: '1px solid var(--border)' }}
+          >
+            <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
+              <LabDescriptionPane
+                state={state}
+                description={content.lab?.description || ''}
+                assets={content.lab?.assets || []}
+                onRunChecks={runChecks}
+                checking={checking}
+              />
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Live preview drawer (when the right pane is not docked, e.g. narrow window) */}
+      {previewOpen && (
+        <div className="fixed inset-0 z-50">
+          <div className="absolute inset-0 bg-black/40" onClick={() => setPreviewOpen(false)} />
+          <div
+            className="absolute bottom-0 right-0 top-0 flex w-[440px] max-w-[94vw] animate-slide-up flex-col"
+            style={{ background: 'var(--bg-card)', boxShadow: 'var(--shadow-lg)', borderLeft: '1px solid var(--border)' }}
+          >
+            <LabRightPane workspace={state.workspace} assetBase={assetBase} rewrites={rewrites} />
+          </div>
+        </div>
+      )}
     </div>
   );
 }

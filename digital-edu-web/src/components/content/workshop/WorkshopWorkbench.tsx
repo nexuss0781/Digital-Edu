@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { PanelLeft } from 'lucide-react';
+import { BookOpen, PanelLeft, PanelRight } from 'lucide-react';
 import { useWorkshop } from '@/hooks/useWorkshop';
+import { useMediaQuery } from '@/hooks/useMediaQuery';
 import { parseWorkshop, buildSrcDoc, codeForTests } from '@/lib/workshopParser';
 import { runStepChecks } from '@/lib/workshopChecks';
 import type { ContentDetail } from '@/types';
@@ -19,8 +20,15 @@ interface Props {
 export default function WorkshopWorkbench({ content, onTreeToggle, onComplete }: Props) {
   const state = useWorkshop(content, onComplete);
   const [railOpen, setRailOpen] = useState(false);
+  const [instructionsOpen, setInstructionsOpen] = useState(false);
+  const [previewOpen, setPreviewOpen] = useState(false);
   const [checking, setChecking] = useState(false);
   const frameRef = useRef<HTMLIFrameElement | null>(null);
+
+  // Docked panes exist only at these breakpoints; below them the panes are
+  // reachable through the header toggle buttons (e.g. taskbar-on-right setups).
+  const hasInstructionsDocked = useMediaQuery('(min-width: 1024px)');
+  const hasPreviewDocked = useMediaQuery('(min-width: 1280px)');
 
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
@@ -127,6 +135,28 @@ export default function WorkshopWorkbench({ content, onTreeToggle, onComplete }:
             >
               Step {state.currentIndex + 1}/{state.totalSteps}
             </span>
+            {!hasInstructionsDocked && (
+              <button
+                onClick={() => setInstructionsOpen(true)}
+                className="flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-medium transition-colors hover:bg-[var(--accent-glow)]"
+                style={{ color: 'var(--text-secondary)', border: '1px solid var(--border)' }}
+                title="Open instructions"
+              >
+                <BookOpen size={14} />
+                Instructions
+              </button>
+            )}
+            {!hasPreviewDocked && (
+              <button
+                onClick={() => setPreviewOpen(true)}
+                className="flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-medium transition-colors hover:bg-[var(--accent-glow)]"
+                style={{ color: 'var(--text-secondary)', border: '1px solid var(--border)' }}
+                title="Open live preview"
+              >
+                <PanelRight size={14} />
+                Preview
+              </button>
+            )}
             <button
               onClick={() => setRailOpen(true)}
               className="flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-medium transition-colors hover:bg-[var(--accent-glow)]"
@@ -165,6 +195,42 @@ export default function WorkshopWorkbench({ content, onTreeToggle, onComplete }:
           <LiveViewer workspace={state.workspace} rewrites={content.rewrites} />
         </div>
       </div>
+
+      {/* Instructions drawer (when the left pane is not docked) */}
+      {instructionsOpen && (
+        <div className="fixed inset-0 z-50">
+          <div className="absolute inset-0 bg-black/40" onClick={() => setInstructionsOpen(false)} />
+          <div
+            className="absolute bottom-0 left-0 top-0 flex w-[380px] max-w-[92vw] animate-slide-up flex-col"
+            style={{ background: 'var(--bg)', boxShadow: 'var(--shadow-lg)', borderRight: '1px solid var(--border)' }}
+          >
+            <button
+              onClick={() => setInstructionsOpen(false)}
+              className="absolute right-2 top-2 z-10 rounded-md p-1.5 transition-colors hover:bg-[var(--accent-glow)]"
+              style={{ color: 'var(--text-secondary)' }}
+              title="Close instructions"
+            >
+              <PanelLeft size={16} />
+            </button>
+            <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
+              <DescriptionPane state={state} step={currentParsed} rewrites={content.rewrites} description={content.body} />
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Live preview drawer (when the right pane is not docked, e.g. narrow window) */}
+      {previewOpen && (
+        <div className="fixed inset-0 z-50">
+          <div className="absolute inset-0 bg-black/40" onClick={() => setPreviewOpen(false)} />
+          <div
+            className="absolute bottom-0 right-0 top-0 flex w-[440px] max-w-[94vw] animate-slide-up flex-col"
+            style={{ background: 'var(--bg-card)', boxShadow: 'var(--shadow-lg)', borderLeft: '1px solid var(--border)' }}
+          >
+            <LiveViewer workspace={state.workspace} rewrites={content.rewrites} />
+          </div>
+        </div>
+      )}
 
       {/* Steps drawer */}
       {railOpen && (
