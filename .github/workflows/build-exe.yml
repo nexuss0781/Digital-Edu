@@ -279,7 +279,7 @@ jobs:
         with:
           name: DigitalEdu-windows
           path: dist/DigitalEdu.exe
-          retention-days: 7
+          retention-days: 1
 
   build-windows7-exe:
     name: Build Windows 7 EXE (legacy, Python 3.8)
@@ -345,7 +345,7 @@ jobs:
         with:
           name: DigitalEdu-Windows7
           path: dist/DigitalEdu-Win7.exe
-          retention-days: 7
+          retention-days: 1
 
   build-linux-deb:
     name: Build Debian (.deb) for Linux
@@ -473,4 +473,53 @@ jobs:
           path: |
             digitaledu_*_amd64.deb
             dist/DigitalEdu
-          retention-days: 7
+          retention-days: 1
+
+  publish-nightly-release:
+    name: Publish binaries to nightly release (fast CDN)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    # Collects all three platform builds and attaches them to a rolling
+    # 'nightly' release. Release assets download over plain HTTPS without
+    # the slow artifact-CDN auth dance.
+    needs: [build-windows-exe, build-windows7-exe, build-linux-deb]
+    if: "!startsWith(github.ref, 'refs/tags/')"
+    steps:
+      - name: Download build outputs
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Collect and rename files
+        run: |
+          mkdir -p out
+          cp artifacts/DigitalEdu-windows/DigitalEdu.exe            out/DigitalEdu-windows.exe
+          cp artifacts/DigitalEdu-Windows7/DigitalEdu-Win7.exe      out/DigitalEdu-windows7.exe
+          cp artifacts/DigitalEdu-linux-deb/dist/DigitalEdu         out/DigitalEdu-linux-binary
+          chmod +x out/DigitalEdu-linux-binary
+          cp artifacts/DigitalEdu-linux-deb/digitaledu_*_amd64.deb  out/
+          cp artifacts/smoke-test-result/smoke-test-result.txt      out/ 2>/dev/null || true
+          ls -la out/
+
+      - name: Publish nightly release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          SHORT=${GITHUB_SHA::7}
+          STAMP=$(date -u '+%Y-%m-%d %H:%M UTC')
+          gh release delete nightly --cleanup-tag --yes || true
+          gh release create nightly \
+            --prerelease \
+            --target "$GITHUB_SHA" \
+            --title "Latest development build ($SHORT)" \
+            --notes "Automated build of commit \`$SHORT\` ($STAMP).
+
+          | File | For |
+          |---|---|
+          | DigitalEdu-windows.exe | Windows 8 / 10 / 11 |
+          | DigitalEdu-windows7.exe | Windows 7 SP1 |
+          | digitaledu_*_amd64.deb | Debian 12+ / Ubuntu 22.04+ (sudo dpkg -i) |
+          | DigitalEdu-linux-binary | Any modern Linux, run directly |
+
+          First launch extracts for a few seconds, then opens http://127.0.0.1:5199"
+          gh release upload nightly out/*
