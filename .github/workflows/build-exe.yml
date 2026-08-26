@@ -475,6 +475,26 @@ jobs:
             dist/DigitalEdu
           retention-days: 1
 
+
+  verify-frontend-build:
+    name: Verify frontend builds from fresh checkout
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+          cache-dependency-path: digital-edu-web/package-lock.json
+
+      - name: Build SPA from source (same as Docker/Render)
+        run: |
+          npm ci
+          npm run build
+        working-directory: digital-edu-web
+
   publish-nightly-release:
     name: Publish binaries to nightly release (fast CDN)
     runs-on: ubuntu-latest
@@ -482,7 +502,7 @@ jobs:
     # Collects all three platform builds and attaches them to a rolling
     # 'nightly' release. Release assets download over plain HTTPS without
     # the slow artifact-CDN auth dance.
-    needs: [build-windows-exe, build-windows7-exe, build-linux-deb]
+    needs: [build-windows-exe, build-windows7-exe, build-linux-deb, verify-frontend-build]
     if: "!startsWith(github.ref, 'refs/tags/')"
     steps:
       - name: Download build outputs
