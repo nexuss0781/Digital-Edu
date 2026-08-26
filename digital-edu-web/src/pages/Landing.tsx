@@ -2,9 +2,9 @@ import { useEffect, useRef, useState } from 'react';
 import type React from 'react';
 import { Link } from 'react-router-dom';
 import {
-  ArrowRight, Download, Menu, X, SquareCode, BookOpen, Hammer, ClipboardCheck,
+  ArrowRight, Menu, X, SquareCode, BookOpen, Hammer, ClipboardCheck,
   Flame, Check, Award, TrendingUp, BadgeCheck, Wrench, Github, Twitter,
-  Youtube,
+  Youtube, AppWindow, Monitor, Package, Terminal,
 } from 'lucide-react';
 
 /* ── Design tokens (Landing.md §2.1) ─────────────────── */
@@ -1426,6 +1426,15 @@ function Faq() {
 }
 
 /* ── Final CTA (§4.11) ───────────────────────────────── */
+const NIGHTLY_BASE = 'https://github.com/nexuss0781/Digital-Edu/releases/download/nightly';
+
+const DESKTOP_DOWNLOADS = [
+  { href: `${NIGHTLY_BASE}/DigitalEdu-windows.exe`, label: 'Windows 10 / 11', icon: AppWindow },
+  { href: `${NIGHTLY_BASE}/DigitalEdu-windows7.exe`, label: 'Windows 7', icon: Monitor },
+  { href: `${NIGHTLY_BASE}/digitaledu-nightly-amd64.deb`, label: 'Debian (.deb)', icon: Package },
+  { href: `${NIGHTLY_BASE}/DigitalEdu-linux-binary`, label: 'Linux binary', icon: Terminal },
+];
+
 function FinalCta() {
   return (
     <section style={{ position: 'relative', padding: '140px 24px', background: NAVY, overflow: 'hidden', borderTop: BORDER }}>
@@ -1463,20 +1472,35 @@ function FinalCta() {
             Create free account
             <ArrowRight size={17} className="de-arrow" />
           </Link>
-          <a
-            href="/downloads/DigitalEdu.exe"
-            download="DigitalEdu.exe"
-            className="de-focus"
-            style={{ display: 'inline-flex', alignItems: 'center', gap: 10, height: 52, padding: '0 26px', borderRadius: 12, fontSize: 15, fontWeight: 600, color: INK, textDecoration: 'none', background: 'rgba(23,249,255,0.10)', border: '1px solid rgba(23,249,255,0.4)', transition: 'background .15s, border-color .15s' }}
-            onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(23,249,255,0.18)'; e.currentTarget.style.borderColor = CYAN; }}
-            onMouseLeave={(e) => { e.currentTarget.style.background = 'rgba(23,249,255,0.10)'; e.currentTarget.style.borderColor = 'rgba(23,249,255,0.4)'; }}
-          >
-            <Download size={17} />
-            Download for Windows
-          </a>
         </div>
-        <div style={{ marginTop: 14, fontFamily: FONT_MONO, fontSize: 11, color: INK3 }}>
-          Windows Professional · Offline installer · No internet required after download
+        {/* Desktop app downloads — all platforms, rolling nightly build */}
+        <div style={{ marginTop: 38 }}>
+          <div style={{ fontFamily: FONT_MONO, fontSize: 11, letterSpacing: '0.14em', color: INK3, marginBottom: 14, textTransform: 'uppercase' }}>
+            Or download the desktop app · offline after install
+          </div>
+          <div style={{ display: 'flex', justifyContent: 'center', gap: 10, flexWrap: 'wrap' }}>
+            {DESKTOP_DOWNLOADS.map((d) => {
+              const Icon = d.icon;
+              return (
+                <a
+                  key={d.label}
+                  href={d.href}
+                  download
+                  className="de-focus"
+                  title={`Download DigitalEdu for ${d.label}`}
+                  style={{ display: 'inline-flex', alignItems: 'center', gap: 9, height: 46, padding: '0 20px', borderRadius: 12, fontSize: 14, fontWeight: 600, color: INK, textDecoration: 'none', background: 'rgba(23,249,255,0.10)', border: '1px solid rgba(23,249,255,0.4)', transition: 'background .15s, border-color .15s' }}
+                  onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(23,249,255,0.18)'; e.currentTarget.style.borderColor = CYAN; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.background = 'rgba(23,249,255,0.10)'; e.currentTarget.style.borderColor = 'rgba(23,249,255,0.4)'; }}
+                >
+                  <Icon size={16} />
+                  {d.label}
+                </a>
+              );
+            })}
+          </div>
+          <div style={{ marginTop: 14, fontFamily: FONT_MONO, fontSize: 11, color: INK3 }}>
+            Free · No internet required after download · Debian/Ubuntu: sudo dpkg -i digitaledu-nightly-amd64.deb
+          </div>
         </div>
       </div>
     </section>

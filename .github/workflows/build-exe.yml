@@ -497,7 +497,8 @@ jobs:
           cp artifacts/DigitalEdu-Windows7/DigitalEdu-Win7.exe      out/DigitalEdu-windows7.exe
           cp artifacts/DigitalEdu-linux-deb/dist/DigitalEdu         out/DigitalEdu-linux-binary
           chmod +x out/DigitalEdu-linux-binary
-          cp artifacts/DigitalEdu-linux-deb/digitaledu_*_amd64.deb  out/
+          # Stable filename so the landing page link never breaks between builds
+          cp artifacts/DigitalEdu-linux-deb/digitaledu_*_amd64.deb  out/digitaledu-nightly-amd64.deb
           cp artifacts/smoke-test-result/smoke-test-result.txt      out/ 2>/dev/null || true
           ls -la out/
 
@@ -519,7 +520,7 @@ jobs:
           |---|---|
           | DigitalEdu-windows.exe | Windows 8 / 10 / 11 |
           | DigitalEdu-windows7.exe | Windows 7 SP1 |
-          | digitaledu_*_amd64.deb | Debian 12+ / Ubuntu 22.04+ (sudo dpkg -i) |
+          | digitaledu-nightly-amd64.deb | Debian 12+ / Ubuntu 22.04+ (sudo dpkg -i) |
           | DigitalEdu-linux-binary | Any modern Linux, run directly |
 
           First launch extracts for a few seconds, then opens http://127.0.0.1:5199"
